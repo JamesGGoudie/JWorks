@@ -9,9 +9,9 @@
                         during the span of the course.
 
 ## ProductBacklog:
-	
-	Personas:			Contains the type users for the application that we are developing.
+    
+    Personas:           Contains the type users for the application that we are developing.
 
-	UserStories:		Contains the requirements that reflect each type of users described in 
-						Personas.
-						
+    UserStories:        Contains the requirements that reflect each type of users described in 
+                        Personas.
+                        
