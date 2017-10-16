@@ -8,7 +8,7 @@
     TEAM AGREEMENT.pdf: Contains the plan as to how the team will work together on this project
                         during the span of the course.
 
-## ProductBacklog
+## ProductBacklog:
 	
 	Personas:			Contains the type users for the application that we are developing.
 
