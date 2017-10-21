@@ -14,4 +14,9 @@
 
     UserStories:        Contains the requirements that reflect each type of users described in 
                         Personas.
+
+## JWorks:              
+    
+    This is the Java application that the team is building, it contains the code for the entire 
+    application.
                         
