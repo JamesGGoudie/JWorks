@@ -6,7 +6,7 @@ import java.sql.Connection;
 /**
  *
  */
-public interface DatabaseSelector extends DatabaseDriver {
+public interface DatabaseAPI extends DatabaseDriver {
     /**
      * take action on the database
      * @param actCode int representing the specific action to be taken
