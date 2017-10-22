@@ -7,7 +7,7 @@ public abstract class Problem {
     /**
      * Gets the question of this problem.
      */
-    public abstract void getQuestion();
+    public abstract String getQuestion();
 
     /**
      * Gets the answer to this problem.
