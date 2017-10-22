@@ -15,6 +15,12 @@
     UserStories:        Contains the requirements that reflect each type of users described in 
                         Personas.
 
+## JAR_Files:
+
+    The various JAR files that we may need for the project.
+
+    * sqlite-jdbc-3.18.0.jar: SQLite, an easy to use SQL-esque package for java.
+
 ## JWorks/src:              
     
     This is the Java application that the team is building, it contains the code for the entire 
