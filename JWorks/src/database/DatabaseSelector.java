@@ -1,7 +1,10 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import exceptions.DatabaseSelectException;
 
@@ -15,7 +18,19 @@ public interface DatabaseSelector {
    *                                 database. 
    */
   static ResultSet getAllProblems(Connection connection) throws DatabaseSelectException {
-    return null;
+    String sql = "SELECT * FROM PROBLEMS";
+    ResultSet results = null;
+    
+    try {
+      Statement statement = connection.createStatement();
+      results = statement.executeQuery(sql);
+    } catch (SQLException e) {
+      e.printStackTrace();
+      String errorMessage = "Failed to get entire problem collection from database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
   }
   
   /**
@@ -28,6 +43,19 @@ public interface DatabaseSelector {
    */
   static ResultSet getSingleProblem(int problemKey, Connection connection)
       throws DatabaseSelectException {
-    return null;
+    String sql = "SELECT * FROM PROBLEMS WHERE ID = ?";
+    ResultSet results = null;
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemKey);
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      String errorMessage = "Failed to get the problem from database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
   }
 }
