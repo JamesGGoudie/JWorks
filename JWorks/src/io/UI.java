@@ -4,22 +4,21 @@ import java.util.Scanner;
 
 public class UI implements UIGen{
 	
-	private Scanner inputPrompt() {
-		Scanner userInput = new Scanner(System.in);
-		
-		return userInput;
-	}
+	//Scanner declaration
+	private Scanner userInput = new Scanner(System.in);
 	
-	public int userChoicePrompt() {
+	/**
+	 * Prompts the user for a choice
+	 * @return returns a String of the prompt
+	 */
+	public String userChoicePrompt() {
 		
 		System.out.println("1. Create a question.\n");
 		System.out.println("2. View a question.\n");
 		System.out.println("--------------------------");
 		System.out.println("Choose a option: ");
-		int choice = inputPrompt().nextInt();
-		
-		inputPrompt().close();
-		
+		String  choice = userInput.nextLine();
+				
 		return choice;
 		
 	}
