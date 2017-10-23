@@ -25,57 +25,26 @@ public class DatabaseInserter {
     int result = -1;
     
       PreparedStatement preparedStatement = null;
-    try {
-        preparedStatement = connection.prepareStatement(sql, 
-              Statement.RETURN_GENERATED_KEYS);
-    } catch (SQLException e) {
-        e.printStackTrace();
-
-        // String errorMessage = "Failed to insert a problem into the database.";
-        // throw new DatabaseInsertException(errorMessage);
-    }
       try {
-        preparedStatement.setInt(1, type);
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-      try {
-        preparedStatement.setString(2, question);
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-      try {
-        preparedStatement.setString(3, answer);
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-      
-      int id = 0;
-    try {
+          preparedStatement = connection.prepareStatement(sql, 
+                Statement.RETURN_GENERATED_KEYS);
+          preparedStatement.setInt(1, type);
+          preparedStatement.setString(2, question);
+          preparedStatement.setString(3, answer);
+        
+        int id = 0;
         id = preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
-      
-      if (id > 0) {
-        ResultSet uniqueKey = null;
-        try {
-            uniqueKey = preparedStatement.getGeneratedKeys();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        
+        if (id > 0) {
+          ResultSet uniqueKey = null;
+          uniqueKey = preparedStatement.getGeneratedKeys();
+          if (uniqueKey.next()) {
+            result = uniqueKey.getInt(1);
+          }
         }
-        try {
-            if (uniqueKey.next()) {
-              try {
-                result = uniqueKey.getInt(1);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+      } catch (SQLException e) {
+        String errorMessage = "Failed to insert question into the database.";
+        throw new DatabaseInsertException(errorMessage);
       }
     
     return result;
