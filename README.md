@@ -42,6 +42,12 @@
 ### databaseAPI:
 
 ### driver:
+    
+    The drivers for JWorks
+    
+    * JWorks.java: The main class of JWorks.
+    * UIParser.java: Parse user's input into readable parameters for the interpreter.
+    * Interpreter.java: interpret user’s input and execute the corresponding action.
 
 ### exceptions:
 
