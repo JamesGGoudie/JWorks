@@ -1,11 +1,15 @@
 package driver;
 
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Hashtable;
 
 import command.ICommand;
 import command.AddSimpleProblemCommand;
 import command.ViewProblemsCommand;
+
+import databaseAPI.DatabaseDriverAPI;
+import databaseAPI.DatabaseStoreAPI;
 
 /**
  * Interprets the user input and execute the execute the action
@@ -21,6 +25,10 @@ public class Interpreter {
   private ICommand commandObject;
   private String[] parameters;
   private String command;
+  
+  private DatabaseStoreAPI database;
+  private Connection connection;
+  
   
 
   /**
@@ -44,6 +52,12 @@ public class Interpreter {
     for (int i = 0; i < commands.length; i++) {
       commandList.put(Integer.toString(i), commands[i]);
     }
+    
+    // database stuff
+    connection = DatabaseDriverAPI.connectOrCreateDataBase();
+    DatabaseDriverAPI.initialize(connection);
+
+    database = new DatabaseStoreAPI();
   }
 
   /**
@@ -58,6 +72,8 @@ public class Interpreter {
     
     // Find the corresponding command and execute it
     commandObject = commandList.get(command);
-    commandObject.Execute(parameters);
+    //commandObject.Execute(parameters);
+    database.actOnDatabase(1, parameters);
+    
   }
 }
