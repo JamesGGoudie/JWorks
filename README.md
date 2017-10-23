@@ -26,16 +26,16 @@
     
     This is the Java application that the team is building, it contains the code for the entire 
     application. This application is a still in progress and in its early stages.
-	
-	Instruction: Compile JWorks.java under JWorks/src/driver/ along with sqlite-jdbc-3.18.0.jar
-	             found under JAR_Files/
-				 
-				 The current working option is option 1, the input format is the following:
-				 
-				 1 "Question" answer
-				 
-				 Where Question must be a string warped around by double quote and answer must
-				 be a string without space.
+    
+    Instruction: Compile JWorks.java under JWorks/src/driver/ along with sqlite-jdbc-3.18.0.jar
+                 found under JAR_Files/
+                 
+                 The current working option is option 1, the input format is the following:
+                 
+                 1 "Question" answer
+                 
+                 Where Question must be a string warped around by double quote and answer must
+                 be a string without space.
     
 ### action:
     
