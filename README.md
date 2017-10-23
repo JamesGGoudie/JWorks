@@ -15,6 +15,7 @@
     UserStories:        Contains the requirements that reflect each type of users described in 
                         Personas.
 
+
 ## JAR_Files:
 
     The various JAR files that we may need for the project.
@@ -51,4 +52,3 @@
     * DatabaseSelectException.java: Thrown if a problem arises while tyring to retrieve data from the database.
 
 ### io:
-    
