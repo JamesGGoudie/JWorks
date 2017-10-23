@@ -10,7 +10,7 @@ public class JWorks {
 
   private static boolean exit = false;
   private static String input;
-  private static String[][] formatted_input;
+  private static String[] parameters;
 
 
   public static void main(String[] args) {
@@ -21,8 +21,8 @@ public class JWorks {
       if (input.equals("exit")) {
         exit = true;
       } else {
-         formatted_input = parser.parseInput(input);
-         interpreter.executeAction(formatted_input);
+        parameters = parser.parseInput(input);
+        interpreter.executeAction(parameters);
       }
     }
   }
