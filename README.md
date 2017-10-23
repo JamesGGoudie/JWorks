@@ -14,6 +14,12 @@
 
     UserStories:        Contains the requirements that reflect each type of users described in 
                         Personas.
+                        
+## SprintBacklog:
+
+    PlanAndBurndown1:   Contains the plan of distribution of tasks as well as the burndown chart.
+    
+    SprintBacklog1:     Contains information on how user stories were divided into tasks.
 
 
 ## JAR_Files:
