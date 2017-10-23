@@ -14,17 +14,27 @@ public class UIParser {
    *         parameters...]
    */
   public String[] parseInput(String input) {
+    // if the action has no parameters,, just return the action
+    if (input.length() == 1) {
+      return new String[] {input};
+    } else {
 
-    ArrayList<String> temp_formatted_input = new ArrayList<String>();
+      ArrayList<String> temp_formatted_input = new ArrayList<String>();
+      String[] parameters;
+      // add the action from the string to the formatted input
+      temp_formatted_input.add(input.substring(0, input.indexOf(' ')));
 
-    // add the action from the string to the formatted input
-    temp_formatted_input.add(input.substring(0, input.indexOf(' ')));
-    // add the parameters to the formatted input
-    temp_formatted_input.addAll(
-        Arrays.asList(formatParameters(input.substring(input.indexOf(' ')))));
+      parameters = formatParameters(input.substring(input.indexOf(' ')));
 
-    formatted_input = new String[temp_formatted_input.size()];
-    return temp_formatted_input.toArray(formatted_input);
+      // add the parameters to the formatted input
+      for (int i = 0; i < parameters.length; i++) {
+        temp_formatted_input.add(parameters[i]);
+      }
+
+
+      formatted_input = new String[temp_formatted_input.size()];
+      return temp_formatted_input.toArray(formatted_input);
+    }
   }
 
   /**
@@ -44,7 +54,7 @@ public class UIParser {
       // take whatever is in the warper as the first parameter
       param_list.add(parameters.substring(stringBegin + 1, stringEnd));
       // remove the first parameter from parameters
-      parameters = parameters.substring(stringEnd);
+      parameters = parameters.substring(stringEnd + 2);
     }
 
     // split all the parameters and add them to the list
