@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public interface DatabaseUpdater {
+public class DatabaseUpdater {
 
   /**
    * Updates the text body of a problem already in the database.
@@ -13,7 +13,7 @@ public interface DatabaseUpdater {
    * @param connection The connection to the database.
    * @return True if the question was updated, false if otherwise.
    */
-  static boolean updateProblemBody(String newQuestion, int problemKey, Connection connection) {
+  protected static boolean updateProblemBody(String newQuestion, int problemKey, Connection connection) {
     String sql = "UPDATE PROBLEMS SET QUESTION = ? WHERE ID = ?;";
     boolean result = false;
     
@@ -39,7 +39,7 @@ public interface DatabaseUpdater {
    * @param connection The connection to the database.
    * @return True if the answer was updated, false if otherwise.
    */
-  static boolean updateProblemAnswer(String newAnswer, int problemKey, Connection connection) {
+  protected static boolean updateProblemAnswer(String newAnswer, int problemKey, Connection connection) {
     String sql = "UPDATE PROBLEMS SET ANSWER = ? WHERE ID = ?;";
     boolean result = false;
     

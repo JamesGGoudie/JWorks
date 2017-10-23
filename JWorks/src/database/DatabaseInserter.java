@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import exceptions.DatabaseInsertException;
 
-public interface DatabaseInserter {
+public class DatabaseInserter {
 
   /**
    * Inserts a problem into the database.
@@ -19,7 +19,7 @@ public interface DatabaseInserter {
    * @return The unique key of the problem.
    * @throws DatabaseInsertException Thrown if the question could not be added to the database.
    */
-  static int insertProblem(int type, String question, String answer, Connection connection)
+  protected static int insertProblem(int type, String question, String answer, Connection connection)
       throws DatabaseInsertException {
     String sql = "INSERT INTO PROBLEMS(TYPE, QUESTION, ANSWER) VALUES(?,?,?)";
     int result = -1;
