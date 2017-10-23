@@ -15,8 +15,40 @@
     UserStories:        Contains the requirements that reflect each type of users described in 
                         Personas.
 
-## JWorks:              
+
+## JAR_Files:
+
+    The various JAR files that we may need for the project.
+
+    * sqlite-jdbc-3.18.0.jar: SQLite, an easy to use SQL-esque package for java.
+
+## JWorks/src:              
     
     This is the Java application that the team is building, it contains the code for the entire 
     application.
-                        
+    
+### action:
+    
+### database: 
+
+    Interacts directly with the database file.
+    
+    * DatabaseDeleter.java: Deletes entries in the database.
+    * DatabaseDriver.java: Create or connect to the database file.
+    * DatabaseInserter.java: Inserts data into the database.
+    * DatabaseSelecter.java: Retrives data from the database.
+    * DatabaseUpdater.java: Modifies data in the database.
+    
+### databaseAPI:
+
+### driver:
+
+### exceptions:
+
+    Contains exceptions.
+    
+    * ConnectionFailedException.java: Thrown if a connection to the database file was corrupt.
+    * DatabaseInsertException.java: Thrown if a problem arises while trying to insert data into the database.
+    * DatabaseSelectException.java: Thrown if a problem arises while tyring to retrieve data from the database.
+
+### io:
