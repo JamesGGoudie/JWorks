@@ -30,7 +30,7 @@ public class AddSimpleProblemCommand implements ICommand {
 
         // Pass to appropriate action -- TODO: get instance of actions rather than creating new
         Action action =  new AddQuestionAction();
-        action.Execute(params);
+        action.execute(params);
         return true;
     }
 }

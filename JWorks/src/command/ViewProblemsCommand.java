@@ -2,10 +2,7 @@ package command;
 
 import action.Action;
 import action.ActionParameters;
-import action.AddQuestionAction;
 import action.ViewQuestionAction;
-import problem.Problem;
-import problem.SingleAnswerProblem;
 
 public class ViewProblemsCommand implements ICommand {
     /**
@@ -19,7 +16,7 @@ public class ViewProblemsCommand implements ICommand {
 
         // Pass to appropriate action -- TODO: get instance of actions rather than creating new
         Action action =  new ViewQuestionAction();
-        action.Execute(params);
+        action.execute(params);
         return true;
     }
 }
