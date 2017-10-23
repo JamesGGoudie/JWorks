@@ -52,6 +52,7 @@
 ### databaseAPI:
 
     API for classes in Database objects
+    
     * DatabaseAPI.java: Interface that defines responsibility shared by all API classes
     * DatabaseDriverAPI: Creates and returns connection to the database
     * DatabseStoreAPI: Parses information supplied by Action object and sends to be stored on database
