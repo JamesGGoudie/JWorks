@@ -5,11 +5,11 @@ import database.DatabaseDriver;
 import exceptions.ConnectionFailedException;
 
 public class DatabaseDriverAPI extends DatabaseDriver {
-    protected static Connection connectOrCreateDataBase() {
+    public static Connection connectOrCreateDataBase() {
         return DatabaseDriver.connectOrCreateDatabase();
     }
     
-    protected static Connection initialize(Connection connection) {
+    public static Connection initialize(Connection connection) {
         
         try {
             DatabaseDriver.initialize(connection);
