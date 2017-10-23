@@ -16,6 +16,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
                 case 1:
                     if(args.length > 1){
                         int result = DatabaseInserter.insertProblem(1, args[0], args[1], connection);
+                        System.out.println(result);
                     }
             }
             connection.close();
