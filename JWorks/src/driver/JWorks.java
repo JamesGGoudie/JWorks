@@ -18,10 +18,10 @@ public class JWorks {
     while (!exit) {
       input = ui.userChoicePrompt();
 
-      if (input.equals("exit")) {
+      if (input.trim().equals("exit")) {
         exit = true;
       } else {
-        parameters = parser.parseInput(input);
+        parameters = parser.parseInput(input.trim());
         interpreter.executeAction(parameters);
       }
     }

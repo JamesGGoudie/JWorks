@@ -1,10 +1,17 @@
 package driver;
 
+/**
+ * Parse user input strings into readable parameters for the Interpreter to
+ * execute commands
+ * 
+ * @author sin
+ */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UIParser {
-  private String[] formatted_input;
+  private String[] formattedInput;
 
   /**
    * Parse the user input into a format that can be used by the actions
@@ -19,21 +26,21 @@ public class UIParser {
       return new String[] {input};
     } else {
 
-      ArrayList<String> temp_formatted_input = new ArrayList<String>();
+      ArrayList<String> tempFormattedInput = new ArrayList<String>();
       String[] parameters;
       // add the action from the string to the formatted input
-      temp_formatted_input.add(input.substring(0, input.indexOf(' ')));
+      tempFormattedInput.add(input.substring(0, input.indexOf(' ')));
 
       parameters = formatParameters(input.substring(input.indexOf(' ')));
 
       // add the parameters to the formatted input
       for (int i = 0; i < parameters.length; i++) {
-        temp_formatted_input.add(parameters[i]);
+        tempFormattedInput.add(parameters[i]);
       }
 
 
-      formatted_input = new String[temp_formatted_input.size()];
-      return temp_formatted_input.toArray(formatted_input);
+      formattedInput = new String[tempFormattedInput.size()];
+      return tempFormattedInput.toArray(formattedInput);
     }
   }
 
@@ -43,7 +50,7 @@ public class UIParser {
    * @return formatted_parameters The formatted parameters
    */
   private String[] formatParameters(String parameters) {
-    ArrayList<String> param_list = new ArrayList<String>();
+    ArrayList<String> paramList = new ArrayList<String>();
 
     // check for any string parameter in the input
     int stringBegin = parameters.indexOf('"');
@@ -51,18 +58,21 @@ public class UIParser {
 
 
     if (stringBegin != stringEnd) {
+      String stringParam = parameters.substring(stringBegin + 1, stringEnd);
       // take whatever is in the warper as the first parameter
-      param_list.add(parameters.substring(stringBegin + 1, stringEnd));
-      // remove the first parameter from parameters
-      parameters = parameters.substring(stringEnd + 2);
+      paramList.add(stringParam);
+      if (parameters.length() > stringParam.length() + 3) {
+        // remove the first parameter from parameters
+        parameters = parameters.substring(stringEnd + 2);
+      }
     }
 
     // split all the parameters and add them to the list
-    param_list.addAll(Arrays.asList(parameters.split(" ", 0)));
+    paramList.addAll(Arrays.asList(parameters.split(" ", 0)));
 
     // return the parameters as a string array
-    String[] formatted_parameters = new String[param_list.size()];
-    return param_list.toArray(formatted_parameters);
+    String[] formatted_parameters = new String[paramList.size()];
+    return paramList.toArray(formatted_parameters);
   }
 
 
