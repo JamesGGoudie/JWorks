@@ -14,6 +14,12 @@
 
     UserStories:        Contains the requirements that reflect each type of users described in 
                         Personas.
+                        
+## SprintBacklog:
+
+    PlanAndBurndown1:   Contains the plan of distribution of tasks as well as the burndown chart.
+    
+    SprintBacklog1:     Contains information on how user stories were divided into tasks.
 
 
 ## JAR_Files:
@@ -27,6 +33,7 @@
     This is the Java application that the team is building, it contains the code for the entire 
     application. This application is a still in progress and in its early stages.
     
+<<<<<<< HEAD
     Instruction: Compile JWorks.java under JWorks/src/driver/ along with sqlite-jdbc-3.18.0.jar
                  found under JAR_Files/
                  
@@ -72,12 +79,15 @@
     * ConnectionFailedException.java: Thrown if a connection to the database file was corrupt.
     * DatabaseInsertException.java: Thrown if a problem arises while trying to insert data into the database.
     * DatabaseSelectException.java: Thrown if a problem arises while tyring to retrieve data from the database.
+=======
+### Instruction: 
+Compile JWorks.java under JWorks/src/driver/ along with sqlite-jdbc-3.18.0.jar found under JAR_Files/
+>>>>>>> origin/dev
 
-### io:
+The current working option is option 1, the input format must match the following:
 
-    User Interface responsible for getting user input and outputs result from database for display.
+```
+1 "Question" answer
+```
 
-    * OutputGen.java: Interface for OutputGenerator.java.
-    * UIGen.java: Interface for UI.java.
-    * OutputGenerator.java: Takes a string and outputs it on to the display.
-    * UI.java: Prompt user for choice/options of usage.
+Where Question must be a string warped around by double quote and answer must be a string without any space.
