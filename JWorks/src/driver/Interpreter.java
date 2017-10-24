@@ -63,7 +63,7 @@ public class Interpreter {
   /**
    * Execute the action base on the user input
    * 
-   * @param formatted_input
+   * @param formattedInput
    */
   public void executeAction(String[] formattedInput) {
     // extract the command and parameters from the formattedInput
@@ -72,8 +72,6 @@ public class Interpreter {
     
     // Find the corresponding command and execute it
     commandObject = commandList.get(command);
-    //commandObject.Execute(parameters);
-    database.actOnDatabase(1, parameters);
-    
+    commandObject.execute(parameters);
   }
 }

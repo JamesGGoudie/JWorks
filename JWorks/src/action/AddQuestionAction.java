@@ -1,7 +1,11 @@
 package action;
 
+import databaseAPI.DatabaseDriverAPI;
+import databaseAPI.DatabaseStoreAPI;
 import io.OutputGenerator;
 import problem.Problem;
+
+import java.sql.Connection;
 
 public class AddQuestionAction extends Action {
     /**
@@ -12,8 +16,14 @@ public class AddQuestionAction extends Action {
     public void execute(ActionParameters params) {
         // Get the problem and add it to the database
         Problem problem = params.getProblem();
+        String[] dbArgs = { problem.getQuestion(), problem.getAnswer() };
 
-        // TODO: Access database API
+        // Instantiate database access
+        Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
+        DatabaseDriverAPI.initialize(connection);
+
+        DatabaseStoreAPI database = new DatabaseStoreAPI();
+        database.actOnDatabase(1, dbArgs);
 
         // Output success
         OutputGenerator output = new OutputGenerator();
