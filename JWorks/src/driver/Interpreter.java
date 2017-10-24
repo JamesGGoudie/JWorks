@@ -50,7 +50,7 @@ public class Interpreter {
 
     // add the commands to the hashtable
     for (int i = 0; i < commands.length; i++) {
-      commandList.put(Integer.toString(i), commands[i]);
+      commandList.put(Integer.toString(i + 1), commands[i]);
     }
     
     // database stuff
