@@ -21,15 +21,15 @@ public class Interpreter {
 
   private AddSimpleProblemCommand addSimpleProblem;
   private ViewProblemsCommand viewProblem;
-  
+
   private ICommand commandObject;
   private String[] parameters;
   private String command;
-  
+
   private DatabaseStoreAPI database;
   private Connection connection;
-  
-  
+
+
 
   /**
    * Hashtable object that holds all the commands and their respective keys
@@ -52,7 +52,7 @@ public class Interpreter {
     for (int i = 0; i < commands.length; i++) {
       commandList.put(Integer.toString(i + 1), commands[i]);
     }
-    
+
     // database stuff
     connection = DatabaseDriverAPI.connectOrCreateDataBase();
     DatabaseDriverAPI.initialize(connection);
@@ -70,8 +70,12 @@ public class Interpreter {
     command = formattedInput[0];
     parameters = Arrays.copyOfRange(formattedInput, 1, formattedInput.length);
     
-    // Find the corresponding command and execute it
-    commandObject = commandList.get(command);
-    commandObject.execute(parameters);
+    // If the command is valid
+    if (commandList.containsKey(command)) {
+      // Find the corresponding command and execute it
+      commandObject = commandList.get(command);
+      commandObject.execute(parameters);
+    }
+    // TODO: raise error for invalid commands
   }
 }

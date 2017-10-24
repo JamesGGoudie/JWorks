@@ -21,17 +21,18 @@ public class UIParser {
    *         parameters...]
    */
   public String[] parseInput(String input) {
-    // if the action has no parameters,, just return the action
-    if (input.length() == 1) {
+    int firstSpace = input.indexOf(' ');
+
+    // if the action has no parameters, just return the action
+    if (firstSpace < 0) {
       return new String[] {input};
     } else {
-
       ArrayList<String> tempFormattedInput = new ArrayList<String>();
       String[] parameters;
       // add the action from the string to the formatted input
-      tempFormattedInput.add(input.substring(0, input.indexOf(' ')));
+      tempFormattedInput.add(input.substring(0, firstSpace));
 
-      parameters = formatParameters(input.substring(input.indexOf(' ')));
+      parameters = formatParameters(input.substring(firstSpace));
 
       // add the parameters to the formatted input
       for (int i = 0; i < parameters.length; i++) {
