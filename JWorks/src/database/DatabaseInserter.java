@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import exceptions.DatabaseInsertException;
 
-public interface DatabaseInserter {
+public class DatabaseInserter {
 
   /**
    * Inserts a problem into the database.
@@ -19,30 +19,33 @@ public interface DatabaseInserter {
    * @return The unique key of the problem.
    * @throws DatabaseInsertException Thrown if the question could not be added to the database.
    */
-  static int insertProblem(int type, String question, String answer, Connection connection)
+  protected static int insertProblem(int type, String question, String answer, Connection connection)
       throws DatabaseInsertException {
     String sql = "INSERT INTO PROBLEMS(TYPE, QUESTION, ANSWER) VALUES(?,?,?)";
     int result = -1;
     
-    try {
-      PreparedStatement preparedStatement = connection.prepareStatement(sql, 
-          Statement.RETURN_GENERATED_KEYS);
-      preparedStatement.setInt(1, type);
-      preparedStatement.setString(2, question);
-      preparedStatement.setString(3, answer);
-      
-      int id = preparedStatement.executeUpdate();
-      
-      if (id > 0) {
-        ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
-        if (uniqueKey.next()) {
-          result = uniqueKey.getInt(1);
+      PreparedStatement preparedStatement = null;
+      try {
+          preparedStatement = connection.prepareStatement(sql, 
+                Statement.RETURN_GENERATED_KEYS);
+          preparedStatement.setInt(1, type);
+          preparedStatement.setString(2, question);
+          preparedStatement.setString(3, answer);
+        
+        int id = 0;
+        id = preparedStatement.executeUpdate();
+        
+        if (id > 0) {
+          ResultSet uniqueKey = null;
+          uniqueKey = preparedStatement.getGeneratedKeys();
+          if (uniqueKey.next()) {
+            result = uniqueKey.getInt(1);
+          }
         }
+      } catch (SQLException e) {
+        String errorMessage = "Failed to insert question into the database.";
+        throw new DatabaseInsertException(errorMessage);
       }
-    } catch (SQLException e) {
-      String errorMessage = "Failed to insert a problem into the database.";
-      throw new DatabaseInsertException(errorMessage);
-    }
     
     return result;
   }

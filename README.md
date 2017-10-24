@@ -14,6 +14,12 @@
 
     UserStories:        Contains the requirements that reflect each type of users described in 
                         Personas.
+                        
+## SprintBacklog:
+
+    PlanAndBurndown1:   Contains the plan of distribution of tasks as well as the burndown chart.
+    
+    SprintBacklog1:     Contains information on how user stories were divided into tasks.
 
 
 ## JAR_Files:
@@ -25,30 +31,15 @@
 ## JWorks/src:              
     
     This is the Java application that the team is building, it contains the code for the entire 
-    application.
+    application. This application is a still in progress and in its early stages.
     
-### action:
-    
-### database: 
+### Instruction: 
+Compile JWorks.java under JWorks/src/driver/ along with sqlite-jdbc-3.18.0.jar found under JAR_Files/
 
-    Interacts directly with the database file.
-    
-    * DatabaseDeleter.java: Deletes entries in the database.
-    * DatabaseDriver.java: Create or connect to the database file.
-    * DatabaseInserter.java: Inserts data into the database.
-    * DatabaseSelecter.java: Retrives data from the database.
-    * DatabaseUpdater.java: Modifies data in the database.
-    
-### databaseAPI:
+The current working option is option 1, the input format must match the following:
 
-### driver:
+```
+1 "Question" answer
+```
 
-### exceptions:
-
-    Contains exceptions.
-    
-    * ConnectionFailedException.java: Thrown if a connection to the database file was corrupt.
-    * DatabaseInsertException.java: Thrown if a problem arises while trying to insert data into the database.
-    * DatabaseSelectException.java: Thrown if a problem arises while tyring to retrieve data from the database.
-
-### io:
+Where Question must be a string warped around by double quote and answer must be a string without any space.

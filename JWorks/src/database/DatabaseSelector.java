@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import exceptions.DatabaseSelectException;
 
-public interface DatabaseSelector {
+public class DatabaseSelector {
 
   /**
    * Gets all of the problems from the database.
@@ -17,7 +17,7 @@ public interface DatabaseSelector {
    * @throws DatabaseSelectException Thrown if the problems could not be retrieved from the
    *                                 database. 
    */
-  static ResultSet getAllProblems(Connection connection) throws DatabaseSelectException {
+  protected static ResultSet getAllProblems(Connection connection) throws DatabaseSelectException {
     String sql = "SELECT * FROM PROBLEMS";
     ResultSet results = null;
     
@@ -41,7 +41,7 @@ public interface DatabaseSelector {
    * @throws DatabaseSelectException Thrown if the question could not be retrieved from the
    *                                 database.
    */
-  static ResultSet getSingleProblem(int problemKey, Connection connection)
+  protected static ResultSet getSingleProblem(int problemKey, Connection connection)
       throws DatabaseSelectException {
     String sql = "SELECT * FROM PROBLEMS WHERE ID = ?";
     ResultSet results = null;

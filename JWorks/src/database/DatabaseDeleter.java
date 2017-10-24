@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public interface DatabaseDeleter {
+public class DatabaseDeleter {
   
   /**
    * Removes a problem from the database.
@@ -12,7 +12,7 @@ public interface DatabaseDeleter {
    * @param connection The connection to the database.
    * @return True if the problem was deleted, false otherwise.
    */
-  static boolean deleteProblem(int problemKey, Connection connection) {
+  protected static boolean deleteProblem(int problemKey, Connection connection) {
     String sql = "DELETE FROM PROBLEMS WHERE ID = ?";
     boolean result = false;
     
