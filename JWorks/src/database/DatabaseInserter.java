@@ -52,7 +52,7 @@ public class DatabaseInserter {
 
   /**
    * Inserts a problem set into the database by collecting an array of numbers.
-   * @param maxAttempts The amount of attempts allowed for this problem set, -1 for infinite.
+   * @param maxAttempts The amount of attempts allowed for this problem set, -8 for infinite.
    * @param problemIDs The unique IDs of the problems.
    * @param connection The connection to the database file.
    * @return The unique ID of the problem set, -1 if an uncaught error occurred.
