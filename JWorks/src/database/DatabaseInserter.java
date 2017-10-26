@@ -93,6 +93,12 @@ public class DatabaseInserter {
           
           if (!alterResult) {
             result = -1;
+          } else {
+            boolean initializeResult = insertProblemSetsInitialAttemptCount(result, connection);
+            
+            if (!initializeResult) {
+              result = -1;
+            }
           }
         }
       }
@@ -134,6 +140,20 @@ public class DatabaseInserter {
       String errorMessage = "Failed to insert student into the database.";
       throw new DatabaseInsertException(errorMessage);
     }
+    
+    return result;
+  }
+  
+  /**
+   * For each students, gives them the initial attempt count for the given problem set.
+   * @param problemSetKey The unique key of the problem set.
+   * @param connection The connection to the database file.
+   * @return True if the initial attempt counts were added, false otherwise.
+   */
+  private static boolean insertProblemSetsInitialAttemptCount(int problemSetKey,
+      Connection connection) {
+    
+    boolean result = false;
     
     return result;
   }
