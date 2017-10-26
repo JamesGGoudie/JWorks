@@ -206,13 +206,14 @@ public class DatabaseUpdater {
     
     String sql = "UPDATE ATTEMPTSREMAINING SET "
         + columnName
-        + " = ? WHERE ID = ?;";
+        + " = ? WHERE STUDENTNUMBER = ?;";
+    
     boolean result = false;
     
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, attemptsRemaining);
-      preparedStatement.setInt(2, problemSetKey);
+      preparedStatement.setInt(2, studentNumber);
       
       preparedStatement.executeUpdate();
       

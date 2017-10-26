@@ -129,11 +129,59 @@ public class DatabaseInserter {
       
       preparedStatement.close();
       
-      result = true;
+      result = insertStudentsInitialAttemptCount(studentNumber, connection);
     } catch (SQLException e) {
-      // String errorMessage = "Failed to insert student into the database.";
-      // throw new DatabaseInsertException(errorMessage);
+      String errorMessage = "Failed to insert student into the database.";
+      throw new DatabaseInsertException(errorMessage);
+    }
+    
+    return result;
+  }
+  
+  /**
+   * Initializes the amount of attempts a student has for each problem set.
+   * @param studentNumber The unique number of the student.
+   * @param connection The connection to the database file.
+   * @return True if the attempt counts were added for the student, false if an uncaught error
+   *         occurs.
+   */
+  private static boolean insertStudentsInitialAttemptCount(int studentNumber,
+      Connection connection) {
+    
+    String sql = "INSERT INTO ATTEMPTSREMAINING(STUDENTNUMBER) Values(?)";
+    boolean result = false;
+    
+    PreparedStatement preparedStatement = null;
+    
+    try {
+      preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, studentNumber);
+      preparedStatement.executeUpdate();
+      preparedStatement.close();
+
+      sql = "SELECT MAXATTEMPTS FROM PROBLEMSETS";
+      Statement statement = connection.createStatement();
+      ResultSet resultSet = statement.executeQuery(sql);
+      
+      int count = 1;
+
+      result = true;
+      
+      while (resultSet.next() & result) {
+        int problemSetKey = count;
+        int attemptsRemaining = resultSet.getInt(1);
+        
+        result = DatabaseUpdater.updateAttemptsRemaining(problemSetKey, studentNumber,
+            attemptsRemaining, connection);
+        
+        count++;
+      }
+
+      resultSet.close();
+    } catch (SQLException e) {
       e.printStackTrace();
+      String errorMessage = "Failed to insert inital attempt count into the database.";
+      System.out.println(errorMessage);
     }
     
     return result;

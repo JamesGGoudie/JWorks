@@ -116,7 +116,7 @@ public class DatabaseSelector {
   }
   
   /**
-   * 
+   * Returns the amount of attempts that a given student has for a given problem set.
    * @param studentNumber The unique number of the student.
    * @param problemSetKey The unique key of the problem set.
    * @param connection The connection to the database file.
@@ -130,7 +130,6 @@ public class DatabaseSelector {
     String sql = "SELECT * FROM ATTEMPTSREMAINING WHERE STUDENTNUMBER = ?";
     int result = -1;
     ResultSet data = null;
-    
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, studentNumber);
@@ -139,9 +138,11 @@ public class DatabaseSelector {
       String columnName = "PROBLEMSET" + problemSetKey;
       
       result = data.getInt(columnName);
+      
+      data.close();
     } catch (SQLException e) {
       e.printStackTrace();
-      String errorMessage = "Failed to get the problem set from the database.";
+      String errorMessage = "Failed to get the remaining amount of attempts from the database.";
       throw new DatabaseSelectException(errorMessage);
     }
     
