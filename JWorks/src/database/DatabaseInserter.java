@@ -84,6 +84,12 @@ public class DatabaseInserter {
         uniqueKey = preparedStatement.getGeneratedKeys();
         if (uniqueKey.next()) {
           result = uniqueKey.getInt(1);
+          boolean alterResult = 
+              DatabaseAlterer.addProblemSetToAttemptsRemaining(result, connection);
+          
+          if (!alterResult) {
+            result = -1;
+          }
         }
       }
     } catch (SQLException e) {
