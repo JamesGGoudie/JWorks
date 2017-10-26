@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
@@ -10,7 +11,14 @@
       <Pane prefHeight="780.0" prefWidth="780.0">
          <children>
             <Button fx:id="logoutButton" layoutX="708.0" layoutY="10.0" mnemonicParsing="false" text="Logout" />
-            <Label fx:id="welcomeLabel" layoutX="23.0" layoutY="11.0" text="Welcome" />
+            <Label fx:id="welcomeLabel" layoutX="21.0" layoutY="14.0" text="Welcome" />
+            <Separator layoutY="47.0" prefHeight="2.0" prefWidth="780.0" />
+            <Pane fx:id="innerScreen" layoutX="140.0" layoutY="146.0" prefHeight="640.0" prefWidth="640.0">
+               <children>
+                  <Button fx:id="createNewQuestionButton" layoutX="147.0" layoutY="164.0" mnemonicParsing="false" text="Create New Question" />
+                  <Button fx:id="viewQuestionsButton" layoutX="163.0" layoutY="233.0" mnemonicParsing="false" text="View Questions" />
+               </children>
+            </Pane>
          </children>
       </Pane>
    </children>

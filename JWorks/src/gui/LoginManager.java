@@ -1,9 +1,12 @@
 package gui;
 
 import java.io.IOException;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.*;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+
 
 
 public class LoginManager {
@@ -12,18 +15,19 @@ public class LoginManager {
   public LoginManager(Scene scene) {
     this.scene = scene;
   }
-  
+
   public void Login(String user) {
     ShowInstructorMainScreen(user);
   }
-  
+
   public void logout() {
     showLoginScreen();
   }
 
   public void showLoginScreen() {
     try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
+      FXMLLoader loader =
+          new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
       scene.setRoot((Parent) loader.load());
       LoginController controller = loader.<LoginController>getController();
       controller.initManager(this);
