@@ -63,7 +63,7 @@ public class DatabaseInserter {
     String problemsFormatted = "";
     
     for (int problemID : problemIDs) {
-      problemsFormatted = Integer.toString(problemID) + ";";
+      problemsFormatted += Integer.toString(problemID) + ";";
     }
     
     String sql = "INSERT INTO PROBLEMSETS(MAXATTEMPTS, PROBLEMS) VALUES(?,?)";
