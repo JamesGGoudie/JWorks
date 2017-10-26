@@ -52,4 +52,28 @@ public class DatabaseDeleter {
     
     return result;
   }
+  
+  /**
+   * Removes a student from the database.
+   * @param studentNumber The unique number associated with the student.
+   * @param connection The connection to the database file.
+   * @return True if the student was deleted, false otherwise.
+   */
+  protected static boolean deleteStudent(int studentNumber, Connection connection) {
+    String sql = "DELETE FROM STUDENTS WHERE STUDENTNUMBER = ?";
+    boolean result = false;
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, studentNumber);
+      preparedStatement.executeUpdate();
+      
+      result = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      System.out.println("A problem occurred while attempting to delete a student.");
+    }
+    
+    return result;
+  }
 }
