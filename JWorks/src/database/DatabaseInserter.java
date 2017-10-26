@@ -111,7 +111,7 @@ public class DatabaseInserter {
    */
   protected static boolean insertStudent(int studentNumber, String name, String email,
       Connection connection) throws DatabaseInsertException {
-    String sql = "INSERT INTO STUDENTS(STUDENTNUMBER, NAME, EMAIL) VALUES(?,?)";
+    String sql = "INSERT INTO STUDENTS(STUDENTNUMBER, NAME, EMAIL) VALUES(?,?,?)";
     boolean result = false;
     
     PreparedStatement preparedStatement = null;
@@ -125,8 +125,9 @@ public class DatabaseInserter {
       
       result = true;
     } catch (SQLException e) {
-      String errorMessage = "Failed to insert student into the database.";
-      throw new DatabaseInsertException(errorMessage);
+      // String errorMessage = "Failed to insert student into the database.";
+      // throw new DatabaseInsertException(errorMessage);
+      e.printStackTrace();
     }
     
     return result;

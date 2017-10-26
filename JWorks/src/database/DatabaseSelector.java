@@ -127,7 +127,7 @@ public class DatabaseSelector {
   protected static int getAttemptsRemaining(int studentNumber, int problemSetKey,
       Connection connection) throws DatabaseSelectException {
     
-    String sql = "SELECT * FROM ATTEMPTSREMAINING WHERE ID = ?";
+    String sql = "SELECT * FROM ATTEMPTSREMAINING WHERE STUDENTNUMBER = ?";
     int result = -1;
     ResultSet data = null;
     
