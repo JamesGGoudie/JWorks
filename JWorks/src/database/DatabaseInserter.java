@@ -41,6 +41,8 @@ public class DatabaseInserter {
         if (uniqueKey.next()) {
           result = uniqueKey.getInt(1);
         }
+        
+        preparedStatement.close();
       }
     } catch (SQLException e) {
       String errorMessage = "Failed to insert a problem into the database.";
@@ -87,6 +89,8 @@ public class DatabaseInserter {
           boolean alterResult = 
               DatabaseAlterer.addProblemSetToAttemptsRemaining(result, connection);
           
+          preparedStatement.close();
+          
           if (!alterResult) {
             result = -1;
           }
@@ -122,6 +126,8 @@ public class DatabaseInserter {
       preparedStatement.setString(3, email);
     
       preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
       
       result = true;
     } catch (SQLException e) {

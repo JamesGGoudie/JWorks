@@ -20,6 +20,9 @@ public class DatabaseDeleter {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, problemKey);
       preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
+      
       result = true;
     } catch (SQLException e) {
       e.printStackTrace();
@@ -44,6 +47,8 @@ public class DatabaseDeleter {
       preparedStatement.setInt(1, problemSetKey);
       preparedStatement.executeUpdate();
       
+      preparedStatement.close();
+      
       result = DatabaseAlterer.removeProblemSetFromAttemptsRemaining(problemSetKey, connection);
     } catch (SQLException e) {
       e.printStackTrace();
@@ -67,6 +72,8 @@ public class DatabaseDeleter {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, studentNumber);
       preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
       
       result = true;
     } catch (SQLException e) {

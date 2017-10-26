@@ -24,6 +24,8 @@ public class DatabaseUpdater {
       
       preparedStatement.executeUpdate();
       
+      preparedStatement.close();
+      
       result = true;
     } catch (SQLException e) {
       System.out.println("A problem occurred while attempting to modify a problems question.");
@@ -51,6 +53,8 @@ public class DatabaseUpdater {
       
       preparedStatement.executeUpdate();
       
+      preparedStatement.close();
+      
       result = true;
     } catch (SQLException e) {
       System.out.println("A problem occurred while attempting to modify a problems answer.");
@@ -77,6 +81,8 @@ public class DatabaseUpdater {
       preparedStatement.setInt(2, studentNumber);
       
       preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
       
       result = true;
     } catch (SQLException e) {
@@ -106,6 +112,8 @@ public class DatabaseUpdater {
       
       preparedStatement.executeUpdate();
       
+      preparedStatement.close();
+      
       result = true;
     } catch (SQLException e) {
       System.out.println("A problem occurred while attempting to change a students email.");
@@ -133,6 +141,8 @@ public class DatabaseUpdater {
       preparedStatement.setInt(2, problemSetKey);
       
       preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
       
       result = true;
     } catch (SQLException e) {
@@ -169,6 +179,8 @@ public class DatabaseUpdater {
       
       preparedStatement.executeUpdate();
       
+      preparedStatement.close();
+      
       result = true;
     } catch (SQLException e) {
       System.out.println("A problem occurred while updating the problems in the set.");
@@ -203,6 +215,8 @@ public class DatabaseUpdater {
       preparedStatement.setInt(2, problemSetKey);
       
       preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
       
       result = true;
     } catch (SQLException e) {
