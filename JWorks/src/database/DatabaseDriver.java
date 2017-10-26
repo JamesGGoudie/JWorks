@@ -62,6 +62,21 @@ public class DatabaseDriver {
           + "ANSWER NOT NULL)";
       statement.executeUpdate(sql);
       
+      statement = connection.createStatement();
+      
+      sql = "CREATE TABLE IF NOT EXISTS PROBLEMSETS "
+          + "(ID INTEGER PRIMARY KEY NOT NULL,"
+          + "PROBLEMS TEXT NOT NULL)";
+      statement.executeUpdate(sql);
+      
+      statement = connection.createStatement();
+      
+      sql = "CREATE TABLE IF NOT EXISTS STUDENTS "
+          + "(STUDENTNUMBER INTEGER PRIMARY KEY NOT NULL,"
+          + "NAME TEXT NOT NULL,"
+          + "EMAIL NOT NULL)";
+      statement.executeUpdate(sql);
+      
       statement.close();
       result = true;
       
