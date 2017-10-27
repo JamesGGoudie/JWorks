@@ -94,7 +94,8 @@ public class DatabaseInserter {
           if (!alterResult) {
             result = -1;
           } else {
-            boolean initializeResult = insertProblemSetsInitialAttemptCount(result, connection);
+            boolean initializeResult = insertProblemSetsInitialAttemptCount(result, maxAttempts,
+                connection);
             
             if (!initializeResult) {
               result = -1;
@@ -145,15 +146,37 @@ public class DatabaseInserter {
   }
   
   /**
-   * For each students, gives them the initial attempt count for the given problem set.
+   * For each student, gives them the initial attempt count for the given problem set.
    * @param problemSetKey The unique key of the problem set.
    * @param connection The connection to the database file.
    * @return True if the initial attempt counts were added, false otherwise.
    */
-  private static boolean insertProblemSetsInitialAttemptCount(int problemSetKey,
+  private static boolean insertProblemSetsInitialAttemptCount(int problemSetKey, int maxAttempts,
       Connection connection) {
     
+    String sql = "SELECT STUDENTNUMBER FROM STUDENTS";
     boolean result = false;
+    
+    Statement statement = null;
+    
+    try {
+      statement = connection.createStatement();
+      ResultSet studentNumbers = statement.executeQuery(sql);
+      
+      result = true;
+      
+      while (studentNumbers.next() & result) {
+        int studentNumber = studentNumbers.getInt(1);
+        result = DatabaseUpdater.updateAttemptsRemaining(problemSetKey, studentNumber, maxAttempts,
+            connection);
+      }
+      
+      statement.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      String errorMessage = "Failed to insert inital attempt count for new problem set.";
+      System.out.println(errorMessage);
+    }
     
     return result;
   }
@@ -181,15 +204,15 @@ public class DatabaseInserter {
 
       sql = "SELECT MAXATTEMPTS FROM PROBLEMSETS";
       Statement statement = connection.createStatement();
-      ResultSet resultSet = statement.executeQuery(sql);
+      ResultSet maxAttempts = statement.executeQuery(sql);
       
       int count = 1;
 
       result = true;
       
-      while (resultSet.next() & result) {
+      while (maxAttempts.next() & result) {
         int problemSetKey = count;
-        int attemptsRemaining = resultSet.getInt(1);
+        int attemptsRemaining = maxAttempts.getInt(1);
         
         result = DatabaseUpdater.updateAttemptsRemaining(problemSetKey, studentNumber,
             attemptsRemaining, connection);
@@ -197,10 +220,10 @@ public class DatabaseInserter {
         count++;
       }
 
-      resultSet.close();
+      statement.close();
     } catch (SQLException e) {
       e.printStackTrace();
-      String errorMessage = "Failed to insert inital attempt count into the database.";
+      String errorMessage = "Failed to insert inital attempt count for new student.";
       System.out.println(errorMessage);
     }
     
