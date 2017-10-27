@@ -33,11 +33,18 @@ public class Main {
         int problemIDs[] = {7, 5, 12};
 
         DatabaseInserter.insertStudent(num, "James", "gmail", connection);
-        problemSetNum = DatabaseInserter.insertProblemSet(5, problemIDs, connection);
+        problemSetNum = DatabaseInserter.insertProblemSet(101, problemIDs, connection);
+        problemSetNum = DatabaseInserter.insertProblemSet(102, problemIDs, connection);
+        problemSetNum = DatabaseInserter.insertProblemSet(103, problemIDs, connection);
         // DatabaseUpdater.updateAttemptsRemaining(problemSetNum, num, 10, connection);
         
+        
+        
+        
         try {
-          System.out.println("Attempts_Remaining: " + DatabaseSelector.getAttemptsRemaining(num, problemSetNum, connection));
+          System.out.println("Attempts_Remaining: " + DatabaseSelector.getAttemptsRemaining(num, 1, connection));
+          System.out.println("Deleted Problem Set: " + DatabaseDeleter.deleteProblemSet(2, connection));
+          System.out.println("Attempts_Remaining: " + DatabaseSelector.getAttemptsRemaining(num, 1, connection));
         } catch (DatabaseSelectException e2) {
           // TODO Auto-generated catch block
           e2.printStackTrace();

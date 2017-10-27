@@ -73,7 +73,7 @@ public class DatabaseAlterer {
       
       for (int columnIndex = 2; columnIndex < (numberOfColumns + 1); columnIndex++) {
         String columnName = resultsMetaData.getColumnName(columnIndex);
-        if (columnName != columnToRemove) {
+        if (!columnName.equals(columnToRemove)) {
           
           sql = "ALTER TABLE ATTEMPTSREMAINING ADD COLUMN "
               + columnName
@@ -83,7 +83,7 @@ public class DatabaseAlterer {
           statement.executeUpdate(sql);
         }
       }
-
+      
       resultsFull.close();
       
       sql = "DROP TABLE ATTEMPTSREMAINING_TEMP";
