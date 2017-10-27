@@ -33,6 +33,7 @@ public class Main {
         int problemIDs[] = {7, 5, 12};
 
         DatabaseInserter.insertStudent(num, "James", "gmail", connection);
+        DatabaseInserter.insertStudent(2 * num, "James", "gmail", connection);
         problemSetNum = DatabaseInserter.insertProblemSet(101, problemIDs, connection);
         problemSetNum = DatabaseInserter.insertProblemSet(102, problemIDs, connection);
         problemSetNum = DatabaseInserter.insertProblemSet(103, problemIDs, connection);

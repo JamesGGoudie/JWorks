@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -81,6 +82,28 @@ public class DatabaseAlterer {
           
           statement = connection.createStatement();
           statement.executeUpdate(sql);
+        }
+      }
+      
+      while(resultsFull.next()) {
+        int studentNumber = resultsFull.getInt(1);
+        
+        sql = "INSERT INTO ATTEMPTSREMAINING(STUDENTNUMBER) VALUES (?)";
+        
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, studentNumber);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+        
+        for (int columnIndex = 2; columnIndex < (numberOfColumns + 1); columnIndex++) {
+          String columnName = resultsMetaData.getColumnName(columnIndex);
+          if (!columnName.equals(columnToRemove)) {
+            int attemptsRemaining = resultsFull.getInt(columnName);
+            int newProblemSetKey = Integer.valueOf(columnName.substring(10));
+            
+            DatabaseUpdater.updateAttemptsRemaining(newProblemSetKey, studentNumber,
+                attemptsRemaining, connection);
+          }
         }
       }
       
