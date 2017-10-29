@@ -11,8 +11,10 @@ public class Main {
         DatabaseDriverAPI.initialize(connection);
         
         DatabaseStoreAPI database = new DatabaseStoreAPI();
-        
+
+        DatabaseExtractAPI store = new DatabaseExtractAPI();
 	    database.actOnDatabase(1, input);
+	    store.actOnDatabase(1,input);
     }
 
 }
