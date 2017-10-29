@@ -5,16 +5,17 @@ import java.sql.Connection;
 public class Main {
 
     public static void main(String[] args) {
-        String[] input = {"Q_1", "A_1"};
-        
+        String[] problem = {"Q_1", "A_1"};
+        String[] pSet = {"2", "1", "2", "3"};
         Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
         DatabaseDriverAPI.initialize(connection);
         
-        DatabaseStoreAPI database = new DatabaseStoreAPI();
+        DatabaseStoreAPI insert = new DatabaseStoreAPI();
 
         DatabaseExtractAPI select = new DatabaseExtractAPI();
-	    //database.actOnDatabase(1, input);
-	    select.actOnDatabase(1,input);
+	    //insert.actOnDatabase(2, problem);
+        //insert.actOnDatabase(2, pSet);
+	    select.actOnDatabase(2,pSet);
     }
 
 }
