@@ -24,21 +24,20 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                 case 1:
                     ResultSet results = DatabaseSelector.getAllProblems(connection);
                     ResultSetMetaData rsmd = results.getMetaData();
-                    String[] a_problem = new String[rsmd.getColumnCount()];
+                    String[] a_problem ;
                     // each problem will be an array, they will be stored into the list of problems
                     // parse each result into problem attribute and add it to the list of problems
                     while (results.next()){
-                        for(int col = 1; col < rsmd.getColumnCount();col++){
-                            System.out.print(results.getString(col));
-                            a_problem[col] = results.getString(col);
+                        a_problem = new String[rsmd.getColumnCount()];
+                        for(int col = 1; col <= rsmd.getColumnCount();col++){
+                            a_problem[col - 1] = results.getString(col);
                         }
-                        System.out.print("\n");
                         problems.add(a_problem);
                     }
                     String[] col;
                     for (int aRow = 0; aRow < problems.size(); aRow++){
                         col = problems.get(aRow);
-                        System.out.println("Problem PK:"+ " "+ col[1]);
+                        System.out.println("Question number: "+col[0]);
                         for(int aCol = 1; aCol < col.length; aCol++){
                             System.out.print(col[aCol]+"\t");
                         }

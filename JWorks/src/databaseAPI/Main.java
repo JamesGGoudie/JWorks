@@ -12,9 +12,9 @@ public class Main {
         
         DatabaseStoreAPI database = new DatabaseStoreAPI();
 
-        DatabaseExtractAPI store = new DatabaseExtractAPI();
-	    database.actOnDatabase(1, input);
-	    store.actOnDatabase(1,input);
+        DatabaseExtractAPI select = new DatabaseExtractAPI();
+	    //database.actOnDatabase(1, input);
+	    select.actOnDatabase(1,input);
     }
 
 }
