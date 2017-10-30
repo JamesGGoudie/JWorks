@@ -1,4 +1,6 @@
 JWorks/bin/
-JWorks/.classpath
-JWorks/.project
+*.classpath
+*.project
+*.settings
 JWorks/*.db
+/bin/

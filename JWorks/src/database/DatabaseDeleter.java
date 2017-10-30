@@ -4,15 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public interface DatabaseDeleter {
+public class DatabaseDeleter {
   
   /**
    * Removes a problem from the database.
    * @param problemKey The unique key of the problem.
-   * @param connection The connection to the database.
+   * @param connection The connection to the database file.
    * @return True if the problem was deleted, false otherwise.
    */
-  static boolean deleteProblem(int problemKey, Connection connection) {
+  protected static boolean deleteProblem(int problemKey, Connection connection) {
     String sql = "DELETE FROM PROBLEMS WHERE ID = ?";
     boolean result = false;
     
@@ -20,10 +20,65 @@ public interface DatabaseDeleter {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, problemKey);
       preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
+      
       result = true;
     } catch (SQLException e) {
       e.printStackTrace();
-      System.out.println("A problem occurred while attempting to delete a question.");
+      System.out.println("A problem occurred while attempting to delete a problem.");
+    }
+    
+    return result;
+  }
+  
+  /**
+   * Removes a problem set from the database along with the attempts remaining for each student.
+   * @param problemSetKey The unique ID of the problem set.
+   * @param connection The connection to the database file.
+   * @return True if all components of the problem set was deleted, false otherwise.
+   */
+  protected static boolean deleteProblemSet(int problemSetKey, Connection connection) {
+    String sql = "DELETE FROM PROBLEMSETS WHERE ID = ?";
+    boolean result = false;
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemSetKey);
+      preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
+      
+      result = DatabaseAlterer.removeProblemSetFromAttemptsRemaining(problemSetKey, connection);
+    } catch (SQLException e) {
+      e.printStackTrace();
+      System.out.println("A problem occurred while attempting to delete a problem set.");
+    }
+    
+    return result;
+  }
+  
+  /**
+   * Removes a student from the database.
+   * @param studentNumber The unique number associated with the student.
+   * @param connection The connection to the database file.
+   * @return True if the student was deleted, false otherwise.
+   */
+  protected static boolean deleteStudent(int studentNumber, Connection connection) {
+    String sql = "DELETE FROM STUDENTS WHERE STUDENTNUMBER = ?";
+    boolean result = false;
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, studentNumber);
+      preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
+      
+      result = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      System.out.println("A problem occurred while attempting to delete a student.");
     }
     
     return result;
