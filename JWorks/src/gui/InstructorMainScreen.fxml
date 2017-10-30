@@ -8,17 +8,17 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InstructorMainScreenController">
    <children>
-      <Pane prefHeight="780.0" prefWidth="780.0">
+      <Pane fx:id="InstructorRoot" prefHeight="780.0" prefWidth="780.0">
          <children>
             <Button fx:id="logoutButton" layoutX="708.0" layoutY="10.0" mnemonicParsing="false" text="Logout" />
             <Label fx:id="welcomeLabel" layoutX="21.0" layoutY="14.0" text="Welcome" />
             <Separator layoutY="47.0" prefHeight="2.0" prefWidth="780.0" />
-            <Pane fx:id="innerScreen" layoutX="140.0" layoutY="146.0" prefHeight="640.0" prefWidth="640.0">
-               <children>
-                  <Button fx:id="createNewQuestionButton" layoutX="147.0" layoutY="164.0" mnemonicParsing="false" text="Create New Question" />
-                  <Button fx:id="viewQuestionsButton" layoutX="163.0" layoutY="233.0" mnemonicParsing="false" text="View Questions" />
-               </children>
-            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="innerScreen" layoutY="90.0" prefHeight="690.0" prefWidth="780.0">
+         <children>
+            <Button fx:id="createNewQuestionButton" layoutX="326.0" layoutY="166.0" mnemonicParsing="false" text="Create New Question" />
+            <Button fx:id="viewQuestionsButton" layoutX="341.0" layoutY="254.0" mnemonicParsing="false" text="View Questions" />
          </children>
       </Pane>
    </children>

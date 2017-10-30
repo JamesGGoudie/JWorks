@@ -16,12 +16,20 @@ public class InstructorMainScreenController {
   @FXML
   private Button viewQuestionsButton;
   
+  
+  
   public void initialize() {}
   
   public void initSession(final LoginManager loginManager, String user) {
     welcomeLabel.setText("Welcome " + user);
     
     logoutButton.setOnAction(new EventHandler<ActionEvent>() {
+      @Override public void handle(ActionEvent event) {
+        loginManager.logout();
+      }
+    });
+    
+    createNewQuestionButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override public void handle(ActionEvent event) {
         loginManager.logout();
       }
