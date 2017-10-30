@@ -4,7 +4,6 @@ import database.DatabaseSelector;
 import exceptions.DatabaseSelectException;
 import io.OutputGenerator;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -16,6 +15,8 @@ import java.util.List;
 public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     @Override
     public void actOnDatabase(int actObj, String[] args) {
+        //to send message to UI
+        OutputGenerator outTo = new OutputGenerator();
         try {
             Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
             // the query result will always be parsed into an Array list
@@ -30,20 +31,31 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                     results = DatabaseSelector.getAllProblems(connection);
                     rsmd = results.getMetaData();
                     formatResult(results, rsmd, problems);
+                    outTo.problemSetOutput(problems);
                     break;
                 case 2:
                     results = DatabaseSelector.getProblemSet(Integer.parseInt(args[0]), connection);
                     rsmd = results.getMetaData();
                     formatResult(results, rsmd, problems);
+                    outTo.problemSetOutput(problems);
+                    break;
+                case 3:
+                    results = DatabaseSelector.getStudent(Integer.parseInt(args[0]), connection);
+                    rsmd = results.getMetaData();
+                    if (results.isClosed()){
+                        throw new DatabaseSelectException("student with student number: "+args[0]+" wasn't be found");
+                    }
+                    else{
+                        String[] studentRow = formatStudent(results, rsmd);
+                        outTo.output("User has student number: "+studentRow[0]+" name: "+studentRow[1]+" and email: "+studentRow[2]);
+                    }
                     break;
             }
-            OutputGenerator outTo = new OutputGenerator();
-            outTo.problemSetOutput(problems);
             connection.close();
         }catch (SQLException e){
-            System.out.println(e.getMessage());
+            outTo.output(e.getMessage());
         } catch (DatabaseSelectException e) {
-            System.out.println(e.getMessage());
+            outTo.output(e.getMessage());
         }
     }
 
@@ -55,11 +67,22 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         while (rs.next()){
             row = new String[rm.getColumnCount()];
             for(int col = 1; col <= rm.getColumnCount();col++){
-                System.out.print(rs.getString(col)+"   ");
+                //System.out.print(rs.getString(col)+"   ");
                 row[col - 1] = rs.getString(col);
             }
-            System.out.print("\n");
+            //System.out.print("\n");
             problems.add(row);
         }
+    }
+    private String[] formatStudent(ResultSet rs, ResultSetMetaData rm)
+            throws DatabaseSelectException, SQLException{
+        // parse student into a string array
+        String[] row = new String[rm.getColumnCount()];
+        for(int col = 1; col <= rm.getColumnCount();col++){
+            //System.out.print(rs.getString(col)+"   ");
+            row[col - 1] = rs.getString(col);
+        }
+        //System.out.print("\n");
+        return row;
     }
 }
