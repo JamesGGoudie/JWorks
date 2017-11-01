@@ -13,31 +13,31 @@ public class InstructorMainScreenController {
   @FXML
   private Label welcomeLabel;
   @FXML
-  private Button createNewQuestionButton;
-  @FXML
-  private Button viewQuestionsButton;
-  @FXML
   private Pane innerScreen;
-
+  @FXML
+  private Button homeButton;
 
   public void initialize() {}
 
   public void initSession(final LoginManager loginManager,
       InstructorMainScreenManager instructorMainScreenManager, String user) {
     welcomeLabel.setText("Welcome " + user);
-
+    
+    instructorMainScreenManager.homeScreen(innerScreen);
+    
     logoutButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
         loginManager.logout();
       }
     });
-
-    createNewQuestionButton.setOnAction(new EventHandler<ActionEvent>() {
+    
+    homeButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        instructorMainScreenManager.createNewQuestion(innerScreen);
+        instructorMainScreenManager.homeScreen(innerScreen);
       }
     });
+
   }
 }

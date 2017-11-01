@@ -5,39 +5,27 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class InstructorMainScreenManager {
-  private Scene scene;
+  private InstructorInnerScreenController controller;
 
-  public InstructorMainScreenManager(Scene scene) {
-    this.scene = scene;
-  }
-
-  public void createNewQuestion(Pane innerPane) {
-    showCreateNewQuestionScreen(innerPane);
-  }
-
-  public void viewQuestions() {
-
-  }
-
-  private void showCreateNewQuestionScreen(Pane innerPane) {
+  public void homeScreen(Pane innerPane) {
     try {
-      // load the new inner pane from the new question screen fxml file
-      FXMLLoader loader = new FXMLLoader(
-          getClass().getResource("CreateNewQuestionScreen.fxml"));
-      // clear the inner pane
+      // load the new inner pane from fxml file
+      FXMLLoader loader =
+          new FXMLLoader(getClass().getResource("InstructorInnerScreen.fxml"));
+      // replace the inner pane with the fxml file content
       innerPane.getChildren().clear();
-      // Add the new pane with question input to the main screen
       innerPane.getChildren().add(loader.load());
+      // Load the controller and start the controller
+      controller =
+          loader.<InstructorInnerScreenController>getController();
+      controller.initSession(this);
     } catch (IOException ex) {
       Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null,
           ex);
     }
   }
-
-  private void showViewQuestionsScreen() {}
 
 }

@@ -38,7 +38,7 @@ public class LoginManager {
   private void ShowInstructorMainScreen(String user) {
     try {
       InstructorMainScreenManager instructorMainScreenManager =
-          new InstructorMainScreenManager(this.scene);
+          new InstructorMainScreenManager();
       FXMLLoader loader =
           new FXMLLoader(getClass().getResource("InstructorMainScreen.fxml"));
       scene.setRoot((Parent) loader.load());
