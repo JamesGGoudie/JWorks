@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 
 public class InstructorMainScreenController {
@@ -15,23 +16,27 @@ public class InstructorMainScreenController {
   private Button createNewQuestionButton;
   @FXML
   private Button viewQuestionsButton;
-  
-  
-  
+  @FXML
+  private Pane innerScreen;
+
+
   public void initialize() {}
-  
-  public void initSession(final LoginManager loginManager, String user) {
+
+  public void initSession(final LoginManager loginManager,
+      InstructorMainScreenManager instructorMainScreenManager, String user) {
     welcomeLabel.setText("Welcome " + user);
-    
+
     logoutButton.setOnAction(new EventHandler<ActionEvent>() {
-      @Override public void handle(ActionEvent event) {
+      @Override
+      public void handle(ActionEvent event) {
         loginManager.logout();
       }
     });
-    
+
     createNewQuestionButton.setOnAction(new EventHandler<ActionEvent>() {
-      @Override public void handle(ActionEvent event) {
-        loginManager.logout();
+      @Override
+      public void handle(ActionEvent event) {
+        instructorMainScreenManager.createNewQuestion(innerScreen);
       }
     });
   }

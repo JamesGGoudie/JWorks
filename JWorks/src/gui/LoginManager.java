@@ -37,12 +37,14 @@ public class LoginManager {
 
   private void ShowInstructorMainScreen(String user) {
     try {
+      InstructorMainScreenManager instructorMainScreenManager =
+          new InstructorMainScreenManager(this.scene);
       FXMLLoader loader =
           new FXMLLoader(getClass().getResource("InstructorMainScreen.fxml"));
       scene.setRoot((Parent) loader.load());
       InstructorMainScreenController controller =
           loader.<InstructorMainScreenController>getController();
-      controller.initSession(this, user);
+      controller.initSession(this, instructorMainScreenManager, user);
     } catch (IOException ex) {
       Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null,
           ex);
