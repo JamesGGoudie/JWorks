@@ -1,10 +1,12 @@
 package action;
 
 import problem.Problem;
+import problem.ProblemSet;
 
 public class ActionParameters {
 
     private Problem problem;
+    private ProblemSet problemSet;
 
     /**
      * Creates a new Parameter object with no information.
@@ -27,5 +29,13 @@ public class ActionParameters {
      */
     public Problem getProblem() {
         return problem;
+    }
+
+    public void setProblemSet(ProblemSet problemSet) {
+        this.problemSet = problemSet;
+    }
+
+    public ProblemSet getProblemSet() {
+        return problemSet;
     }
 }
