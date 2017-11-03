@@ -3,8 +3,8 @@ package command;
 import action.Action;
 import action.ActionParameters;
 import action.AddQuestionAction;
-import problem.Problem;
-import problem.SingleAnswerProblem;
+import models.Problem;
+import models.SingleAnswerProblem;
 
 public class AddSimpleProblemCommand implements ICommand {
     /**

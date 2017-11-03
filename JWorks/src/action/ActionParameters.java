@@ -1,7 +1,7 @@
 package action;
 
-import problem.Problem;
-import problem.ProblemSet;
+import models.Problem;
+import models.ProblemSet;
 
 public class ActionParameters {
 

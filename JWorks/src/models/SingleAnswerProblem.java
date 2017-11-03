@@ -1,4 +1,4 @@
-package problem;
+package models;
 
 public class SingleAnswerProblem extends Problem {
 

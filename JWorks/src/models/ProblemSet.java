@@ -1,4 +1,4 @@
-package problem;
+package models;
 
 import java.util.List;
 

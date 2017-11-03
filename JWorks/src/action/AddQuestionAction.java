@@ -3,7 +3,7 @@ package action;
 import databaseAPI.DatabaseDriverAPI;
 import databaseAPI.DatabaseStoreAPI;
 import io.OutputGenerator;
-import problem.Problem;
+import models.Problem;
 
 import java.sql.Connection;
 

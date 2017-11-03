@@ -1,7 +1,7 @@
 package action;
 
 import io.OutputGenerator;
-import problem.Problem;
+import models.Problem;
 
 public class ViewQuestionAction extends Action {
     /**

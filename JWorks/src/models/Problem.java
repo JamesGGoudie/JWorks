@@ -1,4 +1,4 @@
-package problem;
+package models;
 
 /**
  * Represents a base problem with a question and answer

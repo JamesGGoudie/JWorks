@@ -2,7 +2,7 @@ package command;
 
 import action.ActionParameters;
 import action.AddProblemSetAction;
-import problem.SimpleProblemSet;
+import models.SimpleProblemSet;
 
 public class AddSimpleProblemSetCommand implements ICommand {
     /**

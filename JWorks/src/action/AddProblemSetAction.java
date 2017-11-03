@@ -1,6 +1,6 @@
 package action;
 
-import problem.ProblemSet;
+import models.ProblemSet;
 
 public class AddProblemSetAction extends Action {
     @Override
