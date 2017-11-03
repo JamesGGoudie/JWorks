@@ -5,6 +5,7 @@ import io.OutputGen;
 import io.UI;
 import exceptions.DatabaseInsertException;
 import io.OutputGenerator;
+import problem.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
             int lenArg = args.length;
             // check the type of object being acted on
             switch (actObj){
-                //case when a new question is being inserted
+                //case when a new problem is being inserted
                 case 1:
                     if(lenArg > 1){
                         result = DatabaseInserter.insertProblem(1, args[0], args[1], connection);
@@ -64,4 +65,39 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
             toUI.output(e.getMessage());
         }
     }
+
+    /*
+    * Inserts into the problems table in the JWorks database
+    * @param newProblem Problem object that is to be inserted into the database
+    * @return the PrimaryKey of the problem in the table
+    */
+    public int actOnDatabase(Problem newProblem) throws DatabaseInsertException, SQLException{
+        Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
+        //store the primary key of row inserted
+        int result;
+        result = DatabaseInserter.insertProblem(1, newProblem.getQuestion(), newProblem.getAnswer(), connection);
+        return result;
+    }
+
+    /*
+    * Inserts into the problemsets table in the JWorks database
+    * @param newProblem Problem set objects whose attribute is to be stored into the database
+    * @return the PrimaryKey of the ProblemSet in the table
+    */
+    public int actOnDatabse(ProblemSet newPSet) throws DatabaseInsertException, SQLException{
+        Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
+        //store the primary key of row inserted
+        int result;
+        int[] pIDs = new int[newPSet.getQuestions().size()];
+        for (int i = 0; i < newPSet.getQuestions().size(); i++){
+            pIDs[i] = (newPSet.getQuestions().get(i)).getId();
+        }
+        result = DatabaseInserter.insertProblemSet(newPSet.getMaximumNumberOfAttempts(), pIDs, connection);
+        return result;
+    }
+
+    /*
+    * Insert new Student User
+    *
+     */
 }
