@@ -23,18 +23,23 @@ public class InstructorMainScreenController {
       InstructorMainScreenManager instructorMainScreenManager, String user) {
     welcomeLabel.setText("Welcome " + user);
     
+    // load the home screen on initial call
     instructorMainScreenManager.homeScreen(innerScreen);
     
+    // logout button action
     logoutButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
+    	// load the logout screen
         loginManager.logout();
       }
     });
     
+    // home button action
     homeButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
+    	// load the home screen
         instructorMainScreenManager.homeScreen(innerScreen);
       }
     });
