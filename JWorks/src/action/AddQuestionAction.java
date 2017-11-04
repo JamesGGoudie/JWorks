@@ -10,12 +10,12 @@ import java.sql.Connection;
 public class AddQuestionAction extends Action {
     /**
      * Executes this Action to add the given Problem object into storage.
-     * @param params The parameters to pass into the Action. This should contain a Problem.
+     * @param params The parameters to pass into the Action. This should be a Problem object.
      */
     @Override
-    public void execute(ActionParameters params) {
+    public Object execute(Object... params) {
         // Get the problem and add it to the database
-        Problem problem = params.getProblem();
+        Problem problem = (Problem) params[0];
         String[] dbArgs = { problem.getQuestion(), problem.getAnswer() };
 
         // Instantiate database access
@@ -25,8 +25,6 @@ public class AddQuestionAction extends Action {
         DatabaseStoreAPI database = new DatabaseStoreAPI();
         database.actOnDatabase(1, dbArgs);
 
-        // Output success
-        OutputGenerator output = new OutputGenerator();
-        output.output("Question successfully added");
+        return problem;
     }
 }

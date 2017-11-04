@@ -1,5 +1,6 @@
 package action;
 
+import databaseAPI.DatabaseExtractAPI;
 import io.OutputGenerator;
 import models.Problem;
 
@@ -9,16 +10,13 @@ public class ViewQuestionAction extends Action {
      * @param params The parameters to pass into the Action. There are no required parameters for this method.
      */
     @Override
-    public void execute(ActionParameters params) {
+    public Object execute(Object... params) {
         // Read from api
-        Problem[] problems = new Problem[0]; // TODO: get problems from database API
-
-        // Output all questions - TODO: get instance of output generator rather than instantiating it
-        OutputGenerator output = new OutputGenerator();
-
-        for (Problem p : problems) {
-            output.output("Q: " + p.getQuestion());
-            output.output("A: " + p.getAnswer());
-        }
+        /*Problem[] problems = new Problem[0]; // TODO: get problems from database API
+        return problems;
+         */
+        DatabaseExtractAPI api = new DatabaseExtractAPI();
+        api.actOnDatabase(1, new String[0]);
+        return true;
     }
 }
