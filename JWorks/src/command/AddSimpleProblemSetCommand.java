@@ -26,6 +26,7 @@ public class AddSimpleProblemSetCommand extends Command {
 
         AddProblemSetAction action = new AddProblemSetAction();
         action.execute(problemSet);
+        outputStream.output("Problem set created");
         return true;
     }
 }

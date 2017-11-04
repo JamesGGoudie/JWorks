@@ -32,6 +32,8 @@ public class AddSimpleProblemCommand extends Command {
         // Pass to appropriate action -- TODO: get instance of actions rather than creating new
         Action action =  new AddQuestionAction();
         action.execute(problem);
+
+        outputStream.output("Question successfully added.");
         return true;
     }
 }
