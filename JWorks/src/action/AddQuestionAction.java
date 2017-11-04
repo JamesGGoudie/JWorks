@@ -1,5 +1,6 @@
 package action;
 
+import databaseAPI.DatabaseAPI;
 import databaseAPI.DatabaseDriverAPI;
 import databaseAPI.DatabaseStoreAPI;
 import io.OutputGenerator;
@@ -10,7 +11,10 @@ import java.sql.Connection;
 public class AddQuestionAction extends Action {
     /**
      * Executes this Action to add the given Problem object into storage.
-     * @param params The parameters to pass into the Action. This should be a Problem object.
+     * @param params The parameters to pass into the Action.
+     *               The first parameter is the Problem to add.
+     *               The second parameter is the database API to use.
+     * @return the problem added
      */
     @Override
     public Object execute(Object... params) {
@@ -19,11 +23,8 @@ public class AddQuestionAction extends Action {
         String[] dbArgs = { problem.getQuestion(), problem.getAnswer() };
 
         // Instantiate database access
-        Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
-        DatabaseDriverAPI.initialize(connection);
-
-        DatabaseStoreAPI database = new DatabaseStoreAPI();
-        database.actOnDatabase(1, dbArgs);
+        DatabaseAPI api = (DatabaseAPI) params[1];
+        api.actOnDatabase(1, dbArgs);
 
         return problem;
     }

@@ -1,12 +1,13 @@
 package command;
 
 import action.AddProblemSetAction;
+import databaseAPI.DatabaseAPI;
 import io.OutputGen;
 import models.SimpleProblemSet;
 
 public class AddSimpleProblemSetCommand extends Command {
-    public AddSimpleProblemSetCommand(OutputGen outputStream) {
-        super(outputStream);
+    public AddSimpleProblemSetCommand(DatabaseAPI api, OutputGen outputStream) {
+        super(api, outputStream);
     }
 
     /**
@@ -25,7 +26,7 @@ public class AddSimpleProblemSetCommand extends Command {
         }
 
         AddProblemSetAction action = new AddProblemSetAction();
-        action.execute(problemSet);
+        action.execute(problemSet, databaseAPI);
         outputStream.output("Problem set created");
         return true;
     }

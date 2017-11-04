@@ -1,13 +1,21 @@
 package command;
 
+import databaseAPI.DatabaseAPI;
 import io.OutputGen;
 
 public abstract class Command {
 
     protected OutputGen outputStream;
+    protected DatabaseAPI databaseAPI;
 
-    public Command(OutputGen outputStream) {
+    /**
+     * Creates a new command using the specified database API method and output generator.
+     * @param databaseAPI the database API instance to use with the action
+     * @param outputStream the output generator to use with the command
+     */
+    public Command(DatabaseAPI databaseAPI, OutputGen outputStream) {
         this.outputStream = outputStream;
+        this.databaseAPI = databaseAPI;
     }
 
     /**

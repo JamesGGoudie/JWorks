@@ -2,14 +2,15 @@ package command;
 
 import action.Action;
 import action.AddQuestionAction;
+import databaseAPI.DatabaseAPI;
 import io.OutputGen;
 import models.Problem;
 import models.SingleAnswerProblem;
 
 public class AddSimpleProblemCommand extends Command {
 
-    public AddSimpleProblemCommand(OutputGen outputStream) {
-        super(outputStream);
+    public AddSimpleProblemCommand(DatabaseAPI api, OutputGen outputStream) {
+        super(api, outputStream);
     }
 
     /**
@@ -31,7 +32,7 @@ public class AddSimpleProblemCommand extends Command {
 
         // Pass to appropriate action -- TODO: get instance of actions rather than creating new
         Action action =  new AddQuestionAction();
-        action.execute(problem);
+        action.execute(problem, databaseAPI);
 
         outputStream.output("Question successfully added.");
         return true;

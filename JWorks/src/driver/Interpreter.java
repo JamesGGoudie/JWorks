@@ -9,6 +9,7 @@ import command.AddSimpleProblemCommand;
 import command.ViewProblemsCommand;
 
 import databaseAPI.DatabaseDriverAPI;
+import databaseAPI.DatabaseExtractAPI;
 import databaseAPI.DatabaseStoreAPI;
 import io.OutputGen;
 import io.OutputGenerator;
@@ -28,7 +29,8 @@ public class Interpreter {
   private String[] parameters;
   private String command;
 
-  private DatabaseStoreAPI database;
+  private DatabaseStoreAPI databaseStore;
+  private DatabaseExtractAPI databaseExtract;
   private Connection connection;
 
   private OutputGen outputGenerator;
@@ -45,12 +47,19 @@ public class Interpreter {
    * Default constructor
    */
   public Interpreter() {
+    // database stuff
+    connection = DatabaseDriverAPI.connectOrCreateDataBase();
+    DatabaseDriverAPI.initialize(connection);
+
+    databaseStore = new DatabaseStoreAPI();
+    databaseExtract = new DatabaseExtractAPI();
+
     // initialize output generator
     outputGenerator = new OutputGenerator();
 
     // create all command object being used
-    addSimpleProblem = new AddSimpleProblemCommand(outputGenerator);
-    viewProblem = new ViewProblemsCommand(outputGenerator);
+    addSimpleProblem = new AddSimpleProblemCommand(databaseStore, outputGenerator);
+    viewProblem = new ViewProblemsCommand(databaseExtract, outputGenerator);
 
     // add the commands into an array
     Command[] commands = {addSimpleProblem, viewProblem};
@@ -59,12 +68,6 @@ public class Interpreter {
     for (int i = 0; i < commands.length; i++) {
       commandList.put(Integer.toString(i + 1), commands[i]);
     }
-
-    // database stuff
-    connection = DatabaseDriverAPI.connectOrCreateDataBase();
-    DatabaseDriverAPI.initialize(connection);
-
-    database = new DatabaseStoreAPI();
   }
 
   /**

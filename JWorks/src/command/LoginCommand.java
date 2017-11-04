@@ -1,11 +1,12 @@
 package command;
 
+import databaseAPI.DatabaseAPI;
 import io.OutputGen;
 
 public class LoginCommand extends Command {
 
-    public LoginCommand(OutputGen outputStream) {
-        super(outputStream);
+    public LoginCommand(DatabaseAPI api, OutputGen outputStream) {
+        super(api, outputStream);
     }
 
     /**
