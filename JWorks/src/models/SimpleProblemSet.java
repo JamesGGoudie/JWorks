@@ -14,6 +14,7 @@ public class SimpleProblemSet extends ProblemSet {
      * Initializes a Problem Set with an empty list of Problems.
      */
     public SimpleProblemSet() {
+        super();
         this.problems = new ArrayList<>();
     }
 
@@ -22,6 +23,7 @@ public class SimpleProblemSet extends ProblemSet {
      * @param problems the list of Problems that the Problem Set contains
      */
     public SimpleProblemSet(List<Problem> problems) {
+        super();
         this.problems = problems;
     }
 
@@ -37,7 +39,7 @@ public class SimpleProblemSet extends ProblemSet {
     /**
      * Removes the given Problem from the Problem Set
      * @param problem the Problem to remove from the Problem Set
-     * @return
+     * @return true if the Problem has been removed, false otherwise
      */
     public boolean removeProblem(Problem problem) {
         return problems.remove(problem);
