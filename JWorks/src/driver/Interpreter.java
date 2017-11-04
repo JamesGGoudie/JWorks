@@ -10,6 +10,8 @@ import command.ViewProblemsCommand;
 
 import databaseAPI.DatabaseDriverAPI;
 import databaseAPI.DatabaseStoreAPI;
+import io.OutputGen;
+import io.OutputGenerator;
 
 /**
  * Interprets the user input and execute the execute the action
@@ -29,6 +31,8 @@ public class Interpreter {
   private DatabaseStoreAPI database;
   private Connection connection;
 
+  private OutputGen outputGenerator;
+
 
 
   /**
@@ -41,9 +45,12 @@ public class Interpreter {
    * Default constructor
    */
   public Interpreter() {
+    // initialize output generator
+    outputGenerator = new OutputGenerator();
+
     // create all command object being used
-    addSimpleProblem = new AddSimpleProblemCommand();
-    viewProblem = new ViewProblemsCommand();
+    addSimpleProblem = new AddSimpleProblemCommand(outputGenerator);
+    viewProblem = new ViewProblemsCommand(outputGenerator);
 
     // add the commands into an array
     Command[] commands = {addSimpleProblem, viewProblem};

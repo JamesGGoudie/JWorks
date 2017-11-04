@@ -17,7 +17,7 @@ public class ViewProblemsCommand extends Command {
     public boolean execute(String[] args) {
         // Pass to appropriate action -- TODO: get instance of actions rather than creating new
         Action action =  new ViewQuestionAction();
-        action.execute(null);
+        action.execute(false);
 
         // Uncomment once we can retrieve objects from API
         //outputStream.output(problems);
