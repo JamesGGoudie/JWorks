@@ -3,6 +3,7 @@ package database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class DatabaseUpdater {
 
@@ -226,5 +227,65 @@ public class DatabaseUpdater {
     }
     
     return result;
+  }
+  
+  /**
+   * Changes the starting time of the problem set in the database to the new one given.
+   * @param problemSetKey The unique ID of the problem set.
+   * @param newStartTime The new release time of the problem set.
+   * @param connection The connection to the database file.
+   * @return True if successful, false otherwise.
+   */
+  protected static boolean updateStartTime(int problemSetKey, Date newStartTime,
+      Connection connection) {
+   
+   String sql = "UPDATE PROBLEMSETS SET STARTTIME = ? WHERE ID = ?;";
+   boolean result = false;
+   long timeSinceEpoch = newStartTime.getTime();
+   
+   try {
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setLong(1, timeSinceEpoch / 1000L);
+    preparedStatement.setInt(2, problemSetKey);
+    preparedStatement.executeUpdate();
+    preparedStatement.close();
+    
+    result = true;
+  } catch (SQLException e) {
+    System.out.println("A problem occurred while updating the release time.");
+    e.printStackTrace();
+  }
+   
+   return result;
+  }
+  
+  /**
+   * Changes the starting time of the problem set in the database to the new one given.
+   * @param problemSetKey The unique ID of the problem set.
+   * @param newStartTime The new release time of the problem set.
+   * @param connection The connection to the database file.
+   * @return True if successful, false otherwise.
+   */
+  protected static boolean updateEndTime(int problemSetKey, Date newEndTime,
+      Connection connection) {
+   
+   String sql = "UPDATE PROBLEMSETS SET ENDTIME = ? WHERE ID = ?;";
+   boolean result = false;
+   long timeSinceEpoch = newEndTime.getTime();
+   
+   try {
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setLong(1, timeSinceEpoch / 1000L);
+    preparedStatement.setInt(2, problemSetKey);
+    preparedStatement.executeUpdate();
+    preparedStatement.close();
+    
+    result = true;
+  } catch (SQLException e) {
+    System.out.println("A problem occurred while updating the due date.");
+    e.printStackTrace();
+  }
+   
+   return result;
   }
 }
