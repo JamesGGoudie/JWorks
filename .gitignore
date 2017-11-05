@@ -4,3 +4,4 @@ JWorks/bin/
 *.settings
 JWorks/*.db
 /bin/
+JWorks/src/database/Main.java
