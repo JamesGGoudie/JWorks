@@ -1,10 +1,15 @@
 package command;
 
-import action.ActionParameters;
 import action.AddProblemSetAction;
-import problem.SimpleProblemSet;
+import databaseAPI.DatabaseAPI;
+import io.OutputGen;
+import models.SimpleProblemSet;
 
-public class AddSimpleProblemSetCommand implements ICommand {
+public class AddSimpleProblemSetCommand extends Command {
+    public AddSimpleProblemSetCommand(DatabaseAPI api, OutputGen outputStream) {
+        super(api, outputStream);
+    }
+
     /**
      * Saves a new Simple Problem Set, given a list of Problem IDs.
      * @param args the arguments for the command to use. This should be a list of Problem IDs to add the Problem set.
@@ -20,11 +25,9 @@ public class AddSimpleProblemSetCommand implements ICommand {
             // problemSet.addProblem()
         }
 
-        ActionParameters params = new ActionParameters();
-        params.setProblemSet(problemSet);
-
         AddProblemSetAction action = new AddProblemSetAction();
-        action.execute(params);
+        action.execute(problemSet, databaseAPI);
+        outputStream.output("Problem set created");
         return true;
     }
 }

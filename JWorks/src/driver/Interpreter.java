@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Hashtable;
 
-import command.ICommand;
+import command.Command;
 import command.AddSimpleProblemCommand;
 import command.ViewProblemsCommand;
 
 import databaseAPI.DatabaseDriverAPI;
+import databaseAPI.DatabaseExtractAPI;
 import databaseAPI.DatabaseStoreAPI;
+import io.OutputGen;
+import io.OutputGenerator;
 
 /**
  * Interprets the user input and execute the execute the action
@@ -22,42 +25,49 @@ public class Interpreter {
   private AddSimpleProblemCommand addSimpleProblem;
   private ViewProblemsCommand viewProblem;
 
-  private ICommand commandObject;
+  private Command commandObject;
   private String[] parameters;
   private String command;
 
-  private DatabaseStoreAPI database;
+  private DatabaseStoreAPI databaseStore;
+  private DatabaseExtractAPI databaseExtract;
   private Connection connection;
+
+  private OutputGen outputGenerator;
 
 
 
   /**
    * Hashtable object that holds all the commands and their respective keys
    */
-  private Hashtable<String, ICommand> commandList =
-      new Hashtable<String, ICommand>();
+  private Hashtable<String, Command> commandList =
+      new Hashtable<String, Command>();
 
   /**
    * Default constructor
    */
   public Interpreter() {
+    // database stuff
+    connection = DatabaseDriverAPI.connectOrCreateDataBase();
+    DatabaseDriverAPI.initialize(connection);
+
+    databaseStore = new DatabaseStoreAPI();
+    databaseExtract = new DatabaseExtractAPI();
+
+    // initialize output generator
+    outputGenerator = new OutputGenerator();
+
     // create all command object being used
-    addSimpleProblem = new AddSimpleProblemCommand();
-    viewProblem = new ViewProblemsCommand();
+    addSimpleProblem = new AddSimpleProblemCommand(databaseStore, outputGenerator);
+    viewProblem = new ViewProblemsCommand(databaseExtract, outputGenerator);
 
     // add the commands into an array
-    ICommand[] commands = {addSimpleProblem, viewProblem};
+    Command[] commands = {addSimpleProblem, viewProblem};
 
     // add the commands to the hashtable
     for (int i = 0; i < commands.length; i++) {
       commandList.put(Integer.toString(i + 1), commands[i]);
     }
-
-    // database stuff
-    connection = DatabaseDriverAPI.connectOrCreateDataBase();
-    DatabaseDriverAPI.initialize(connection);
-
-    database = new DatabaseStoreAPI();
   }
 
   /**

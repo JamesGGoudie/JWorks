@@ -2,7 +2,7 @@ package io;
 
 import java.util.List;
 
-public class OutputGenerator {
+public class OutputGenerator implements OutputGen{
 	
 	/**
 	 * Output a String out onto the UI

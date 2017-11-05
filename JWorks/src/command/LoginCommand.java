@@ -1,9 +1,16 @@
 package command;
 
-public class LoginCommand implements ICommand {
+import databaseAPI.DatabaseAPI;
+import io.OutputGen;
+
+public class LoginCommand extends Command {
+
+    public LoginCommand(DatabaseAPI api, OutputGen outputStream) {
+        super(api, outputStream);
+    }
 
     /**
-     *
+     * Command to log into the application.
      * @param args the arguments for the command to use. First argument is the username, the second argument is the
      *             password.
      * @return whether or not authentication succeeded.
