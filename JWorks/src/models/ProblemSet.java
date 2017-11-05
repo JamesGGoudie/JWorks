@@ -1,10 +1,13 @@
 package models;
 
+import java.util.Date;
 import java.util.List;
 
 public abstract class ProblemSet extends DatabaseObject {
 
     protected int maxAttempts;
+    protected Date startTime;
+    protected Date endTime;
 
 
     protected ProblemSet() {
@@ -21,7 +24,7 @@ public abstract class ProblemSet extends DatabaseObject {
      * Returns the maximum number of attempts for this Problem Set.
      * @return the maximum number of attempts for this Problem Set. -1 represents no limit.
      */
-    public int getMaximumNumberOfAttempts() {
+    public int getMaxAttempts() {
         return maxAttempts;
     };
 
@@ -31,5 +34,21 @@ public abstract class ProblemSet extends DatabaseObject {
      */
     public void setMaxAttempts(int maxAttempts) {
         this.maxAttempts = maxAttempts;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 }
