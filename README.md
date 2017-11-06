@@ -40,7 +40,7 @@
 ### Build Instructions: 
 Add JAR_Files/sqlite-jdbc-3.18.0.jar as an external dependency to the project.
 
-####Running the Command Line Version:
+#### Running the Command Line Version:
 1. Compile and run the project using JWorks/src/driver/JWorks.java as the main class. 
 
 In the command line version, the following commands can be typed into the command line:
@@ -59,7 +59,7 @@ To view all saved questions:
 2
 ```
 
-####Running the GUI Version:
+#### Running the GUI Version:
 1. Compile and run the project using JWorks/src/gui/JWorksGUI.java as the main class.
 
 To login, enter any non-empty username and press the Login button.
