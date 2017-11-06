@@ -1,5 +1,8 @@
 package io;
 
+import models.Problem;
+import models.ProblemSet;
+
 import java.util.List;
 
 public class OutputGenerator implements OutputGen{
@@ -11,7 +14,31 @@ public class OutputGenerator implements OutputGen{
 	public void output(String out) {
 		System.out.println(out);
 	}
-	
+
+	/**
+	 * Output a Problem object onto the UI
+	 *
+	 * @param problem the Problem object to output
+	 */
+	@Override
+	public void output(Problem problem) {
+		output("Q" + problem.getId() + ":" + problem.getQuestion());
+		output("A:" + problem.getAnswer());
+	}
+
+	/**
+	 * Output a Problem Set object onto the UI
+	 *
+	 * @param problemSet the Problem Set object to output
+	 */
+	@Override
+	public void output(ProblemSet problemSet) {
+        output("Problem Set " + problemSet.getId() + ":");
+        for (Problem p : problemSet.getQuestions()) {
+            output(p);
+        }
+	}
+
 	/**
 	 * Outputs a ArrayList of problems/problem sets.
 	 * @param problemSet an ArrayList of problems in a problem set. 
