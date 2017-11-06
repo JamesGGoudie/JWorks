@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import exceptions.DatabaseInsertException;
 
@@ -60,15 +61,15 @@ public class DatabaseInserter {
    * @return The unique ID of the problem set, -1 if an uncaught error occurred.
    * @throws DatabaseInsertException Thrown if the problem set could not be added to the database.
    */
-  protected static int insertProblemSet(int maxAttempts, int[] problemIDs, Connection connection) 
-      throws DatabaseInsertException {
+  protected static int insertProblemSet(int maxAttempts, int[] problemIDs, Date startTime,
+      Date endTime, Connection connection) throws DatabaseInsertException {
     String problemsFormatted = "";
     
     for (int problemID : problemIDs) {
       problemsFormatted += Integer.toString(problemID) + ";";
     }
     
-    String sql = "INSERT INTO PROBLEMSETS(MAXATTEMPTS, PROBLEMS) VALUES(?,?)";
+    String sql = "INSERT INTO PROBLEMSETS(MAXATTEMPTS, PROBLEMS, STARTTIME, ENDTIME) VALUES(?,?,?,?)";
     int result = -1;
     
     PreparedStatement preparedStatement = null;
@@ -77,7 +78,9 @@ public class DatabaseInserter {
           Statement.RETURN_GENERATED_KEYS);
       preparedStatement.setInt(1, maxAttempts);
       preparedStatement.setString(2, problemsFormatted);
-    
+      preparedStatement.setLong(3, startTime.getTime() / 1000L);
+      preparedStatement.setLong(4, endTime.getTime() / 1000L);
+      
       int id = 0;
       id = preparedStatement.executeUpdate();
       

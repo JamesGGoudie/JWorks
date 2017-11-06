@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import exceptions.DatabaseSelectException;
 
@@ -141,8 +142,65 @@ public class DatabaseSelector {
       
       data.close();
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get the remaining amount of attempts from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return result;
+  }
+  
+  /**
+   * Gets the time that the problem set is released from the database.
+   * @param problemSetKey The unique key of the problem set.
+   * @param connection The connection to the database file.
+   * @return The problem sets release date if successful, or the epoch if otherwise.
+   * @throws DatabaseSelectException 
+   */
+  protected static Date getStartTime(int problemSetKey, Connection connection)
+      throws DatabaseSelectException {
+    
+    String sql = "SELECT STARTTIME FROM PROBLEMSETS WHERE ID = ?";
+    Date result = new Date(0);
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemSetKey);
+      ResultSet data = preparedStatement.executeQuery();
+      
+      long timeSinceEpoch = data.getInt(1);
+      result.setTime(timeSinceEpoch * 1000L);
+      
+      data.close();
+      
+    } catch (SQLException e) {
+      e.printStackTrace();
+      String errorMessage = "Failed to get the problem sets release time from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return result;
+  }
+  
+
+  protected static Date getEndTime(int problemSetKey, Connection connection)
+      throws DatabaseSelectException {
+    
+    String sql = "SELECT ENDTIME FROM PROBLEMSETS WHERE ID = ?";
+    Date result = new Date(0);
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemSetKey);
+      ResultSet data = preparedStatement.executeQuery();
+      
+      long timeSinceEpoch = data.getInt(1);
+      result.setTime(timeSinceEpoch * 1000L);
+      
+      data.close();
+      
+    } catch (SQLException e) {
+      e.printStackTrace();
+      String errorMessage = "Failed to get the problem sets due date from the database.";
       throw new DatabaseSelectException(errorMessage);
     }
     
