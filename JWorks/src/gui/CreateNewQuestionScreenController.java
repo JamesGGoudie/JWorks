@@ -52,9 +52,11 @@ public class CreateNewQuestionScreenController {
           // execute the action
           interpreter.executeAction(inputValues);
           
-          // reset the input fields
+          // reset the all text fields
           questionInput.setText("");
           answerInput.setText("");
+          questionError.setText("");
+          answerError.setText("");
         }
       }
     });
