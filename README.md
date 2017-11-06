@@ -14,12 +14,16 @@
 
     UserStories:        Contains the requirements that reflect each type of users described in 
                         Personas.
+
+    Where # denotes the sprint number. Sprints where no changes are made are omitted.
                         
 ## SprintBacklog:
 
-    PlanAndBurndown1:   Contains the plan of distribution of tasks as well as the burndown chart.
+    PlanAndBurndown#:   Contains the plan of distribution of tasks as well as the burndown chart.
     
-    SprintBacklog1:     Contains information on how user stories were divided into tasks.
+    SprintBacklog#:     Contains information on how user stories were divided into tasks.
+
+    Where # denotes the sprint number.
 
 
 ## JAR_Files:
@@ -33,61 +37,31 @@
     This is the Java application that the team is building, it contains the code for the entire 
     application. This application is a still in progress and in its early stages.
     
-<<<<<<< HEAD
-    Instruction: Compile JWorks.java under JWorks/src/driver/ along with sqlite-jdbc-3.18.0.jar
-                 found under JAR_Files/
-                 
-                 The current working option is option 1, the input format is the following:
-                 
-                 1 "Question" answer
-                 
-                 Where Question must be a string warped around by double quote and answer must
-                 be a string without space.
-    
-### action:
-    
-### database: 
+### Build Instructions: 
+Add JAR_Files/sqlite-jdbc-3.18.0.jar as an external dependency to the project.
 
-    Interacts directly with the database file.
-    
-    * DatabaseDeleter.java: Deletes entries in the database.
-    * DatabaseDriver.java: Create or connect to the database file.
-    * DatabaseInserter.java: Inserts data into the database.
-    * DatabaseSelecter.java: Retrives data from the database.
-    * DatabaseUpdater.java: Modifies data in the database.
-    
-### databaseAPI:
+####Running the Command Line Version:
+1. Compile and run the project using JWorks/src/driver/JWorks.java as the main class. 
 
-    API for classes in Database objects
-    
-    * DatabaseAPI.java: Interface that defines responsibility shared by all API classes
-    * DatabaseDriverAPI: Creates and returns connection to the database
-    * DatabseStoreAPI: Parses information supplied by Action object and sends to be stored on database
+In the command line version, the following commands can be typed into the command line:
 
-### driver:
-    
-    The drivers for JWorks
-    
-    * JWorks.java: The main class of JWorks.
-    * UIParser.java: Parse user's input into readable parameters for the interpreter.
-    * Interpreter.java: interpret user’s input and execute the corresponding action.
-
-### exceptions:
-
-    Contains exceptions.
-    
-    * ConnectionFailedException.java: Thrown if a connection to the database file was corrupt.
-    * DatabaseInsertException.java: Thrown if a problem arises while trying to insert data into the database.
-    * DatabaseSelectException.java: Thrown if a problem arises while tyring to retrieve data from the database.
-=======
-### Instruction: 
-Compile JWorks.java under JWorks/src/driver/ along with sqlite-jdbc-3.18.0.jar found under JAR_Files/
->>>>>>> origin/dev
-
-The current working option is option 1, the input format must match the following:
+To add a new question:
 
 ```
 1 "Question" answer
 ```
 
-Where Question must be a string warped around by double quote and answer must be a string without any space.
+Where Question is a string wrapped by double quotes, and answer is a string without a space.
+
+To view all saved questions:
+
+```
+2
+```
+
+####Running the GUI Version:
+1. Compile and run the project using JWorks/src/gui/JWorksGUI.java as the main class.
+
+To login, enter any non-empty username and press the Login button.
+Currently, a user can create a new question, return to the home page, or log out.
+
