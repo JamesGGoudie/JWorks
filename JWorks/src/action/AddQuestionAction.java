@@ -3,10 +3,12 @@ package action;
 import databaseAPI.DatabaseAPI;
 import databaseAPI.DatabaseDriverAPI;
 import databaseAPI.DatabaseStoreAPI;
+import exceptions.DatabaseInsertException;
 import io.OutputGenerator;
 import models.Problem;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class AddQuestionAction extends Action {
     /**
@@ -20,11 +22,16 @@ public class AddQuestionAction extends Action {
     public Object execute(Object... params) {
         // Get the problem and add it to the database
         Problem problem = (Problem) params[0];
-        String[] dbArgs = { problem.getQuestion(), problem.getAnswer() };
 
         // Instantiate database access
-        DatabaseAPI api = (DatabaseAPI) params[1];
-        api.actOnDatabase(1, dbArgs);
+        DatabaseStoreAPI api = (DatabaseStoreAPI) params[1];
+        try {
+            api.actOnDatabase(problem);
+        } catch (DatabaseInsertException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return problem;
     }
