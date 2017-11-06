@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import exceptions.DatabaseSelectException;
 
@@ -13,7 +14,8 @@ public class DatabaseSelector {
   /**
    * Gets all of the problems from the database.
    * @param connection The connection to the database.
-   * @return A ResultSet containing all of the problems from the database.
+   * @return A ResultSet containing all of the problems from the database, null is there was an
+   *         uncaught error.
    * @throws DatabaseSelectException Thrown if the problems could not be retrieved from the
    *                                 database. 
    */
@@ -37,12 +39,13 @@ public class DatabaseSelector {
    * Gets a problem from the database.
    * @param problemKey The unique key of the question in the database.
    * @param connection The connection to the database.
-   * @return A ResultSet containing data from one question.
+   * @return A ResultSet containing data from one question, null is there was an uncaught error.
    * @throws DatabaseSelectException Thrown if the question could not be retrieved from the
    *                                 database.
    */
   protected static ResultSet getSingleProblem(int problemKey, Connection connection)
       throws DatabaseSelectException {
+    
     String sql = "SELECT * FROM PROBLEMS WHERE ID = ?";
     ResultSet results = null;
     
@@ -57,5 +60,150 @@ public class DatabaseSelector {
     }
     
     return results;
+  }
+  
+  /**
+   * Returns a student from the database.
+   * @param studentNumber The unique number associated with the student.
+   * @param connection The connection to the database file.
+   * @return A ResultSet containing data about the student, null if there was a uncaught error.
+   * @throws DatabaseSelectException Thrown if the student could not be retrieved from the
+   *                                 database.
+   */
+  protected static ResultSet getStudent(int studentNumber, Connection connection)
+      throws DatabaseSelectException {
+    
+    String sql = "SELECT * FROM STUDENTS WHERE STUDENTNUMBER = ?";
+    ResultSet results = null;
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, studentNumber);
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      String errorMessage = "Failed to get the student from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
+  
+  /**
+   * Returns a problem set from the database.
+   * @param problemSetKey The unique ID of the problem set.
+   * @param connection The connection to the database file.
+   * @return A ResultSet containing data about a problem set, null if there was a uncaught error.
+   * @throws DatabaseSelectException Thrown if the problem set could not be retrieved from the
+   *                                 database.
+   */
+  protected static ResultSet getProblemSet(int problemSetKey, Connection connection)
+      throws DatabaseSelectException {
+    
+    String sql = "SELECT * FROM PROBLEMSETS WHERE ID = ?";
+    ResultSet results = null;
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemSetKey);
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      String errorMessage = "Failed to get the problem set from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
+  
+  /**
+   * Returns the amount of attempts that a given student has for a given problem set.
+   * @param studentNumber The unique number of the student.
+   * @param problemSetKey The unique key of the problem set.
+   * @param connection The connection to the database file.
+   * @return The attempts remaining, -1 if an uncaught error occurs. -8 implies infinite.
+   * @throws DatabaseSelectException Thrown if the remaining attempts could not be retrieved from
+   *                                 the database.
+   */
+  protected static int getAttemptsRemaining(int studentNumber, int problemSetKey,
+      Connection connection) throws DatabaseSelectException {
+    
+    String sql = "SELECT * FROM ATTEMPTSREMAINING WHERE STUDENTNUMBER = ?";
+    int result = -1;
+    ResultSet data = null;
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, studentNumber);
+      data = preparedStatement.executeQuery();
+      
+      String columnName = "PROBLEMSET" + problemSetKey;
+      
+      result = data.getInt(columnName);
+      
+      data.close();
+    } catch (SQLException e) {
+      String errorMessage = "Failed to get the remaining amount of attempts from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return result;
+  }
+  
+  /**
+   * Gets the time that the problem set is released from the database.
+   * @param problemSetKey The unique key of the problem set.
+   * @param connection The connection to the database file.
+   * @return The problem sets release date if successful, or the epoch if otherwise.
+   * @throws DatabaseSelectException 
+   */
+  protected static Date getStartTime(int problemSetKey, Connection connection)
+      throws DatabaseSelectException {
+    
+    String sql = "SELECT STARTTIME FROM PROBLEMSETS WHERE ID = ?";
+    Date result = new Date(0);
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemSetKey);
+      ResultSet data = preparedStatement.executeQuery();
+      
+      long timeSinceEpoch = data.getInt(1);
+      result.setTime(timeSinceEpoch * 1000L);
+      
+      data.close();
+      
+    } catch (SQLException e) {
+      e.printStackTrace();
+      String errorMessage = "Failed to get the problem sets release time from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return result;
+  }
+  
+
+  protected static Date getEndTime(int problemSetKey, Connection connection)
+      throws DatabaseSelectException {
+    
+    String sql = "SELECT ENDTIME FROM PROBLEMSETS WHERE ID = ?";
+    Date result = new Date(0);
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemSetKey);
+      ResultSet data = preparedStatement.executeQuery();
+      
+      long timeSinceEpoch = data.getInt(1);
+      result.setTime(timeSinceEpoch * 1000L);
+      
+      data.close();
+      
+    } catch (SQLException e) {
+      e.printStackTrace();
+      String errorMessage = "Failed to get the problem sets due date from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return result;
   }
 }

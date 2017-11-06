@@ -33,8 +33,56 @@
     This is the Java application that the team is building, it contains the code for the entire 
     application. This application is a still in progress and in its early stages.
     
+<<<<<<< HEAD
+    Instruction: Compile JWorks.java under JWorks/src/driver/ along with sqlite-jdbc-3.18.0.jar
+                 found under JAR_Files/
+                 
+                 The current working option is option 1, the input format is the following:
+                 
+                 1 "Question" answer
+                 
+                 Where Question must be a string warped around by double quote and answer must
+                 be a string without space.
+    
+### action:
+    
+### database: 
+
+    Interacts directly with the database file.
+    
+    * DatabaseDeleter.java: Deletes entries in the database.
+    * DatabaseDriver.java: Create or connect to the database file.
+    * DatabaseInserter.java: Inserts data into the database.
+    * DatabaseSelecter.java: Retrives data from the database.
+    * DatabaseUpdater.java: Modifies data in the database.
+    
+### databaseAPI:
+
+    API for classes in Database objects
+    
+    * DatabaseAPI.java: Interface that defines responsibility shared by all API classes
+    * DatabaseDriverAPI: Creates and returns connection to the database
+    * DatabseStoreAPI: Parses information supplied by Action object and sends to be stored on database
+
+### driver:
+    
+    The drivers for JWorks
+    
+    * JWorks.java: The main class of JWorks.
+    * UIParser.java: Parse user's input into readable parameters for the interpreter.
+    * Interpreter.java: interpret user’s input and execute the corresponding action.
+
+### exceptions:
+
+    Contains exceptions.
+    
+    * ConnectionFailedException.java: Thrown if a connection to the database file was corrupt.
+    * DatabaseInsertException.java: Thrown if a problem arises while trying to insert data into the database.
+    * DatabaseSelectException.java: Thrown if a problem arises while tyring to retrieve data from the database.
+=======
 ### Instruction: 
 Compile JWorks.java under JWorks/src/driver/ along with sqlite-jdbc-3.18.0.jar found under JAR_Files/
+>>>>>>> origin/dev
 
 The current working option is option 1, the input format must match the following:
 

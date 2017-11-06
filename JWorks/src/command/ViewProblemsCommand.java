@@ -1,22 +1,27 @@
 package command;
 
 import action.Action;
-import action.ActionParameters;
 import action.ViewQuestionAction;
+import databaseAPI.DatabaseAPI;
+import io.OutputGen;
 
-public class ViewProblemsCommand implements ICommand {
+public class ViewProblemsCommand extends Command {
+    public ViewProblemsCommand(DatabaseAPI api, OutputGen outputStream) {
+        super(api, outputStream);
+    }
+
     /**
      * Views all problems saved in storage.
      * @param args the arguments for the command to use. No arguments are required.
      */
     @Override
     public boolean execute(String[] args) {
-        // Setup action params -- none needed
-        ActionParameters params = new ActionParameters();
-
         // Pass to appropriate action -- TODO: get instance of actions rather than creating new
         Action action =  new ViewQuestionAction();
-        action.execute(params);
+        action.execute(databaseAPI);
+
+        // Uncomment once we can retrieve objects from API
+        //outputStream.output(problems);
         return true;
     }
 }
