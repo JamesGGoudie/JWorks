@@ -1,4 +1,4 @@
-package problem;
+package models;
 
 public class SingleAnswerProblem extends Problem {
 
@@ -18,5 +18,13 @@ public class SingleAnswerProblem extends Problem {
     @Override
     public String getAnswer() {
         return answer;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }

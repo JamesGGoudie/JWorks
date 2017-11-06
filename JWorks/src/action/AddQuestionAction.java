@@ -1,32 +1,38 @@
 package action;
 
+import databaseAPI.DatabaseAPI;
 import databaseAPI.DatabaseDriverAPI;
 import databaseAPI.DatabaseStoreAPI;
+import exceptions.DatabaseInsertException;
 import io.OutputGenerator;
-import problem.Problem;
+import models.Problem;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class AddQuestionAction extends Action {
     /**
      * Executes this Action to add the given Problem object into storage.
-     * @param params The parameters to pass into the Action. This should contain a Problem.
+     * @param params The parameters to pass into the Action.
+     *               The first parameter is the Problem to add.
+     *               The second parameter is the database API to use.
+     * @return the problem added
      */
     @Override
-    public void execute(ActionParameters params) {
+    public Object execute(Object... params) {
         // Get the problem and add it to the database
-        Problem problem = params.getProblem();
-        String[] dbArgs = { problem.getQuestion(), problem.getAnswer() };
+        Problem problem = (Problem) params[0];
 
         // Instantiate database access
-        Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
-        DatabaseDriverAPI.initialize(connection);
+        DatabaseStoreAPI api = (DatabaseStoreAPI) params[1];
+        try {
+            api.actOnDatabase(problem);
+        } catch (DatabaseInsertException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        DatabaseStoreAPI database = new DatabaseStoreAPI();
-        database.actOnDatabase(1, dbArgs);
-
-        // Output success
-        OutputGenerator output = new OutputGenerator();
-        output.output("Question successfully added");
+        return problem;
     }
 }
