@@ -1,26 +1,22 @@
 package databaseAPI;
 
 import database.DatabaseInserter;
-import io.OutputGen;
-import io.UI;
 import exceptions.DatabaseInsertException;
-import io.OutputGenerator;
 import javafx.scene.input.DataFormat;
 import models.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.text.DateFormat;
 
 public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
     private Connection connection;
-    /*
-    * Inserts into the problems table in the JWorks database
-    * @param newProblem Problem object that is to be inserted into the database
-    * @return the PrimaryKey of the problem in the table
-    */
+    /**
+     * Inserts into the problems table in the JWorks database
+     * @param newProblem Problem object that is to be inserted into the database
+     * @return the PrimaryKey of the problem in the table
+     * @throws DatabaseInsertException
+     * @throws SQLException
+     */
     public int actOnDatabase(Problem newProblem) throws DatabaseInsertException, SQLException{
         connection = DatabaseDriverAPI.connectOrCreateDataBase();
         //store the primary key of row inserted
@@ -29,11 +25,13 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         return result;
     }
 
-    /*
-    * Inserts into the problemsets table in the JWorks database
-    * @param newProblem Problem set objects whose attribute is to be stored into the database
-    * @return the PrimaryKey of the ProblemSet in the table
-    */
+    /**
+     * Inserts into the problem sets table in the JWorks database
+     * @param newPSet Problem set objects whose attribute is to be stored into the database
+     * @return Primary key of the ProblemSet in the table
+     * @throws DatabaseInsertException
+     * @throws SQLException
+     */
     public int actOnDatabse(ProblemSet newPSet) throws DatabaseInsertException, SQLException{
         connection = DatabaseDriverAPI.connectOrCreateDataBase();
         //store the primary key of row inserted
@@ -47,9 +45,12 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         return result;
     }
 
-    /*
-    * Insert new Student User
-    * @param
+    /**
+     * Insert new Student User
+     * @param newStudent instance of new Student who is going to be registered into the database
+     * @return student number for successful insertion, -1 for failed insertion
+     * @throws DatabaseInsertException
+     * @throws SQLException
      */
     public int actOnDatabse(Student newStudent) throws DatabaseInsertException, SQLException{
         connection = DatabaseDriverAPI.connectOrCreateDataBase();
@@ -57,7 +58,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         int result;
         boolean test = DatabaseInserter.insertStudent(newStudent.getStudentNumber(), newStudent.getName(), newStudent.getEmailAddress(), connection);
         if (test){
-            result = 0;
+            result = newStudent.getStudentNumber();
         } else{
             result = -1;
         }
