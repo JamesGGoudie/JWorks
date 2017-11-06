@@ -14,11 +14,12 @@ public abstract class DatabaseObject {
     }
 
     /**
-     * Sets the primary key for this object.
-     * @return the unique key for this object
+     * Sets the primary key for this object
+     * @param id the new primary key for this object
      */
-    public int setId() {
-        return id;
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     /**
