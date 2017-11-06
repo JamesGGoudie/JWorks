@@ -3,15 +3,19 @@ package gui;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import driver.Interpreter;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 public class LoginManager {
   private Scene scene;
+  private Interpreter interpreter;
 
-  public LoginManager(Scene scene) {
+  public LoginManager(Scene scene, Interpreter interpreter) {
     this.scene = scene;
+    this.interpreter = interpreter;
   }
 
   public void Login(String user) {
@@ -38,7 +42,7 @@ public class LoginManager {
   private void ShowInstructorMainScreen(String user) {
     try {
       InstructorMainScreenManager instructorMainScreenManager =
-          new InstructorMainScreenManager();
+          new InstructorMainScreenManager(interpreter);
       FXMLLoader loader =
           new FXMLLoader(getClass().getResource("InstructorMainScreen.fxml"));
       scene.setRoot((Parent) loader.load());

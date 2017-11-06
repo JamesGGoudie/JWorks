@@ -1,5 +1,6 @@
 package gui;
 
+import driver.Interpreter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,18 +14,20 @@ public class InstructorInnerScreenController {
   private Button viewQuestionsButton;
   @FXML
   private Pane innerScreen;
-  
-  private InstructorInnerScreenManager innerScreenManager = new InstructorInnerScreenManager();
+
+  private InstructorInnerScreenManager innerScreenManager =
+      new InstructorInnerScreenManager();
 
   public void initialize() {}
 
   public void initSession(
-      InstructorMainScreenManager instructorMainScreenManager) {
+      InstructorMainScreenManager instructorMainScreenManager,
+      Interpreter interpreter) {
 
     createNewQuestionButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        innerScreenManager.createNewQuestion(innerScreen);
+        innerScreenManager.createNewQuestion(innerScreen, interpreter);
       }
     });
 
