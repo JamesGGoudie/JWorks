@@ -19,6 +19,10 @@
                         
 ## SprintBacklog:
 
+    This folder contains organized files and folders of all backlogs for each sprint. In each sprint
+	folder contains the burndown chart and sprint plan for that sprint.
+
+
     PlanAndBurndown#:   Contains the plan of distribution of tasks as well as the burndown chart.
     
     SprintBacklog#:     Contains information on how user stories were divided into tasks.
