@@ -69,7 +69,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      * @throws DatabaseSelectException
      * @throws SQLException
      */
-    public Problem actOnDatabse(int pKey, Problem searchProblem)throws DatabaseSelectException, SQLException{
+    public Problem actOnDatabase(int pKey, Problem searchProblem)throws DatabaseSelectException, SQLException{
         Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
         // stores value returned from respective table
         ResultSet results;
