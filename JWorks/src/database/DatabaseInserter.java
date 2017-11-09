@@ -163,6 +163,41 @@ public class DatabaseInserter {
   }
   
   /**
+   * Inserts an instructor into the database.
+   * @param name The name of the instructor.
+   * @param email The email address of the instructor.
+   * @param password The password created for the instructor.
+   * @param connection The connection to the database file.
+   * @return True if the student was added, false if an uncaught error occurred.
+   * @throws DatabaseInsertException Thrown if the instructor could not be added to the database.
+   */
+  protected static boolean insertInstructor(String name, String email, String password,
+      Connection connection) throws DatabaseInsertException {
+    
+    String sql = "INSERT INTO INSTRUCTORS(NAME, EMAIL, PASSWORD) VALUES(?,?,?)";
+    boolean result = false;
+    
+    PreparedStatement  preparedStatement = null;
+    try {
+      preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setString(1, name);
+      preparedStatement.setString(2, email);
+      preparedStatement.setString(3, password);
+      
+      preparedStatement.executeUpdate();
+      preparedStatement.close();
+      
+      result = true;
+      
+    } catch (SQLException e) {
+      String errorMessage = "Failed to insert instructor into the database.";
+      throw new DatabaseInsertException(errorMessage);
+    }
+    
+    return result;
+  }
+  
+  /**
    * For each student, gives them the initial attempt count for the given problem set.
    * @param problemSetKey The unique key of the problem set.
    * @param connection The connection to the database file.
