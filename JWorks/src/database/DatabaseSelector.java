@@ -221,6 +221,34 @@ public class DatabaseSelector {
   }
   
   /**
+   * Retrieves data on all of the problem sets created by an instructor.
+   * @param instructorID The unique ID of the instructor.
+   * @param connection The connection to the database file.
+   * @return A ResultSet of the instructor-problemSets relationship table containing the problem
+   *         set keys of the problem sets created by the instructor; null indicated that an error
+   *         occurred.
+   * @throws DatabaseSelectException Thrown if the instructors problem sets could not be retrieved
+   *                                 from the database.
+   */
+  protected static ResultSet getInstructorsProblemSets(int instructorID, Connection connection)
+      throws DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT * INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE INSTRUCTOR = ?";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, instructorID);
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      String errorMessage = "Failed to get the problems sets created by the instructor.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
+  
+  /**
    * Returns the amount of attempts that a given student has for a given problem set.
    * @param studentNumber The unique number of the student.
    * @param problemSetKey The unique key of the problem set.
