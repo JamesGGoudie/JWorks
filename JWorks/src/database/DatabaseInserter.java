@@ -63,13 +63,8 @@ public class DatabaseInserter {
    */
   protected static int insertProblemSet(int maxAttempts, int[] problemIDs, Date startTime,
       Date endTime, Connection connection) throws DatabaseInsertException {
-    String problemsFormatted = "";
     
-    for (int problemID : problemIDs) {
-      problemsFormatted += Integer.toString(problemID) + ";";
-    }
-    
-    String sql = "INSERT INTO PROBLEMSETS(MAXATTEMPTS, PROBLEMS, STARTTIME, ENDTIME) VALUES(?,?,?,?)";
+    String sql = "INSERT INTO PROBLEMSETS(MAXATTEMPTS, STARTTIME, ENDTIME) VALUES(?,?,?)";
     int result = -1;
     
     PreparedStatement preparedStatement = null;
@@ -77,16 +72,20 @@ public class DatabaseInserter {
       preparedStatement = connection.prepareStatement(sql, 
           Statement.RETURN_GENERATED_KEYS);
       preparedStatement.setInt(1, maxAttempts);
-      preparedStatement.setString(2, problemsFormatted);
-      preparedStatement.setLong(3, startTime.getTime() / 1000L);
-      preparedStatement.setLong(4, endTime.getTime() / 1000L);
+      preparedStatement.setLong(2, startTime.getTime() / 1000L);
+      preparedStatement.setLong(3, endTime.getTime() / 1000L);
       
       int id = 0;
       id = preparedStatement.executeUpdate();
       
+      sql = "INSERT INTO PROBLEMSETS_PROBLEMS_RELATIONSHIP(PROBLEMSET, PROBLEM) VALUES = (?,?)";
+      
+      // If the ID generated is valid.
       if (id > 0) {
         ResultSet uniqueKey = null;
         uniqueKey = preparedStatement.getGeneratedKeys();
+        
+        // If there exists a key.
         if (uniqueKey.next()) {
           result = uniqueKey.getInt(1);
           boolean alterResult = 
@@ -94,14 +93,29 @@ public class DatabaseInserter {
           
           preparedStatement.close();
           
+          // If the problem set could not be added to the attempts remaining table.
           if (!alterResult) {
             result = -1;
           } else {
             boolean initializeResult = insertProblemSetsInitialAttemptCount(result, maxAttempts,
                 connection);
             
+            // If the initial attempt counts could not be initialized.
             if (!initializeResult) {
               result = -1;
+            } else {
+              // If everything else worked.
+              
+              // Adds the problems IDs the relationship table with the generated ID for the
+              // problemset.
+              for (int problemID : problemIDs) {
+                
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, result);
+                preparedStatement.setInt(2, problemID);
+                
+                preparedStatement.executeUpdate();
+              }
             }
           }
         }
