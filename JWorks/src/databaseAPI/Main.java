@@ -3,6 +3,10 @@ package databaseAPI;
 import java.sql.Connection;
 import models.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -13,6 +17,10 @@ public class Main {
         Problem p2 = new SingleAnswerProblem("2 plus 2 = 4. Minus 1", "3");
         SimpleProblemSet ps1 = new SimpleProblemSet();
         ps1.addProblem(p1);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        ps1.setEndTime(date);
+        ps1.setStartTime(date);
         Student sUser = new Student("aaron", "a.rodgers@packers.club", "collar", 12);
         DatabaseStoreAPI insert = new DatabaseStoreAPI();
         DatabaseExtractAPI select = new DatabaseExtractAPI();

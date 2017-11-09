@@ -2,7 +2,11 @@ package action;
 
 import databaseAPI.DatabaseAPI;
 import databaseAPI.DatabaseStoreAPI;
+import exceptions.DatabaseInsertException;
 import models.ProblemSet;
+import models.SimpleProblemSet;
+
+import java.sql.SQLException;
 
 public class AddProblemSetAction extends Action {
     /**
@@ -15,11 +19,16 @@ public class AddProblemSetAction extends Action {
     @Override
     public Object execute(Object... params) {
         // Get database instance
-        DatabaseAPI api = (DatabaseAPI) params[1];
+        DatabaseStoreAPI api = (DatabaseStoreAPI) params[1];
+        SimpleProblemSet problemSet = (SimpleProblemSet) params[0];
 
-        // TODO: Add problem set to database
-        ProblemSet problemSet = (ProblemSet) params[0];
-         // api.actOnDatabase(2, )
+        try {
+            api.actOnDatabase(problemSet);
+        } catch (DatabaseInsertException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return problemSet;
     }
