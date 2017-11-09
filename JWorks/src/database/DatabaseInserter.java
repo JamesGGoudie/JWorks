@@ -107,7 +107,7 @@ public class DatabaseInserter {
               // If everything else worked.
               
               // Adds the problems IDs the relationship table with the generated ID for the
-              // problemset.
+              // problem set.
               for (int problemID : problemIDs) {
                 
                 preparedStatement = connection.prepareStatement(sql);
