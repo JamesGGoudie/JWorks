@@ -133,13 +133,14 @@ public class DatabaseInserter {
    * @param studentNumber The unique ID of the student.
    * @param name The name of the student.
    * @param email The email of the student.
+   * @param password The password created for the student.
    * @param connection The connection to the database file.
    * @return True if the student was added, false if an uncaught error occurred.
    * @throws DatabaseInsertException Thrown if the student could not be added to the database.
    */
   protected static boolean insertStudent(int studentNumber, String name, String email,
-      Connection connection) throws DatabaseInsertException {
-    String sql = "INSERT INTO STUDENTS(STUDENTNUMBER, NAME, EMAIL) VALUES(?,?,?)";
+      String password, Connection connection) throws DatabaseInsertException {
+    String sql = "INSERT INTO STUDENTS(STUDENTNUMBER, NAME, EMAIL, PASSWORD) VALUES(?,?,?,?)";
     boolean result = false;
     
     PreparedStatement preparedStatement = null;
@@ -148,6 +149,7 @@ public class DatabaseInserter {
       preparedStatement.setInt(1, studentNumber);
       preparedStatement.setString(2, name);
       preparedStatement.setString(3, email);
+      preparedStatement.setString(4, password);
     
       preparedStatement.executeUpdate();
       
