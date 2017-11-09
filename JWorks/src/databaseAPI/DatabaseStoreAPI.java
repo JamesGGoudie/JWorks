@@ -52,13 +52,8 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      * @throws DatabaseInsertException
      * @throws SQLException
      */
-<<<<<<< HEAD
     public int actOnDatabse(Student newStudent) throws DatabaseInsertException, SQLException{
         this.actOnDatabase();
-=======
-    public int actOnDatabase(Student newStudent) throws DatabaseInsertException, SQLException{
-        connection = DatabaseDriverAPI.connectOrCreateDataBase();
->>>>>>> origin/database
         //store the primary key of row inserted
         int result;
         boolean test = DatabaseInserter.insertStudent(newStudent.getStudentNumber(), newStudent.getName(), newStudent.getEmailAddress(), connection);
