@@ -65,7 +65,6 @@ public class DatabaseDriver {
       sql = "CREATE TABLE IF NOT EXISTS PROBLEMSETS "
           + "(ID INTEGER PRIMARY KEY NOT NULL,"
           + "MAXATTEMPTS INTEGER NOT NULL,"
-          + "PROBLEMS TEXT NOT NULL,"
           + "STARTTIME INTEGER NOT NULL,"
           + "ENDTIME INTEGER NOT NULL)";
       statement.executeUpdate(sql);
