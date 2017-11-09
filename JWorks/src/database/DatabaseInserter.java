@@ -78,8 +78,6 @@ public class DatabaseInserter {
       int id = 0;
       id = preparedStatement.executeUpdate();
       
-      sql = "INSERT INTO PROBLEMSETS_PROBLEMS_RELATIONSHIP(PROBLEMSET, PROBLEM) VALUES = (?,?)";
-      
       // If the ID generated is valid.
       if (id > 0) {
         ResultSet uniqueKey = null;
@@ -105,6 +103,8 @@ public class DatabaseInserter {
               result = -1;
             } else {
               // If everything else worked.
+              
+              sql = "INSERT INTO PROBLEMSETS_PROBLEMS_RELATIONSHIP(PROBLEMSET, PROBLEM) VALUES = (?,?)";
               
               // Adds the problems IDs to the relationship table with the generated ID for the
               // problem set.
