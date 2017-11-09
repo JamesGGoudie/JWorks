@@ -152,7 +152,7 @@ public class DatabaseSelector {
   protected static ResultSet getProblemsInProblemSet(int problemSetKey, Connection connection)
       throws DatabaseSelectException {
     ResultSet results = null;
-    String sql = "SELECT * FROM PROBLEMSETS_PROBLEMS_RELATIONSHIP WHERE PROBLEMSET = ?";
+    String sql = "SELECT PROBLEM FROM PROBLEMSETS_PROBLEMS_RELATIONSHIP WHERE PROBLEMSET = ?";
     
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -179,7 +179,7 @@ public class DatabaseSelector {
       Connection connection) throws DatabaseSelectException {
     
     ResultSet results = null;
-    String sql = "SELECT * FROM PROBLEMSETS_PROBLEMS_RELATIONSHIP WHERE PROBLEM = ?";
+    String sql = "SELECT PROBLEMSET FROM PROBLEMSETS_PROBLEMS_RELATIONSHIP WHERE PROBLEM = ?";
     
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -206,7 +206,7 @@ public class DatabaseSelector {
       throws DatabaseSelectException {
     
     ResultSet results = null;
-    String sql = "SELECT * FROM INSTRUCTORS_PROBLEMS_RELATIONSHIP WHERE INSTRUCTOR = ?";
+    String sql = "SELECT PROBLEM FROM INSTRUCTORS_PROBLEMS_RELATIONSHIP WHERE INSTRUCTOR = ?";
     
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -234,7 +234,7 @@ public class DatabaseSelector {
       throws DatabaseSelectException {
     
     ResultSet results = null;
-    String sql = "SELECT * INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE INSTRUCTOR = ?";
+    String sql = "SELECT PROBLEMSET INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE INSTRUCTOR = ?";
     
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
