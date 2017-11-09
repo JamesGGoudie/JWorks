@@ -75,7 +75,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         ResultSet results;
         // store metadata for corresponding ResultSet
         ResultSetMetaData rsmd;
-        results = DatabaseSelector.getProblemSet(pKey, connection);
+        results = DatabaseSelector.getSingleProblem(pKey, connection);
         rsmd = results.getMetaData();
         String[] resultRow = new String[rsmd.getColumnCount()];
         while(results.next()){
