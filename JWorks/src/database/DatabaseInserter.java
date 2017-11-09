@@ -16,12 +16,13 @@ public class DatabaseInserter {
    * @param type An integer used to represent the questions type.
    * @param question The text that would be prompted to the student.
    * @param answer The answer to the question.
+   * @param instructorID The unique ID of the instructor who created the problem.
    * @param connection The connection to the database.
    * @return The unique key of the problem, -1 if an uncaught error occurred.
    * @throws DatabaseInsertException Thrown if the question could not be added to the database.
    */
-  protected static int insertProblem(int type, String question, String answer, Connection connection)
-      throws DatabaseInsertException {
+  protected static int insertProblem(int type, String question, String answer, int instructorID,
+      Connection connection) throws DatabaseInsertException {
     String sql = "INSERT INTO PROBLEMS(TYPE, QUESTION, ANSWER) VALUES(?,?,?)";
     int result = -1;
     
@@ -41,6 +42,15 @@ public class DatabaseInserter {
         uniqueKey = preparedStatement.getGeneratedKeys();
         if (uniqueKey.next()) {
           result = uniqueKey.getInt(1);
+          
+          sql = "INSERT INTO INSTRUCTORS_PROBLEMS_RELATIONSHIP(INSTRUCTOR, PROBLEM) "
+              + "VALUES = (?,?)";
+          
+          preparedStatement = connection.prepareStatement(sql);
+          preparedStatement.setInt(1, instructorID);
+          preparedStatement.setInt(2, result);
+          
+          preparedStatement.executeUpdate();
         }
         
         preparedStatement.close();
