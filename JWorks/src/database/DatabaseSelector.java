@@ -81,8 +81,33 @@ public class DatabaseSelector {
       preparedStatement.setInt(1, studentNumber);
       results = preparedStatement.executeQuery();
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get the student from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
+  
+  /**
+   * Returns the instructor from the database with the corresponding ID.
+   * @param instuctorID The unique ID of the instructor.
+   * @param connection The connection to the database file.
+   * @return A ResultSet containing data about the instructor, null indicates an error occurred.
+   * @throws DatabaseSelectException Thrown if the instructor could not be retrieved from the
+   *                                 database.
+   */
+  protected static ResultSet getInstructor(int instuctorID, Connection connection)
+      throws DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT * FROM INSTRUCTORS WHERE ID = ?";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, instuctorID);
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      String errorMessage = "Failed to get the instructor from the database.";
       throw new DatabaseSelectException(errorMessage);
     }
     
