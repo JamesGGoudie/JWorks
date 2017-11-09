@@ -170,26 +170,35 @@ public class DatabaseInserter {
    * @param email The email address of the instructor.
    * @param password The password created for the instructor.
    * @param connection The connection to the database file.
-   * @return True if the student was added, false if an uncaught error occurred.
+   * @return The unique ID of the instructor, -1 if an uncaught error occurs.
    * @throws DatabaseInsertException Thrown if the instructor could not be added to the database.
    */
-  protected static boolean insertInstructor(String name, String email, String password,
+  protected static int insertInstructor(String name, String email, String password,
       Connection connection) throws DatabaseInsertException {
     
     String sql = "INSERT INTO INSTRUCTORS(NAME, EMAIL, PASSWORD) VALUES(?,?,?)";
-    boolean result = false;
+    int result = -1;
     
     PreparedStatement  preparedStatement = null;
     try {
-      preparedStatement = connection.prepareStatement(sql);
+      preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       preparedStatement.setString(1, name);
       preparedStatement.setString(2, email);
       preparedStatement.setString(3, password);
       
-      preparedStatement.executeUpdate();
-      preparedStatement.close();
+      int id = 0;
+      id = preparedStatement.executeUpdate();
       
-      result = true;
+      if (id > 0) {
+        ResultSet uniqueKey = null;
+        uniqueKey = preparedStatement.getGeneratedKeys();
+        
+        if (uniqueKey.next()) {
+          result = uniqueKey.getInt(1);
+          
+          preparedStatement.close();
+        }
+      }
       
     } catch (SQLException e) {
       String errorMessage = "Failed to insert instructor into the database.";
