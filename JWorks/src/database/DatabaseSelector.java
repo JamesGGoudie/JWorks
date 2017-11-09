@@ -154,7 +154,7 @@ public class DatabaseSelector {
    * @param problemSetKey The unique key of the problem set.
    * @param connection The connection to the database file.
    * @return The problem sets release date if successful, or the epoch if otherwise.
-   * @throws DatabaseSelectException 
+   * @throws DatabaseSelectException Thrown if the release time could not be retrieved.
    */
   protected static Date getStartTime(int problemSetKey, Connection connection)
       throws DatabaseSelectException {
@@ -181,7 +181,13 @@ public class DatabaseSelector {
     return result;
   }
   
-
+  /**
+   * Gets the time that the problem set is due.
+   * @param problemSetKey The unique key of the problem set.
+   * @param connection The connection to the database file.
+   * @return The problem sets due date if successful, or the epoch if otherwise.
+   * @throws DatabaseSelectException Thrown if the due date could not be retrieved.
+   */
   protected static Date getEndTime(int problemSetKey, Connection connection)
       throws DatabaseSelectException {
     
