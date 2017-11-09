@@ -141,7 +141,7 @@ public class DatabaseSelector {
   }
   
   /**
-   * Retrieves the problems associated with a given problem set.
+   * Retrieves data on the problems associated with a given problem set.
    * @param problemSetKey The unique ID of the problem set.
    * @param connection The connection to the database file.
    * @return A ResultSet of the problems-problemSet relationship table containing the problem IDs
@@ -162,6 +162,34 @@ public class DatabaseSelector {
       String errorMessage = "Failed to get the problems in the problem set.";
       throw new DatabaseSelectException(errorMessage);
     }
+    
+    return results;
+  }
+  
+  /**
+   * Retrieves data on all of the problem sets which contain the given problem.
+   * @param problemKey The unique key of the problem.
+   * @param connection The connection to the database file.
+   * @return A ResultSet of the problems-problemSet relationship table containing the problem IDs
+   *         of the problem set, null indicated an error occurred.
+   * @throws DatabaseSelectException Thrown if the problem sets could not be retrieved from the
+   *                                 database.
+   */
+  protected static ResultSet getProblemSetsWhichContainProblem(int problemKey,
+      Connection connection) throws DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT * FROM PROBLEMSETS_PROBLEMS_RELATIONSHIP WHERE PROBLEM = ?";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemKey);
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      String errorMessage = "Failed to get the problem sets which contain the problem.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
     
     return results;
   }
