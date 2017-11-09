@@ -70,10 +70,39 @@ public class DatabaseDriver {
           + "ENDTIME INTEGER NOT NULL)";
       statement.executeUpdate(sql);
       
+      sql = "CREATE TABLE IF NOT EXISTS PROBLEMSETS_PROBLEMS_RELATIONSHIP "
+          + "(PROBLEMSET INTEGER PRIMARY KEY NOT NULL,"
+          + "PROBLEM INTEGER NOT NULL,"
+          + "FOREIGN KEY (PROBLEMSET) REFERENCES PROBLEMSETS(ID),"
+          + "FOREIGN KEY (PROBLEM) REFERENCES PROBLEMS(ID)";
+      statement.executeUpdate(sql);
+      
       sql = "CREATE TABLE IF NOT EXISTS STUDENTS "
           + "(STUDENTNUMBER INTEGER PRIMARY KEY NOT NULL,"
           + "NAME TEXT NOT NULL,"
-          + "EMAIL TEXT NOT NULL)";
+          + "EMAIL TEXT NOT NULL,"
+          + "PASSWORD TEXT NOT NULL)";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS INSTRUCTORS "
+          + "(ID INTEGER PRIMARY KEY NOT NULL,"
+          + "NAME TEXT NOT NULL,"
+          + "EMAIL TEXT NOT NULL,"
+          + "PASSWORD TEXT NOT NULL)";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS INSTRUCTORS_PROBLEMS_RELATIONSHIP "
+          + "(INSTRUCTOR INTEGER PRIMARY KEY NOT NULL,"
+          + "PROBLEM INTEGER NOT NULL,"
+          + "FOREIGN KEY (INSTRUCTOR) REFERENCES INSTRUCTORS(ID),"
+          + "FOREIGN KEY (PROBLEM) REFERENCES PROBLEMS(ID)";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS INSTRUCTORS_PROBLEMSETS_RELATIONSHIP "
+          + "(INSTRUCTOR INTEGER PRIMARY KEY NOT NULL,"
+          + "PROBLEMSET INTEGER NOT NULL,"
+          + "FOREIGN KEY (INSTRUCTOR) REFERENCES INSTRUCTORS(ID),"
+          + "FOREIGN KEY (PROBLEMSET) REFERENCES PROBLEMSETS(ID)";
       statement.executeUpdate(sql);
       
       sql = "CREATE TABLE IF NOT EXISTS ATTEMPTSREMAINING "
