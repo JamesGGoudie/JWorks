@@ -221,6 +221,35 @@ public class DatabaseSelector {
   }
   
   /**
+   * Returns the ID of the instructor which created the given problem.
+   * @param problemKey The unique ID of the problem.
+   * @param connection The connection to the database file.
+   * @return The unique ID of the instructor who created the problem; -1 indicates an error
+   *         occurred.
+   * @throws DatabaseSelectException Thrown if the instructor who created the problem could not be
+   *                                 retrieved from the database.
+   */
+  protected static int getProblemCreator(int problemKey, Connection connection)
+      throws DatabaseSelectException {
+    
+    int result = -1;
+    String sql = "SELECT INSTRUCTOR FROM INSTRUCTORS_PROBLEMS_RELATIONSHIP WHERE PROBLEM = ?";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemKey);
+      ResultSet data = preparedStatement.executeQuery();
+      
+      result = data.getInt(1);
+    } catch (SQLException e) {
+      String errorMessage = "Failed to get the instructor who created the problem.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return result;
+  }
+  
+  /**
    * Retrieves data on all of the problem sets created by an instructor.
    * @param instructorID The unique ID of the instructor.
    * @param connection The connection to the database file.
