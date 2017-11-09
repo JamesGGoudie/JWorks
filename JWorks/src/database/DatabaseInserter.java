@@ -57,12 +57,15 @@ public class DatabaseInserter {
    * Inserts a problem set into the database by collecting an array of numbers.
    * @param maxAttempts The amount of attempts allowed for this problem set, -8 for infinite.
    * @param problemIDs The unique IDs of the problems.
+   * @param startTime The time when the problem set is to be released.
+   * @param endTime The time when the problem set is due.
+   * @param instructorID The unique ID of the instructor who created the problem set.
    * @param connection The connection to the database file.
    * @return The unique ID of the problem set, -1 if an uncaught error occurred.
    * @throws DatabaseInsertException Thrown if the problem set could not be added to the database.
    */
   protected static int insertProblemSet(int maxAttempts, int[] problemIDs, Date startTime,
-      Date endTime, Connection connection) throws DatabaseInsertException {
+      Date endTime, int instructorID, Connection connection) throws DatabaseInsertException {
     
     String sql = "INSERT INTO PROBLEMSETS(MAXATTEMPTS, STARTTIME, ENDTIME) VALUES(?,?,?)";
     int result = -1;
@@ -89,8 +92,6 @@ public class DatabaseInserter {
           boolean alterResult = 
               DatabaseAlterer.addProblemSetToAttemptsRemaining(result, connection);
           
-          preparedStatement.close();
-          
           // If the problem set could not be added to the attempts remaining table.
           if (!alterResult) {
             result = -1;
@@ -116,6 +117,17 @@ public class DatabaseInserter {
                 
                 preparedStatement.executeUpdate();
               }
+              
+              sql = "INSERT INTO INSTRUCTORS_PROBLEMSETS_RELATIONSHIP(INSTRUCTOR, PROBLEMSET)"
+                  + "VALUES = (?,?)";
+              
+              preparedStatement = connection.prepareStatement(sql);
+              preparedStatement.setInt(1, instructorID);
+              preparedStatement.setInt(2, result);
+              
+              preparedStatement.executeUpdate();
+              
+              preparedStatement.close();
             }
           }
         }
