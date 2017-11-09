@@ -106,7 +106,7 @@ public class DatabaseInserter {
             } else {
               // If everything else worked.
               
-              // Adds the problems IDs the relationship table with the generated ID for the
+              // Adds the problems IDs to the relationship table with the generated ID for the
               // problem set.
               for (int problemID : problemIDs) {
                 
