@@ -190,6 +190,32 @@ public class DatabaseSelector {
       throw new DatabaseSelectException(errorMessage);
     }
     
+    return results;
+  }
+  
+  /**
+   * Retrieves data on all of the problems created by an instructor.
+   * @param instructorID The unique ID of the instructor.
+   * @param connection The connection to the database file.
+   * @return A ResultSet of the instructor-problems relationship table containing the problem IDs
+   *         of the problems created by the instructor; null indicates that an error occurred.
+   * @throws DatabaseSelectException Throw if the instructors problems could not be retrieved from
+   *                                 the database.
+   */
+  protected static ResultSet getInstructorsProblems(int instructorID, Connection connection)
+      throws DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT * FROM INSTRUCTORS_PROBLEMS_RELATIONSHIP WHERE INSTRUCTOR = ?";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, instructorID);
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      String errorMessage = "Failed to get the problems created by the instructor.";
+      throw new DatabaseSelectException(errorMessage);
+    }
     
     return results;
   }
