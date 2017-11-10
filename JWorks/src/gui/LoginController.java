@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 
-public class LoginController {
+public class LoginController extends Controller{
   @FXML
   private TextField username;
   @FXML
@@ -17,16 +17,16 @@ public class LoginController {
   private Button loginButton;
   @FXML
   private Label errorMessage;
-
-  public void initialize() {}
-
-  public void initManager(LoginManager loginManager) {
+  
+  public void Start(LoginManager loginManager) {
 
     // action on login button
     loginButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent arg0) {
+        // get the uesr name from the user name tex field
         String user = username.getText();
+        // check for any empty field
         if (user.equals("")) {
           errorMessage.setText("Please enter the username");
         } else {
@@ -34,8 +34,5 @@ public class LoginController {
         }
       }
     });
-
   }
-
-
 }
