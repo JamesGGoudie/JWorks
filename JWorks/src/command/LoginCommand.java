@@ -1,7 +1,9 @@
 package command;
 
+import action.LoginAction;
 import databaseAPI.DatabaseAPI;
 import io.OutputGen;
+import models.Student;
 
 public class LoginCommand extends Command {
 
@@ -10,7 +12,7 @@ public class LoginCommand extends Command {
     }
 
     /**
-     * Command to log into the application.
+     * Command to log into the application. Passes the user to 
      * @param args the arguments for the command to use. First argument is the username, the second argument is the
      *             password.
      * @return whether or not authentication succeeded.
@@ -24,9 +26,20 @@ public class LoginCommand extends Command {
         
         String user = args[0];
         String password = args[1];
+        LoginAction action = new LoginAction();
 
         // Call authentication action
-        // TODO: actually authenticate
-        return true;
+        Object result = action.execute(user, password, this.databaseAPI);
+        
+        // Parse result
+        if (result instanceof Student) {
+        	Student student = (Student) result;
+        	// TODO: Change output stream to handle non-problem/string payloads
+        	outputStream.output(student.toString());
+        	return true;
+        }
+        
+        // Only reached if authentication fails
+        return false;
     }
 }
