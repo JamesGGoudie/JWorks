@@ -44,7 +44,7 @@ public class DatabaseInserter {
           result = uniqueKey.getInt(1);
           
           sql = "INSERT INTO INSTRUCTORS_PROBLEMS_RELATIONSHIP(INSTRUCTOR, PROBLEM) "
-              + "VALUES = (?,?)";
+              + "VALUES(?,?)";
           
           preparedStatement = connection.prepareStatement(sql);
           preparedStatement.setInt(1, instructorID);
@@ -56,6 +56,7 @@ public class DatabaseInserter {
         preparedStatement.close();
       }
     } catch (SQLException e) {
+      e.printStackTrace();
       String errorMessage = "Failed to insert a problem into the database.";
       throw new DatabaseInsertException(errorMessage);
     }
@@ -115,7 +116,7 @@ public class DatabaseInserter {
             } else {
               // If everything else worked.
               
-              sql = "INSERT INTO PROBLEMSETS_PROBLEMS_RELATIONSHIP(PROBLEMSET, PROBLEM) VALUES = (?,?)";
+              sql = "INSERT INTO PROBLEMSETS_PROBLEMS_RELATIONSHIP(PROBLEMSET, PROBLEM) VALUES (?,?)";
               
               // Adds the problems IDs to the relationship table with the generated ID for the
               // problem set.
@@ -129,7 +130,7 @@ public class DatabaseInserter {
               }
               
               sql = "INSERT INTO INSTRUCTORS_PROBLEMSETS_RELATIONSHIP(INSTRUCTOR, PROBLEMSET)"
-                  + "VALUES = (?,?)";
+                  + "VALUES (?,?)";
               
               preparedStatement = connection.prepareStatement(sql);
               preparedStatement.setInt(1, instructorID);
