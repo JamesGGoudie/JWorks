@@ -14,7 +14,11 @@ public class InstructorInnerScreenController extends Controller {
   @FXML
   private Pane innerScreen;
 
-
+  /**
+   * Start the handling of actions on screen
+   * 
+   * @param instructorInnerScreenManager
+   */
   public void start(InstructorInnerScreenManager instructorInnerScreenManager) {
 
     createNewQuestionButton.setOnAction(new EventHandler<ActionEvent>() {

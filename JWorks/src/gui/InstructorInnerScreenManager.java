@@ -1,19 +1,26 @@
 package gui;
 
-import driver.Interpreter;
 import javafx.scene.layout.Pane;
 
 public class InstructorInnerScreenManager extends Manager {
   private InstructorInnerScreenController controller;
-
   private CreateNewQuestionScreenManager createNewQuestionScreenManager =
       new CreateNewQuestionScreenManager();
 
+  /**
+   * Go to the create new question screen
+   * 
+   * @param innerPane The pane that needs updates
+   */
+  public void createNewQuestion(Pane innerPane) {
+    showCreateNewQuestionScreen(innerPane);
+  }
 
-  //public InstructorInnerScreenManager(Interpreter interpreter) {
-  //  setInterpreter(interpreter);
-  //}
-
+  /**
+   * Load and display the inner screen for instructor
+   * 
+   * @param innerPane
+   */
   public void showScreen(Pane innerPane) {
     // load the new inner pane from fxml file
     loader = loadNewPane(loader, innerPane, "InstructorInnerScreen.fxml");
@@ -22,10 +29,11 @@ public class InstructorInnerScreenManager extends Manager {
     controller.start(this);
   }
 
-  public void createNewQuestion(Pane innerPane) {
-    showCreateNewQuestionScreen(innerPane);
-  }
-
+  /**
+   * Load and display the create new question screen
+   * 
+   * @param innerPane The pane that needs updates
+   */
   private void showCreateNewQuestionScreen(Pane innerPane) {
     createNewQuestionScreenManager.showScreen(innerPane);
   }

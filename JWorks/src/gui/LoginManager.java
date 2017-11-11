@@ -4,13 +4,13 @@ import javafx.scene.Scene;
 
 public class LoginManager extends Manager {
   private Scene scene;
+  private LoginController controller;
   private InstructorMainScreenManager instructorMainScreenManager;
 
   /**
    * Default constructor
    * 
    * @param scene The scene of the screen
-   * @param interpreter The interpreter for executing actions
    */
   public LoginManager(Scene scene) {
     this.scene = scene;
@@ -38,8 +38,9 @@ public class LoginManager extends Manager {
   public void showScreen() {
     // load the fxml file that contains the layout of the login screen
     loader = loadNewScreen(loader, scene, "LoginScreen.fxml");
-
-    LoginController controller = loader.<LoginController>getController();
+    // get the controller
+    controller = loader.<LoginController>getController();
+    // start the controller
     controller.start(this);
   }
 
@@ -50,7 +51,7 @@ public class LoginManager extends Manager {
    */
   private void ShowInstructorMainScreen(String user) {
     // create a new instance of instructor main screen manager
-    instructorMainScreenManager = new InstructorMainScreenManager(scene, super.interpreter);
+    instructorMainScreenManager = new InstructorMainScreenManager(scene);
     // show the main screen
     instructorMainScreenManager.showScreen(this, user);
   }

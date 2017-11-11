@@ -45,7 +45,7 @@ public class InstructorMainScreenController extends Controller {
   public void start(InstructorMainScreenManager instructorMainScreenManager) {
 
     // load the home screen on initial call
-    instructorMainScreenManager.showHomeScreen(innerScreen);
+    instructorMainScreenManager.home(innerScreen);
 
     // logout button action
     logoutButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -61,7 +61,7 @@ public class InstructorMainScreenController extends Controller {
       @Override
       public void handle(ActionEvent event) {
         // load the home screen
-        instructorMainScreenManager.showHomeScreen(innerScreen);
+        instructorMainScreenManager.home(innerScreen);
       }
     });
 

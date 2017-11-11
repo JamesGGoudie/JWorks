@@ -23,6 +23,11 @@ public class CreateNewQuestionScreenController extends Controller {
   private String[] inputValues;
 
 
+  /**
+   * Start the handling of actions on screen
+   * 
+   * @param createNewQuestionScreenManager
+   */
   public void start(
       CreateNewQuestionScreenManager createNewQuestionScreenManager) {
 
@@ -57,7 +62,7 @@ public class CreateNewQuestionScreenController extends Controller {
         }
       }
     });
-    
-    
+
+
   }
 }

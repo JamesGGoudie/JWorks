@@ -1,6 +1,5 @@
 package gui;
 
-import driver.Interpreter;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
@@ -14,10 +13,18 @@ public class InstructorMainScreenManager extends Manager {
    * Default constructor
    * 
    * @param scene
-   * @param interpreter
    */
-  public InstructorMainScreenManager(Scene scene, Interpreter interpreter) {
+  public InstructorMainScreenManager(Scene scene) {
     this.scene = scene;
+  }
+
+  /**
+   * Go to home screen
+   * 
+   * @param innerPane The pane that needs update
+   */
+  public void home(Pane innerPane) {
+    showHomeScreen(innerPane);
   }
 
   /**
@@ -42,9 +49,9 @@ public class InstructorMainScreenManager extends Manager {
    * 
    * @param innerPane The pane that needs update
    */
-  public void showHomeScreen(Pane innerPane) {
+  private void showHomeScreen(Pane innerPane) {
     instructorInnerScreenManager.showScreen(innerPane);
-
   }
+
 
 }
