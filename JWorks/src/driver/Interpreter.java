@@ -21,6 +21,8 @@ import io.OutputGenerator;
  *
  */
 public class Interpreter {
+  
+  private static Interpreter referencedInterpreter = null;
 
   private AddSimpleProblemCommand addSimpleProblem;
   private ViewProblemsCommand viewProblem;
@@ -42,11 +44,11 @@ public class Interpreter {
    */
   private Hashtable<String, Command> commandList =
       new Hashtable<String, Command>();
-
+  
   /**
    * Default constructor
    */
-  public Interpreter() {
+  private Interpreter() {
     // database stuff
     connection = DatabaseDriverAPI.connectOrCreateDataBase();
     DatabaseDriverAPI.initialize(connection);
@@ -68,6 +70,13 @@ public class Interpreter {
     for (int i = 0; i < commands.length; i++) {
       commandList.put(Integer.toString(i + 1), commands[i]);
     }
+  }
+  
+  public static Interpreter createNewInterpreter() {
+    if(referencedInterpreter == null) {
+      referencedInterpreter = new Interpreter();
+    }
+    return referencedInterpreter;
   }
 
   /**

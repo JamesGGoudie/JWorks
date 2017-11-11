@@ -5,7 +5,7 @@ import io.UI;
 public class JWorks {
 
   private static UI ui = new UI();
-  private static Interpreter interpreter = new Interpreter();
+  private static Interpreter interpreter = Interpreter.createNewInterpreter();
   private static UIParser parser = new UIParser();
 
   private static boolean exit = false;
