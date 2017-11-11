@@ -23,6 +23,8 @@ import io.OutputGenerator;
  *
  */
 public class Interpreter {
+  
+  private static Interpreter referencedInterpreter = null;
 
   private AddSimpleProblemCommand addSimpleProblem;
   private ViewProblemsCommand viewProblem;
@@ -44,12 +46,13 @@ public class Interpreter {
    */
   private Hashtable<String, Command> commandList =
       new Hashtable<String, Command>();
-
+  
   /**
    * Default constructor
    * @param mode 1 for command line mode, 2 for GUI mode.
    */
-  public Interpreter(OutputMode mode) {
+
+  private Interpreter(OutputMode mode) {
     // database stuff
     connection = DatabaseDriverAPI.connectOrCreateDataBase();
     DatabaseDriverAPI.initialize(connection);
@@ -78,6 +81,13 @@ public class Interpreter {
     for (int i = 0; i < commands.length; i++) {
       commandList.put(Integer.toString(i + 1), commands[i]);
     }
+  }
+  
+  public static Interpreter createNewInterpreter(OutputMode mode) {
+    if(referencedInterpreter == null) {
+      referencedInterpreter = new Interpreter(mode);
+    }
+    return referencedInterpreter;
   }
 
   /**
