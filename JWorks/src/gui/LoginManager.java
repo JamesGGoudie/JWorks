@@ -20,9 +20,16 @@ public class LoginManager extends Manager {
    * Load the corresponding instructor/student screen based on the user's input
    * 
    * @param user The name of the user
+   * @param password The password for the user
+   * @return Whether or not the login attempt is successful
    */
-  public void Login(String user) {
-    ShowInstructorMainScreen(user);
+  public boolean Login(String user, String password) {
+    String[] args = { "3", user, password };
+    if (interpreter.executeAction(args)) {
+      ShowInstructorMainScreen(user);
+      return true;
+    }
+    return false;
   }
 
   /**
