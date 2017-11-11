@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 
-public class InstructorMainScreenController {
+public class InstructorMainScreenController extends Controller {
   @FXML
   private Button logoutButton;
   @FXML
@@ -17,30 +17,51 @@ public class InstructorMainScreenController {
   @FXML
   private Button homeButton;
 
-  public void initialize() {}
+  private LoginManager loginManager;
 
-  public void initSession(final LoginManager loginManager,
-      InstructorMainScreenManager instructorMainScreenManager, String user) {
+  /**
+   * Set the user name label on the main screen
+   * 
+   * @param user The user name
+   */
+  public void setUserName(String user) {
     welcomeLabel.setText("Welcome " + user);
-    
+  }
+
+  /**
+   * Set the manager for login actions
+   * 
+   * @param loginManager
+   */
+  public void setLoginManager(LoginManager loginManager) {
+    this.loginManager = loginManager;
+  }
+
+  /**
+   * Start the handling of actions on screen
+   * 
+   * @param instructorMainScreenManager Manager that handles screen updates
+   */
+  public void start(InstructorMainScreenManager instructorMainScreenManager) {
+
     // load the home screen on initial call
-    instructorMainScreenManager.homeScreen(innerScreen);
-    
+    instructorMainScreenManager.showHomeScreen(innerScreen);
+
     // logout button action
     logoutButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-    	// load the logout screen
+        // load the logout screen
         loginManager.logout();
       }
     });
-    
+
     // home button action
     homeButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-    	// load the home screen
-        instructorMainScreenManager.homeScreen(innerScreen);
+        // load the home screen
+        instructorMainScreenManager.showHomeScreen(innerScreen);
       }
     });
 

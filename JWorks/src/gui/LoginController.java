@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 
-public class LoginController extends Controller{
+public class LoginController extends Controller {
   @FXML
   private TextField username;
   @FXML
@@ -17,8 +17,13 @@ public class LoginController extends Controller{
   private Button loginButton;
   @FXML
   private Label errorMessage;
-  
-  public void Start(LoginManager loginManager) {
+
+  /**
+   * Start the handling of actions on screen
+   * 
+   * @param loginManager The manager that handles screen updates on login
+   */
+  public void start(LoginManager loginManager) {
 
     // action on login button
     loginButton.setOnAction(new EventHandler<ActionEvent>() {
