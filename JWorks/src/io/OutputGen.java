@@ -6,7 +6,11 @@ import models.ProblemSet;
 import java.util.List;
 
 public interface OutputGen {
-	
+
+	enum OutputMode {
+		COMMAND_LINE, GUI
+	};
+
 	/**
 	 * Output a String out onto the UI
 	 * @param out

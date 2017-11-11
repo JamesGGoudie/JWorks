@@ -1,6 +1,7 @@
 package gui;
 
 
+import io.OutputGen;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -9,7 +10,7 @@ import driver.Interpreter;
 
 
 public class JWorksGUI extends Application {
-  private Interpreter interpreter = new Interpreter();
+  private Interpreter interpreter = new Interpreter(OutputGen.OutputMode.GUI);
 
   private Stage stage;
 

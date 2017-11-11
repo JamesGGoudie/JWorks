@@ -11,7 +11,9 @@ import command.ViewProblemsCommand;
 import databaseAPI.DatabaseDriverAPI;
 import databaseAPI.DatabaseExtractAPI;
 import databaseAPI.DatabaseStoreAPI;
+import io.GUIOutputGenerator;
 import io.OutputGen;
+import io.OutputGen.OutputMode;
 import io.OutputGenerator;
 
 /**
@@ -45,8 +47,9 @@ public class Interpreter {
 
   /**
    * Default constructor
+   * @param mode 1 for command line mode, 2 for GUI mode.
    */
-  public Interpreter() {
+  public Interpreter(OutputMode mode) {
     // database stuff
     connection = DatabaseDriverAPI.connectOrCreateDataBase();
     DatabaseDriverAPI.initialize(connection);
@@ -54,8 +57,15 @@ public class Interpreter {
     databaseStore = new DatabaseStoreAPI();
     databaseExtract = new DatabaseExtractAPI();
 
-    // initialize output generator
-    outputGenerator = new OutputGenerator();
+    // initialize output generator depending on application mode
+    switch(mode) {
+      case COMMAND_LINE:
+        outputGenerator = new OutputGenerator();
+        break;
+      case GUI:
+        outputGenerator = new GUIOutputGenerator();
+        break;
+    }
 
     // create all command object being used
     addSimpleProblem = new AddSimpleProblemCommand(databaseStore, outputGenerator);
