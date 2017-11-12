@@ -2,29 +2,27 @@ package models;
 
 public class SingleAnswerProblem extends Problem {
 
-    private String question;
-    private String answer;
-
     public SingleAnswerProblem(String question, String answer) {
-        this.question = question;
-        this.answer = answer;
+        super();
+        problemProperty.set(question);
+        answerProperty.set(answer);
     }
 
     @Override
-    public String getQuestion() {
-        return question;
+    public String getProblem() {
+        return problemProperty.get();
     }
 
     @Override
     public String getAnswer() {
-        return answer;
+        return answerProperty.get();
     }
 
     public void setQuestion(String question) {
-        this.question = question;
+        problemProperty.set(question);
     }
 
     public void setAnswer(String answer) {
-        this.answer = answer;
+        answerProperty.set(answer);
     }
 }
