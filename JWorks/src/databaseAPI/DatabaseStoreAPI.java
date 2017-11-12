@@ -2,7 +2,6 @@ package databaseAPI;
 
 import database.DatabaseInserter;
 import exceptions.DatabaseInsertException;
-import javafx.scene.input.DataFormat;
 import models.*;
 
 import java.sql.Connection;
@@ -21,7 +20,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         connection = DatabaseDriverAPI.connectOrCreateDataBase();
         //store the primary key of row inserted
         int result;
-        result = DatabaseInserter.insertProblem(1, newProblem.getQuestion(), newProblem.getAnswer(), connection);
+        result = DatabaseInserter.insertProblem(1, newProblem.getProblem(), newProblem.getAnswer(), connection);
         return result;
     }
 
