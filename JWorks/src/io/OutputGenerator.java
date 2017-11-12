@@ -6,6 +6,8 @@ import models.ProblemSet;
 import java.util.List;
 
 public class OutputGenerator implements OutputGen{
+
+	private Object lastOutput;
 	
 	/**
 	 * Output a String out onto the UI
@@ -57,5 +59,15 @@ public class OutputGenerator implements OutputGen{
 			}
 			System.out.println("\n");
 		}
+	}
+
+	/**
+	 * Returns the last Object that was sent to this OutputGenerator.
+	 *
+	 * @return the last Object that was sent to this OutputGenerator
+	 */
+	@Override
+	public Object getLastResult() {
+		return lastOutput;
 	}
 }

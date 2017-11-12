@@ -35,6 +35,10 @@ public interface OutputGen {
 	 */
 	void problemSetOutput(List<String[]> problemSet);
 
-
+	/**
+	 * Returns the last Object that was sent to this OutputGenerator.
+	 * @return the last Object that was sent to this OutputGenerator
+	 */
+	Object getLastResult();
 	
 }

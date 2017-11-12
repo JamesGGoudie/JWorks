@@ -7,6 +7,8 @@ import models.ProblemSet;
 import java.util.List;
 
 public class GUIOutputGenerator implements OutputGen {
+
+    private Object lastResult;
     /**
      * Output a String out onto the UI by creating an alert dialog.
      *
@@ -15,6 +17,7 @@ public class GUIOutputGenerator implements OutputGen {
     @Override
     public void output(String out) {
         showInfoAlert(out);
+        lastResult = out;
     }
 
     /**
@@ -24,7 +27,7 @@ public class GUIOutputGenerator implements OutputGen {
      */
     @Override
     public void output(Problem problem) {
-
+        lastResult = problem;
     }
 
     /**
@@ -34,7 +37,7 @@ public class GUIOutputGenerator implements OutputGen {
      */
     @Override
     public void output(ProblemSet problemSet) {
-
+        lastResult = problemSet;
     }
 
     /**
@@ -44,7 +47,17 @@ public class GUIOutputGenerator implements OutputGen {
      */
     @Override
     public void problemSetOutput(List<String[]> problemSet) {
+        lastResult = problemSet;
+    }
 
+    /**
+     * Returns the last Object that was sent to this OutputGenerator.
+     *
+     * @return the last Object that was sent to this OutputGenerator
+     */
+    @Override
+    public Object getLastResult() {
+        return lastResult;
     }
 
     private void showInfoAlert(String description) {

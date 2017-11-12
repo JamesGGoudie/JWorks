@@ -1,5 +1,7 @@
 package gui;
 
+import driver.Interpreter;
+import io.OutputGen;
 import javafx.scene.layout.Pane;
 import models.Problem;
 import models.SingleAnswerProblem;
@@ -40,5 +42,11 @@ public class ViewAllProblemsManager extends Manager {
         problemList.add(p2);
         problemList.add(p3);
         return problemList;
+        /*
+        Actual implementation - once API is complete
+        String[] args = {"2"};
+        interpreter.executeAction(args);
+        return (List<Problem>) interpreter.getOutputGenerator().getLastResult();
+         */
     }
 }

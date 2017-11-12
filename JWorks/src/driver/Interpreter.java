@@ -108,4 +108,8 @@ public class Interpreter {
     }
     // TODO: raise error for invalid commands
   }
+
+  public OutputGen getOutputGenerator() {
+    return outputGenerator;
+  }
 }
