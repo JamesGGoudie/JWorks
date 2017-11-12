@@ -1,6 +1,5 @@
 package gui;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -9,7 +8,7 @@ import models.Problem;
 
 import java.util.List;
 
-public class ViewAllProblemsController extends Controller {
+public class ViewProblemsController extends Controller {
     @FXML
     private TableView<Problem> questionTable;
 
@@ -22,15 +21,15 @@ public class ViewAllProblemsController extends Controller {
     @FXML
     private TableColumn<Problem, String> answerColumn;
 
-    private ViewAllProblemsManager manager;
+    private ViewProblemsManager manager;
 
     /**
      *
      * @param manager The scene manager to use for this UI controller
      */
-    public void start(ViewAllProblemsManager manager) {
+    public void start(ViewProblemsManager manager) {
         this.manager = manager;
-        questionTable.getItems().setAll(getAllProblems());
+        questionTable.getItems().setAll(getProblems());
     }
 
     @Override
@@ -45,7 +44,7 @@ public class ViewAllProblemsController extends Controller {
      * Calls the Manager to get all Problems.
      * @return a list of all Problems
      */
-    private List<Problem> getAllProblems() {
-        return manager.getAllProblems();
+    private List<Problem> getProblems() {
+        return manager.getProblems();
     }
 }

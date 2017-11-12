@@ -1,7 +1,5 @@
 package gui;
 
-import driver.Interpreter;
-import io.OutputGen;
 import javafx.scene.layout.Pane;
 import models.Problem;
 import models.SingleAnswerProblem;
@@ -10,25 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ViewAllProblemsManager extends Manager {
-
-    /**
-     * Load and display the screen to view all problems.
-     *
-     * @param innerPane The pane that new contents are loading into
-     */
-    public void showScreen(Pane innerPane) {
-        loader = loadNewPane(loader, innerPane, "ViewAllProblemsScreen.fxml");
-        ViewAllProblemsController controller =
-                loader.getController();
-        controller.start(this);
-    }
+public class ViewAllProblemsManager extends ViewProblemsManager {
 
     /**
      * Retrieves a list of all available problems to display on the GUI.
      * @return a list of all available Problem objects
      */
-    public List<Problem> getAllProblems() {
+    public List<Problem> getProblems() {
         // Mock implementation
         List<Problem> problemList = new ArrayList<>();
         Problem p1 = new SingleAnswerProblem("Given 2+2=x; what is x-1?", "3");
