@@ -4,7 +4,6 @@ import databaseAPI.DatabaseAPI;
 import databaseAPI.DatabaseStoreAPI;
 import exceptions.DatabaseInsertException;
 import models.ProblemSet;
-import models.SimpleProblemSet;
 
 import java.sql.SQLException;
 
@@ -20,7 +19,7 @@ public class AddProblemSetAction extends Action {
     public Object execute(Object... params) {
         // Get database instance
         DatabaseStoreAPI api = (DatabaseStoreAPI) params[1];
-        SimpleProblemSet problemSet = (SimpleProblemSet) params[0];
+        ProblemSet problemSet = (ProblemSet) params[0];
 
         try {
             api.actOnDatabase(problemSet);

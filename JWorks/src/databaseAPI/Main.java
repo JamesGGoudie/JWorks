@@ -27,8 +27,10 @@ public class Main {
         try{
             //System.out.println(insert.actOnDatabase(p1));
             //System.out.println(insert.actOnDatabase(p2));
-            System.out.println(insert.actOnDatabse(ps1));
+            //System.out.println(insert.actOnDatabse(ps1));
             //System.out.println(insert.actOnDatabse(sUser));
+            Problem sp = select.actOnDatabase(1, new SingleAnswerProblem("", ""));
+            System.out.println("id: "+sp.getId()+"q: "+sp.getQuestion()+"a: "+sp.getAnswer());
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
