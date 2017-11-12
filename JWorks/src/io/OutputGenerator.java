@@ -22,7 +22,7 @@ public class OutputGenerator implements OutputGen{
 	 */
 	@Override
 	public void output(Problem problem) {
-		output("Q" + problem.getId() + ":" + problem.getQuestion());
+		output("Q" + problem.getId() + ":" + problem.getProblem());
 		output("A:" + problem.getAnswer());
 	}
 

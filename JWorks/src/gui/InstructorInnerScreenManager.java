@@ -6,6 +6,8 @@ public class InstructorInnerScreenManager extends Manager {
   private InstructorInnerScreenController controller;
   private CreateNewQuestionScreenManager createNewQuestionScreenManager =
       new CreateNewQuestionScreenManager();
+  private ViewAllProblemsManager viewAllProblemsManager =
+      new ViewAllProblemsManager();
 
   /**
    * Go to the create new question screen
@@ -14,6 +16,10 @@ public class InstructorInnerScreenManager extends Manager {
    */
   public void createNewQuestion(Pane innerPane) {
     showCreateNewQuestionScreen(innerPane);
+  }
+
+  public void viewAllProblems(Pane innerPane) {
+    showViewAllProblemsScreen(innerPane);
   }
 
   /**
@@ -36,5 +42,9 @@ public class InstructorInnerScreenManager extends Manager {
    */
   private void showCreateNewQuestionScreen(Pane innerPane) {
     createNewQuestionScreenManager.showScreen(innerPane);
+  }
+
+  private void showViewAllProblemsScreen(Pane innerPane) {
+    viewAllProblemsManager.showScreen(innerPane);
   }
 }
