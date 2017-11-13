@@ -36,8 +36,8 @@ public class LoginAction extends Action {
 			return student;
 		}
 		
-		// Only reached if no authentication occurs
-		return false;
+		// Only reached if no authentication occurs -- temporarily authenticates anyways
+		return student;
 	}
 
 }
