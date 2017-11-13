@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Hashtable;
 
+import command.AddSimpleProblemSetCommand;
 import command.Command;
 import command.AddSimpleProblemCommand;
 import command.ViewProblemsCommand;
@@ -28,6 +29,7 @@ public class Interpreter {
 
   private AddSimpleProblemCommand addSimpleProblem;
   private ViewProblemsCommand viewProblem;
+  private AddSimpleProblemSetCommand addSimpleProblemSet;
 
   private Command commandObject;
   private String[] parameters;
@@ -73,9 +75,10 @@ public class Interpreter {
     // create all command object being used
     addSimpleProblem = new AddSimpleProblemCommand(databaseStore, outputGenerator);
     viewProblem = new ViewProblemsCommand(databaseExtract, outputGenerator);
+    addSimpleProblemSet = new AddSimpleProblemSetCommand(databaseStore, outputGenerator);
 
     // add the commands into an array
-    Command[] commands = {addSimpleProblem, viewProblem};
+    Command[] commands = {addSimpleProblem, viewProblem, addSimpleProblemSet};
 
     // add the commands to the hashtable
     for (int i = 0; i < commands.length; i++) {
