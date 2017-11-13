@@ -6,7 +6,7 @@ public class LoginManager extends Manager {
   private Scene scene;
   private LoginController controller;
   private InstructorMainScreenManager instructorMainScreenManager;
-
+  private StudentMainScreenManager studentMainScreenManager;
   /**
    * Default constructor
    * 
@@ -22,7 +22,11 @@ public class LoginManager extends Manager {
    * @param user The name of the user
    */
   public void Login(String user) {
-    ShowInstructorMainScreen(user);
+    if (user.matches("[0-9]+")) {
+      showStudentMainScreen(user);
+    } else {
+      ShowInstructorMainScreen(user);
+    }
   }
 
   /**
@@ -55,4 +59,10 @@ public class LoginManager extends Manager {
     // show the main screen
     instructorMainScreenManager.showScreen(this, user);
   }
+  
+  private void showStudentMainScreen(String user) {
+    studentMainScreenManager = new StudentMainScreenManager(scene);
+    studentMainScreenManager.showScreen(this, user);
+  }
+
 }

@@ -25,7 +25,7 @@ public class StudentMainScreenController extends Controller{
    * @param user The user name
    */
   public void setUserName(String user) {
-    welcomeLabel.setText("Welcome user" + user);
+    welcomeLabel.setText("Welcome user " + user);
   }
   
   /**
