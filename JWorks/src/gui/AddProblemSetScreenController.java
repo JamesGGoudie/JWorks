@@ -177,5 +177,19 @@ public class AddProblemSetScreenController extends Controller {
         }
 
         manager.addProblemSet(problemSet);
+        clearFields();
+    }
+
+    /**
+     * Resets the GUI form to its initial state.
+     */
+    private void clearFields() {
+        problemList.clear();
+        updateTableList();
+        problemSetNameField.clear();
+        maxAttemptsField.clear();
+        releaseDateField.setValue(null);
+        dueDateField.setValue(null);
+        errorLabel.setText("");
     }
 }
