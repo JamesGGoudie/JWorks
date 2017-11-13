@@ -9,14 +9,30 @@ public class StudentMainScreenManager extends Manager {
   private StudentInnerScreenManager studentInnerScreenManager =
       new StudentInnerScreenManager();
 
+  /**
+   * Default constructor
+   * 
+   * @param scene
+   */
   public StudentMainScreenManager(Scene scene) {
     this.scene = scene;
   }
 
+  /**
+   * Go to home screen
+   * 
+   * @param innerPane The pane that needs update
+   */
   public void home(Pane innerPane) {
     showHomeScreen(innerPane);
   }
 
+  /**
+   * Load and display the main screen for student
+   * 
+   * @param loginManager
+   * @param user The user name
+   */
   public void showScreen(LoginManager loginManager, String user) {
     loader = loadNewScreen(loader, scene, "StudentMainScreen.fxml");
     // load the controller of the screen
@@ -28,6 +44,11 @@ public class StudentMainScreenManager extends Manager {
     controller.start(this);
   }
 
+  /**
+   * Load and display the home screen for student
+   * 
+   * @param innerPane The pane that needs update
+   */
   private void showHomeScreen(Pane innerPane) {
     studentInnerScreenManager.showScreen(innerPane);
   }

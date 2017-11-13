@@ -7,6 +7,7 @@ public class LoginManager extends Manager {
   private LoginController controller;
   private InstructorMainScreenManager instructorMainScreenManager;
   private StudentMainScreenManager studentMainScreenManager;
+
   /**
    * Default constructor
    * 
@@ -59,7 +60,12 @@ public class LoginManager extends Manager {
     // show the main screen
     instructorMainScreenManager.showScreen(this, user);
   }
-  
+
+  /**
+   * Set the window to show the student main screen
+   * 
+   * @param user
+   */
   private void showStudentMainScreen(String user) {
     studentMainScreenManager = new StudentMainScreenManager(scene);
     studentMainScreenManager.showScreen(this, user);
