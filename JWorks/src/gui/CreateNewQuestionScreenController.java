@@ -1,15 +1,13 @@
 package gui;
 
-import driver.Interpreter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 
-public class CreateNewQuestionScreenController {
+public class CreateNewQuestionScreenController extends Controller {
   @FXML
   private Button submitButton;
   @FXML
@@ -21,13 +19,17 @@ public class CreateNewQuestionScreenController {
   @FXML
   private Label answerError;
 
-
   private final String COMMAND = "1";
   private String[] inputValues;
 
-  public void initialize() {}
 
-  public void initSession(Pane innerPane, Interpreter interpreter) {
+  /**
+   * Start the handling of actions on screen
+   * 
+   * @param createNewQuestionScreenManager
+   */
+  public void start(
+      CreateNewQuestionScreenManager createNewQuestionScreenManager) {
 
     // when the submitButton is clicked
     submitButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -49,9 +51,9 @@ public class CreateNewQuestionScreenController {
           inputValues = new String[] {COMMAND, questionInput.getText(),
               answerInput.getText()};
 
-          // execute the action
-          interpreter.executeAction(inputValues);
-          
+          // Create the new question
+          createNewQuestionScreenManager.createNewQuestion(inputValues);
+
           // reset the all text fields
           questionInput.setText("");
           answerInput.setText("");
@@ -60,5 +62,7 @@ public class CreateNewQuestionScreenController {
         }
       }
     });
+
+
   }
 }
