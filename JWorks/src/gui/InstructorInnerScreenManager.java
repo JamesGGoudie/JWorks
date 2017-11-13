@@ -8,6 +8,8 @@ public class InstructorInnerScreenManager extends Manager {
       new CreateNewQuestionScreenManager();
   private ViewAllProblemsManager viewAllProblemsManager =
       new ViewAllProblemsManager();
+  private AddProblemSetScreenManager addProblemSetScreenManager =
+      new AddProblemSetScreenManager();
 
   /**
    * Go to the create new question screen
@@ -20,6 +22,10 @@ public class InstructorInnerScreenManager extends Manager {
 
   public void viewAllProblems(Pane innerPane) {
     showViewAllProblemsScreen(innerPane);
+  }
+
+  public void addProblemSet(Pane innerPane) {
+    showAddProblemSetScreen(innerPane);
   }
 
   /**
@@ -46,5 +52,9 @@ public class InstructorInnerScreenManager extends Manager {
 
   private void showViewAllProblemsScreen(Pane innerPane) {
     viewAllProblemsManager.showScreen(innerPane);
+  }
+
+  private void showAddProblemSetScreen(Pane innerPane) {
+    addProblemSetScreenManager.showScreen(innerPane);
   }
 }

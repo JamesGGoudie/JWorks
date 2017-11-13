@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.6670951156812339" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="780.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+ fx:controller="gui.AddProblemSetScreenController">
+    <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="530.0">
+            <children>
+                <fx:include source="ViewAllProblemsScreen.fxml" fx:id="problemTableView"/>
+            </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="215.0">
+            <children>
+                <TableView fx:id="problemListTable" layoutX="18.0" layoutY="14.0" prefHeight="331.0" prefWidth="220.0">
+                    <columns>
+                        <TableColumn fx:id="problemListColumn" prefWidth="219.0" text="Problem ID" />
+                    </columns>
+                </TableView>
+                <TextField fx:id="problemSetNameField" layoutX="24.0" layoutY="383.0" prefHeight="31.0" prefWidth="220.0" />
+                <Label layoutX="24.0" layoutY="362.0" text="Problem Set Name" />
+                <DatePicker fx:id="releaseDateField" layoutX="22.0" layoutY="443.0" prefHeight="31.0" prefWidth="220.0" />
+                <Label layoutX="22.0" layoutY="422.0" text="Release Date" />
+                <DatePicker fx:id="dueDateField" layoutX="22.0" layoutY="508.0" prefHeight="31.0" prefWidth="220.0" />
+                <Label layoutX="22.0" layoutY="487.0" text="Due Date" />
+                <Button fx:id="saveProblemSetButton" layoutX="51.0" layoutY="606.0" mnemonicParsing="false" text="Save Problem Set" />
+            </children></AnchorPane>
+    </items>
+</SplitPane>
