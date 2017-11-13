@@ -24,7 +24,7 @@ public class AddProblemSetScreenManager extends Manager {
     public void addProblemSet(ProblemSet problemSet) {
         // Create string args array to call the appropriate command from interpreter
         List<String> argList = new ArrayList<>();
-        argList.add("3"); // add problem set command number
+        argList.add("5"); // add problem set command number
         SimpleDateFormat dateFormat = new SimpleDateFormat();
 
         // Start date, end date, max attempts, followed by problem ids

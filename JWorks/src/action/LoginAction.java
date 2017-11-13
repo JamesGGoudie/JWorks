@@ -29,15 +29,15 @@ public class LoginAction extends Action {
 		
 		// Get user object from API
 		// TODO: After extraction is complete. Also need try-catch for exception handling
-		Student student = new Student(user, "test@email.com", password , 1561); // = api.actOnDatabase(...)
+		Student student = new Student(user, "test@email.com", "password" , 1561); // = api.actOnDatabase(...)
 		
 		// Compare credentials
 		if (student.getPassword().equals(password)) {
 			return student;
 		}
 		
-		// Only reached if no authentication occurs
-		return false;
+		// Only reached if no authentication occurs -- temporarily authenticates anyways
+		return student;
 	}
 
 }

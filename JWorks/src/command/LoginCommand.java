@@ -35,7 +35,7 @@ public class LoginCommand extends Command {
         if (result instanceof Student) {
         	Student student = (Student) result;
         	// TODO: Change output stream to handle non-problem/string payloads
-        	outputStream.output(student.toString());
+        	// outputStream.output(student.toString());
         	return true;
         }
         
