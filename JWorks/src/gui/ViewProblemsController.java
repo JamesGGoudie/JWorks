@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ViewProblemsController extends Controller {
     @FXML
-    private TableView<Problem> questionTable;
+    public TableView<Problem> questionTable;
 
     @FXML
     private TableColumn<Problem, Integer> idColumn;
