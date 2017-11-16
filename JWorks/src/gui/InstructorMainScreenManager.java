@@ -1,37 +1,57 @@
 package gui;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import driver.Interpreter;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
-public class InstructorMainScreenManager {
-  private InstructorInnerScreenController controller;
-  private Interpreter interpreter;
-  
-  public InstructorMainScreenManager(Interpreter interpreter) {
-    this.interpreter = interpreter;
+public class InstructorMainScreenManager extends Manager {
+  private Scene scene;
+  private InstructorMainScreenController controller;
+  private InstructorInnerScreenManager instructorInnerScreenManager =
+      new InstructorInnerScreenManager();
+
+  /**
+   * Default constructor
+   * 
+   * @param scene
+   */
+  public InstructorMainScreenManager(Scene scene) {
+    this.scene = scene;
   }
 
-  public void homeScreen(Pane innerPane) {
-    try {
-      // load the new inner pane from fxml file
-      FXMLLoader loader =
-          new FXMLLoader(getClass().getResource("InstructorInnerScreen.fxml"));
-      // replace the inner pane with the fxml file content
-      innerPane.getChildren().clear();
-      innerPane.getChildren().add(loader.load());
-      // Load the controller and start the controller
-      controller =
-          loader.<InstructorInnerScreenController>getController();
-      controller.initSession(this, interpreter);
-    } catch (IOException ex) {
-      Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null,
-          ex);
-    }
+  /**
+   * Go to home screen
+   * 
+   * @param innerPane The pane that needs update
+   */
+  public void home(Pane innerPane) {
+    showHomeScreen(innerPane);
   }
+
+  /**
+   * Load and display the main screen for instructor
+   * 
+   * @param loginManager
+   * @param user The user name
+   */
+  public void showScreen(LoginManager loginManager, String user) {
+    loader = loadNewScreen(loader, scene, "InstructorMainScreen.fxml");
+    // load the controller of the screen
+    controller = loader.<InstructorMainScreenController>getController();
+    // set the user name for
+    controller.setUserName(user);
+    controller.setLoginManager(loginManager);
+    // Start the controller
+    controller.start(this);
+  }
+
+  /**
+   * Load and display the home screen for instructor
+   * 
+   * @param innerPane The pane that needs update
+   */
+  private void showHomeScreen(Pane innerPane) {
+    instructorInnerScreenManager.showScreen(innerPane);
+  }
+
 
 }

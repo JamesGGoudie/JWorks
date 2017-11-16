@@ -1,16 +1,13 @@
 package gui;
 
 
+import io.OutputGen;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import driver.Interpreter;
-
 
 public class JWorksGUI extends Application {
-  private Interpreter interpreter = new Interpreter();
-
   private Stage stage;
 
   @Override
@@ -18,8 +15,8 @@ public class JWorksGUI extends Application {
     Scene scene = new Scene(new AnchorPane());
 
     // create and start the login screen
-    LoginManager loginManager = new LoginManager(scene, interpreter);
-    loginManager.showLoginScreen();
+    LoginManager loginManager = new LoginManager(scene);
+    loginManager.showScreen();
 
     // show the window
     this.stage = arg0;

@@ -1,33 +1,46 @@
 package gui;
 
-import driver.Interpreter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
-public class InstructorInnerScreenController {
+public class InstructorInnerScreenController extends Controller {
   @FXML
   private Button createNewQuestionButton;
   @FXML
   private Button viewQuestionsButton;
   @FXML
+  private Button addProblemSetButton;
+  @FXML
   private Pane innerScreen;
 
-  private InstructorInnerScreenManager innerScreenManager =
-      new InstructorInnerScreenManager();
-
-  public void initialize() {}
-
-  public void initSession(
-      InstructorMainScreenManager instructorMainScreenManager,
-      Interpreter interpreter) {
+  /**
+   * Start the handling of actions on screen
+   * 
+   * @param instructorInnerScreenManager
+   */
+  public void start(InstructorInnerScreenManager instructorInnerScreenManager) {
 
     createNewQuestionButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        innerScreenManager.createNewQuestion(innerScreen, interpreter);
+        instructorInnerScreenManager.createNewQuestion(innerScreen);
+      }
+    });
+
+    viewQuestionsButton.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        instructorInnerScreenManager.viewAllProblems(innerScreen);
+      }
+    });
+
+    addProblemSetButton.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        instructorInnerScreenManager.addProblemSet(innerScreen);
       }
     });
 
