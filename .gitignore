@@ -2,6 +2,7 @@ JWorks/bin/
 *.classpath
 *.project
 *.settings
+*.class
 JWorks/*.db
 /bin/
 JWorks/src/database/Main.java
