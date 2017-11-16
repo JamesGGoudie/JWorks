@@ -20,7 +20,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         this.actOnDatabase();
         //store the primary key of row inserted
         int result;
-        result = DatabaseInserter.insertProblem(1, newProblem.getProblem(), newProblem.getAnswer(), connection);
+        result = DatabaseInserter.insertProblem(1, newProblem.getProblem(), newProblem.getAnswer(), 0, connection);
         return result;
     }
 
@@ -39,7 +39,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         for (int i = 0; i < newPSet.getQuestions().size(); i++){
             pIDs[i] = (newPSet.getQuestions().get(i)).getId();
         }
-        result = DatabaseInserter.insertProblemSet(newPSet.getMaxAttempts(), pIDs, newPSet.getStartTime(), newPSet.getEndTime(), connection);
+        result = DatabaseInserter.insertProblemSet(newPSet.getMaxAttempts(), pIDs, newPSet.getStartTime(), newPSet.getEndTime(), 1, connection);
         result = 0;
         return result;
     }
@@ -55,7 +55,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         this.actOnDatabase();
         //store the primary key of row inserted
         int result;
-        boolean test = DatabaseInserter.insertStudent(newStudent.getStudentNumber(), newStudent.getName(), newStudent.getEmailAddress(), connection);
+        boolean test = DatabaseInserter.insertStudent(newStudent.getStudentNumber(), newStudent.getName(), newStudent.getEmailAddress(), newStudent.getPassword(), connection);
         if (test){
             result = newStudent.getStudentNumber();
         } else{

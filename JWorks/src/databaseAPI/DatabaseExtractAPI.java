@@ -126,11 +126,13 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     /**
      * Use information from array to assign attributes to Problem
      */
-    private Problem populateProblem(String[] aRow){
+    private Problem populateProblem(String[] aRow) {
         Problem newProblem;
         int pid = Integer.parseInt(aRow[0]);
         String question = aRow[1];
         String answer = aRow[2];
+        //once instructor model has been created
+        //int iid = Integer.getInteger(aRow[3]);
         newProblem = new SingleAnswerProblem(question, answer);
         newProblem.setId(pid);
         return newProblem;
@@ -158,6 +160,24 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             //System.out.print("\n");
             problems.add(row);
         }
+    }
+
+    /**
+     *
+     * @param sid
+     * @param searchStudent
+     * @return
+     */
+    public Student actOnDatabase(int sid, Student searchStudent) throws DatabaseSelectException, SQLException{
+        this.actOnDatabase();
+        // stores value returned from respective table
+        ResultSet results;
+        // store metadata for corresponding ResultSet
+        ResultSetMetaData rsmd;
+        return searchStudent;
+        results = DatabaseSelector.getStudent(sid, connection);
+        rsmd = results.getMetaData();
+        String[] resultRow = new String[rsmd.getColumnCount()];
     }
 
     /**
