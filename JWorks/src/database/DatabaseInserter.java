@@ -153,7 +153,7 @@ public class DatabaseInserter {
   
   /**
    * Inserts a student into the database.
-   * @param studentNumber The unique ID of the student.
+   * @param studentNumber The unique ID of the student, as determined by the user.
    * @param name The name of the student.
    * @param email The email of the student.
    * @param password The password created for the student.
@@ -189,6 +189,7 @@ public class DatabaseInserter {
   
   /**
    * Inserts an instructor into the database.
+   * @param instructorNumber The unique ID of the instructor, as determined by the user.
    * @param name The name of the instructor.
    * @param email The email address of the instructor.
    * @param password The password created for the instructor.
@@ -196,32 +197,25 @@ public class DatabaseInserter {
    * @return The unique ID of the instructor, -1 if an uncaught error occurs.
    * @throws DatabaseInsertException Thrown if the instructor could not be added to the database.
    */
-  protected static int insertInstructor(String name, String email, String password,
-      Connection connection) throws DatabaseInsertException {
+  protected static boolean insertInstructor(int instructorNumber, String name, String email,
+      String password, Connection connection) throws DatabaseInsertException {
     
-    String sql = "INSERT INTO INSTRUCTORS(NAME, EMAIL, PASSWORD) VALUES(?,?,?)";
-    int result = -1;
+    String sql = "INSERT INTO INSTRUCTORS(ID, NAME, EMAIL, PASSWORD) VALUES(?,?,?,?)";
+    boolean result = false;
     
     PreparedStatement  preparedStatement = null;
     try {
-      preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-      preparedStatement.setString(1, name);
-      preparedStatement.setString(2, email);
-      preparedStatement.setString(3, password);
+      preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, instructorNumber);
+      preparedStatement.setString(2, name);
+      preparedStatement.setString(3, email);
+      preparedStatement.setString(4, password);
       
-      int id = 0;
-      id = preparedStatement.executeUpdate();
+      preparedStatement.executeUpdate();
       
-      if (id > 0) {
-        ResultSet uniqueKey = null;
-        uniqueKey = preparedStatement.getGeneratedKeys();
-        
-        if (uniqueKey.next()) {
-          result = uniqueKey.getInt(1);
-          
-          preparedStatement.close();
-        }
-      }
+      preparedStatement.close();
+      
+      result = true;
       
     } catch (SQLException e) {
       String errorMessage = "Failed to insert instructor into the database.";
