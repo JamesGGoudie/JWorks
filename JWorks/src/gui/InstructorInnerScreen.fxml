@@ -7,5 +7,6 @@
    <children>
       <Button fx:id="viewQuestionsButton" layoutX="344.0" layoutY="296.0" mnemonicParsing="false" text="View Question" />
       <Button fx:id="createNewQuestionButton" layoutX="328.0" layoutY="203.0" mnemonicParsing="false" text="Create new question" />
+      <Button fx:id="createStudentAccount" layoutX="305.0" layoutY="388.0" mnemonicParsing="false" text="Create New Student Account" />
    </children>
 </Pane>
