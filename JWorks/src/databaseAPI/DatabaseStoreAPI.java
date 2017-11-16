@@ -18,7 +18,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      * @throws SQLException
      */
     public int actOnDatabase(Problem newProblem) throws DatabaseInsertException, SQLException{
-        connection = DatabaseDriverAPI.connectOrCreateDataBase();
+        this.actOnDatabase();
         //store the primary key of row inserted
         int result;
         result = DatabaseInserter.insertProblem(1, newProblem.getQuestion(), newProblem.getAnswer(), connection);
@@ -32,8 +32,8 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      * @throws DatabaseInsertException
      * @throws SQLException
      */
-    public int actOnDatabase(ProblemSet newPSet) throws DatabaseInsertException, SQLException{
-        connection = DatabaseDriverAPI.connectOrCreateDataBase();
+    public int actOnDatabse(ProblemSet newPSet) throws DatabaseInsertException, SQLException{
+        this.actOnDatabase();
         //store the primary key of row inserted
         int result;
         int[] pIDs = new int[newPSet.getQuestions().size()];
@@ -52,8 +52,8 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      * @throws DatabaseInsertException
      * @throws SQLException
      */
-    public int actOnDatabase(Student newStudent) throws DatabaseInsertException, SQLException{
-        connection = DatabaseDriverAPI.connectOrCreateDataBase();
+    public int actOnDatabse(Student newStudent) throws DatabaseInsertException, SQLException{
+        this.actOnDatabase();
         //store the primary key of row inserted
         int result;
         boolean test = DatabaseInserter.insertStudent(newStudent.getStudentNumber(), newStudent.getName(), newStudent.getEmailAddress(), connection);
@@ -66,7 +66,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
     }
 
     @Override
-    public void actOnDatabase(int actObj, String[] args) {
+    public void actOnDatabase() {
         connection = DatabaseDriverAPI.connectOrCreateDataBase();
     }
 }

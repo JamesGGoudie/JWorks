@@ -15,12 +15,23 @@ import java.util.Iterator;
 import java.util.List;
 
 public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
+    private Connection connection;
     @Override
+    public void actOnDatabase(){
+        connection = DatabaseDriverAPI.connectOrCreateDataBase();
+    }
+
+    /**
+     * Gets result from query run by DatabaseSelector class, parses it and sends it to output generator
+     * @param actObj 1 for problem, 2 for problem set, 3 for Student User
+     * @param args {Primary key for user}
+     */
     public void actOnDatabase(int actObj, String[] args) {
+        this.actOnDatabase();
         //to send message to UI
         OutputGenerator outTo = new OutputGenerator();
         try {
-            Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
+            this.actOnDatabase();
             // the query result will always be parsed into an Array list
             List<String[]> problems = new ArrayList<String[]>();
             // stores value returned from respective table
@@ -70,16 +81,17 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      * @throws SQLException
      */
     public Problem actOnDatabase(int pKey, Problem searchProblem)throws DatabaseSelectException, SQLException{
-        Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
+        this.actOnDatabase();
         // stores value returned from respective table
         ResultSet results;
         // store metadata for corresponding ResultSet
         ResultSetMetaData rsmd;
-        results = DatabaseSelector.getProblemSet(pKey, connection);
+        results = DatabaseSelector.getSingleProblem(pKey, connection);
         rsmd = results.getMetaData();
         String[] resultRow = new String[rsmd.getColumnCount()];
         while(results.next()){
             for (int col = 1; col <= rsmd.getColumnCount(); col++){
+                // check what's being inserted
                 resultRow[col] = results.getString(col);
             }
         }
@@ -95,7 +107,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      * @throws SQLException
      */
     public List<Problem> actOnDatabase(List<Problem> pList) throws DatabaseSelectException, SQLException{
-        Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
+        this.actOnDatabase();
         // the query result will always be parsed into an Array list
         List<String[]> problems = new ArrayList<String[]>();
         // stores value returned from respective table
