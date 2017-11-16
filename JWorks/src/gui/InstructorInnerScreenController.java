@@ -12,7 +12,7 @@ public class InstructorInnerScreenController extends Controller {
   @FXML
   private Button viewQuestionsButton;
   @FXML
-  private Button addProblemSetButton;
+  private Button createStudentAccount;
   @FXML
   private Pane innerScreen;
 
@@ -29,18 +29,12 @@ public class InstructorInnerScreenController extends Controller {
         instructorInnerScreenManager.createNewQuestion(innerScreen);
       }
     });
-
-    viewQuestionsButton.setOnAction(new EventHandler<ActionEvent>() {
+    
+    
+    createStudentAccount.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        instructorInnerScreenManager.viewAllProblems(innerScreen);
-      }
-    });
-
-    addProblemSetButton.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        instructorInnerScreenManager.addProblemSet(innerScreen);
+        instructorInnerScreenManager.createNewStudentAccount(innerScreen);
       }
     });
 
