@@ -8,11 +8,11 @@ public class Instructor  extends User {
         this.instructorID = instructorID;
     }
 
-    public int getStudentNumber() {
+    public int getInstructorID() {
         return instructorID;
     }
 
-    public void setStudentNumber(int studentNumber) {
+    public void setInstructorID(int studentNumber) {
         this.instructorID = studentNumber;
     }
 }
