@@ -174,10 +174,12 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         ResultSet results;
         // store metadata for corresponding ResultSet
         ResultSetMetaData rsmd;
-        return searchStudent;
         results = DatabaseSelector.getStudent(sid, connection);
         rsmd = results.getMetaData();
         String[] resultRow = new String[rsmd.getColumnCount()];
+        resultRow = formatStudent(results, rsmd);
+        searchStudent = populateStudent(searchStudent, resultRow);
+        return searchStudent;
     }
 
     /**
@@ -198,5 +200,19 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         }
         //System.out.print("\n");
         return row;
+    }
+
+    /**
+     * Use info in array provided to set attribute of student object supplied
+     * @param emptyStudent instance of Student user which needs attributes to be assigned
+     * @param studentArray result row from database represented as an array
+     * @return Student object that has been assigned all its attributes
+     */
+    private Student populateStudent(Student emptyStudent, String[] studentArray){
+        emptyStudent.setStudentNumber(Integer.getInteger(studentArray[0]));
+        emptyStudent.setName(studentArray[1]);
+        emptyStudent.setEmailAddress(studentArray[2]);
+        emptyStudent.setPassword(studentArray[3]);
+        return emptyStudent;
     }
 }
