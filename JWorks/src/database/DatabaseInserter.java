@@ -100,46 +100,39 @@ public class DatabaseInserter {
         // If there exists a key.
         if (uniqueKey.next()) {
           result = uniqueKey.getInt(1);
-          boolean alterResult = 
-              DatabaseAlterer.addProblemSetToAttemptsRemaining(result, connection);
           
-          // If the problem set could not be added to the attempts remaining table.
-          if (!alterResult) {
+          boolean initializeResult = insertProblemSetsInitialAttemptCount(result, maxAttempts,
+              connection);
+          
+          // If the initial attempt counts could not be initialized.
+          if (!initializeResult) {
             result = -1;
           } else {
-            boolean initializeResult = insertProblemSetsInitialAttemptCount(result, maxAttempts,
-                connection);
+            // If everything else worked.
             
-            // If the initial attempt counts could not be initialized.
-            if (!initializeResult) {
-              result = -1;
-            } else {
-              // If everything else worked.
-              
-              sql = "INSERT INTO PROBLEMSETS_PROBLEMS_RELATIONSHIP(PROBLEMSET, PROBLEM) VALUES (?,?)";
-              
-              // Adds the problems IDs to the relationship table with the generated ID for the
-              // problem set.
-              for (int problemID : problemIDs) {
-                
-                preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setInt(1, result);
-                preparedStatement.setInt(2, problemID);
-                
-                preparedStatement.executeUpdate();
-              }
-              
-              sql = "INSERT INTO INSTRUCTORS_PROBLEMSETS_RELATIONSHIP(INSTRUCTOR, PROBLEMSET)"
-                  + "VALUES (?,?)";
+            sql = "INSERT INTO PROBLEMSETS_PROBLEMS_RELATIONSHIP(PROBLEMSET, PROBLEM) VALUES (?,?)";
+            
+            // Adds the problems IDs to the relationship table with the generated ID for the
+            // problem set.
+            for (int problemID : problemIDs) {
               
               preparedStatement = connection.prepareStatement(sql);
-              preparedStatement.setInt(1, instructorID);
-              preparedStatement.setInt(2, result);
+              preparedStatement.setInt(1, result);
+              preparedStatement.setInt(2, problemID);
               
               preparedStatement.executeUpdate();
-              
-              preparedStatement.close();
             }
+            
+            sql = "INSERT INTO INSTRUCTORS_PROBLEMSETS_RELATIONSHIP(INSTRUCTOR, PROBLEMSET)"
+                + "VALUES (?,?)";
+            
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, instructorID);
+            preparedStatement.setInt(2, result);
+            
+            preparedStatement.executeUpdate();
+            
+            preparedStatement.close();
           }
         }
       }
@@ -153,7 +146,7 @@ public class DatabaseInserter {
   
   /**
    * Inserts a student into the database.
-   * @param studentNumber The unique ID of the student.
+   * @param studentNumber The unique ID of the student, as determined by the user.
    * @param name The name of the student.
    * @param email The email of the student.
    * @param password The password created for the student.
@@ -189,6 +182,7 @@ public class DatabaseInserter {
   
   /**
    * Inserts an instructor into the database.
+   * @param instructorNumber The unique ID of the instructor, as determined by the user.
    * @param name The name of the instructor.
    * @param email The email address of the instructor.
    * @param password The password created for the instructor.
@@ -196,32 +190,25 @@ public class DatabaseInserter {
    * @return The unique ID of the instructor, -1 if an uncaught error occurs.
    * @throws DatabaseInsertException Thrown if the instructor could not be added to the database.
    */
-  protected static int insertInstructor(String name, String email, String password,
-      Connection connection) throws DatabaseInsertException {
+  protected static boolean insertInstructor(int instructorNumber, String name, String email,
+      String password, Connection connection) throws DatabaseInsertException {
     
-    String sql = "INSERT INTO INSTRUCTORS(NAME, EMAIL, PASSWORD) VALUES(?,?,?)";
-    int result = -1;
+    String sql = "INSERT INTO INSTRUCTORS(ID, NAME, EMAIL, PASSWORD) VALUES(?,?,?,?)";
+    boolean result = false;
     
     PreparedStatement  preparedStatement = null;
     try {
-      preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-      preparedStatement.setString(1, name);
-      preparedStatement.setString(2, email);
-      preparedStatement.setString(3, password);
+      preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, instructorNumber);
+      preparedStatement.setString(2, name);
+      preparedStatement.setString(3, email);
+      preparedStatement.setString(4, password);
       
-      int id = 0;
-      id = preparedStatement.executeUpdate();
+      preparedStatement.executeUpdate();
       
-      if (id > 0) {
-        ResultSet uniqueKey = null;
-        uniqueKey = preparedStatement.getGeneratedKeys();
-        
-        if (uniqueKey.next()) {
-          result = uniqueKey.getInt(1);
-          
-          preparedStatement.close();
-        }
-      }
+      preparedStatement.close();
+      
+      result = true;
       
     } catch (SQLException e) {
       String errorMessage = "Failed to insert instructor into the database.";
@@ -248,16 +235,29 @@ public class DatabaseInserter {
     try {
       statement = connection.createStatement();
       ResultSet studentNumbers = statement.executeQuery(sql);
+
+      PreparedStatement preparedStatement = null;
+      
+      sql = "INSERT INTO ATTEMPTSREMAINING(STUDENTNUMBER, PROBLEMSET, ATTEMPTSREMAINING) "
+          + "Values(?,?,?)";
+      
+      preparedStatement = connection.prepareStatement(sql);
+      // These values shouldn't change across the different students.
+      preparedStatement.setInt(2, problemSetKey);
+      preparedStatement.setInt(3, maxAttempts);
+      
+      while (studentNumbers.next()) {
+        int studentNumber = studentNumbers.getInt(1);
+        
+        preparedStatement.setInt(1, studentNumber);
+
+        preparedStatement.executeUpdate();
+      }
+
+      statement.close();
+      preparedStatement.close();
       
       result = true;
-      
-      while (studentNumbers.next() & result) {
-        int studentNumber = studentNumbers.getInt(1);
-        result = DatabaseUpdater.updateAttemptsRemaining(problemSetKey, studentNumber, maxAttempts,
-            connection);
-      }
-      
-      statement.close();
     } catch (SQLException e) {
       e.printStackTrace();
       String errorMessage = "Failed to insert inital attempt count for new problem set.";
@@ -277,36 +277,39 @@ public class DatabaseInserter {
   private static boolean insertStudentsInitialAttemptCount(int studentNumber,
       Connection connection) {
     
-    String sql = "INSERT INTO ATTEMPTSREMAINING(STUDENTNUMBER) Values(?)";
     boolean result = false;
-    
-    PreparedStatement preparedStatement = null;
+
+    String sql = "SELECT ID, MAXATTEMPTS FROM PROBLEMSETS";
     
     try {
-      preparedStatement = connection.prepareStatement(sql);
-      preparedStatement.setInt(1, studentNumber);
-      preparedStatement.executeUpdate();
-      preparedStatement.close();
-
-      sql = "SELECT MAXATTEMPTS FROM PROBLEMSETS";
       Statement statement = connection.createStatement();
-      ResultSet maxAttempts = statement.executeQuery(sql);
-      
-      int count = 1;
+      ResultSet problemSetData = statement.executeQuery(sql);
 
-      result = true;
+      PreparedStatement preparedStatement = null;
       
-      while (maxAttempts.next() & result) {
-        int problemSetKey = count;
-        int attemptsRemaining = maxAttempts.getInt(1);
+      sql = "INSERT INTO ATTEMPTSREMAINING(STUDENTNUMBER, PROBLEMSET, ATTEMPTSREMAINING) "
+          + "Values(?,?,?)";
+      
+      preparedStatement = connection.prepareStatement(sql);
+      // This value shoudln't change across the different problem sets.
+      preparedStatement.setInt(1, studentNumber);
+      
+      while (problemSetData.next()) {
         
-        result = DatabaseUpdater.updateAttemptsRemaining(problemSetKey, studentNumber,
-            attemptsRemaining, connection);
+        int problemSetKey = problemSetData.getInt(1);
+        int initialAttemptCount = problemSetData.getInt(2);
         
-        count++;
+        
+        preparedStatement.setInt(2, problemSetKey);
+        preparedStatement.setInt(3, initialAttemptCount);
+
+        preparedStatement.executeUpdate();
       }
 
       statement.close();
+      preparedStatement.close();
+      
+      result = true;
     } catch (SQLException e) {
       e.printStackTrace();
       String errorMessage = "Failed to insert inital attempt count for new student.";

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import exceptions.ConnectionFailedException;
 
@@ -15,9 +16,12 @@ public class DatabaseDriver {
   protected static Connection connectOrCreateDatabase() {
     Connection connection = null;
     
+    Properties properties = new Properties();
+    properties.setProperty("PRAGMA foreign_keys", "ON");
+    
     try {
       Class.forName("org.sqlite.JDBC");
-      connection = DriverManager.getConnection("jdbc:sqlite:jworks.db");
+      connection = DriverManager.getConnection("jdbc:sqlite:jworks.db", properties);
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
       System.out.println("The required SQLite class could not be found.");
@@ -106,7 +110,10 @@ public class DatabaseDriver {
       
       sql = "CREATE TABLE IF NOT EXISTS ATTEMPTSREMAINING "
           + "(STUDENTNUMBER INTEGER PRIMARY KEY NOT NULL,"
-          + "FOREIGN KEY(STUDENTNUMBER) REFERENCES STUDENTS(STUDENTNUMBER))";
+          + "PROBLEMSET INTEGER NOT NULL,"
+          + "ATTEMPTSREMAINING INTEGER NOT NULL,"
+          + "FOREIGN KEY(STUDENTNUMBER) REFERENCES STUDENTS(STUDENTNUMBER)"
+          + "FOREIGN KEY(PROBLEMSET) REFERENCES PROBLEMSETS(ID))";
       statement.executeUpdate(sql);
       
       statement.close();

@@ -49,7 +49,7 @@ public class DatabaseDeleter {
       
       preparedStatement.close();
       
-      result = DatabaseAlterer.removeProblemSetFromAttemptsRemaining(problemSetKey, connection);
+      result = true;
     } catch (SQLException e) {
       e.printStackTrace();
       System.out.println("A problem occurred while attempting to delete a problem set.");

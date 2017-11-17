@@ -6,10 +6,8 @@ public class InstructorInnerScreenManager extends Manager {
   private InstructorInnerScreenController controller;
   private CreateNewQuestionScreenManager createNewQuestionScreenManager =
       new CreateNewQuestionScreenManager();
-  private ViewAllProblemsManager viewAllProblemsManager =
-      new ViewAllProblemsManager();
-  private AddProblemSetScreenManager addProblemSetScreenManager =
-      new AddProblemSetScreenManager();
+  private CreateNewStudentAccountManager createNewStudentAccountManager =
+      new CreateNewStudentAccountManager();
 
   /**
    * Go to the create new question screen
@@ -20,12 +18,13 @@ public class InstructorInnerScreenManager extends Manager {
     showCreateNewQuestionScreen(innerPane);
   }
 
-  public void viewAllProblems(Pane innerPane) {
-    showViewAllProblemsScreen(innerPane);
-  }
-
-  public void addProblemSet(Pane innerPane) {
-    showAddProblemSetScreen(innerPane);
+  /**
+   * Go to the create new student account screen
+   * 
+   * @param innerPane
+   */
+  public void createNewStudentAccount(Pane innerPane) {
+    showCreateNewStudentAccountScreen(innerPane);
   }
 
   /**
@@ -49,12 +48,8 @@ public class InstructorInnerScreenManager extends Manager {
   private void showCreateNewQuestionScreen(Pane innerPane) {
     createNewQuestionScreenManager.showScreen(innerPane);
   }
-
-  private void showViewAllProblemsScreen(Pane innerPane) {
-    viewAllProblemsManager.showScreen(innerPane);
-  }
-
-  private void showAddProblemSetScreen(Pane innerPane) {
-    addProblemSetScreenManager.showScreen(innerPane);
+  
+  private void showCreateNewStudentAccountScreen(Pane innerPane) {
+    createNewStudentAccountManager.showScreen(innerPane);
   }
 }
