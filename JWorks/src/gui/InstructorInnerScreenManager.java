@@ -63,6 +63,7 @@ public class InstructorInnerScreenManager extends Manager {
   
   private void showCreateNewStudentAccountScreen(Pane innerPane) {
     createNewStudentAccountManager.showScreen(innerPane);
+  }
 
   private void showViewAllProblemsScreen(Pane innerPane) {
     viewAllProblemsManager.showScreen(innerPane);
