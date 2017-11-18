@@ -81,8 +81,18 @@ public class Interpreter {
     Command[] commands = {addSimpleProblem, viewProblem, login, addStudent, addSimpleProblemSet};
 
     // add the commands to the hashtable
+    
+    /* command by number
     for (int i = 0; i < commands.length; i++) {
       commandList.put(Integer.toString(i + 1), commands[i]);
+    }
+    */
+    
+    // command by name
+    for (Command nextCommand : commands) {
+      String commandName =
+          nextCommand.getClass().getName().substring(8);
+      commandList.put(commandName, nextCommand);
     }
   }
   
