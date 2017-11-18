@@ -1,11 +1,12 @@
 package driver;
 
+import io.OutputGen;
 import io.UI;
 
 public class JWorks {
 
   private static UI ui = new UI();
-  private static Interpreter interpreter = Interpreter.createNewInterpreter();
+  private static Interpreter interpreter = Interpreter.createNewInterpreter(OutputGen.OutputMode.COMMAND_LINE);
   private static UIParser parser = new UIParser();
 
   private static boolean exit = false;

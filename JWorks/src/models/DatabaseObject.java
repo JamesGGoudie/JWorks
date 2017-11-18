@@ -1,7 +1,9 @@
 package models;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 public abstract class DatabaseObject {
-    protected int id = -1;
+    protected final SimpleIntegerProperty idProperty = new SimpleIntegerProperty(-1);
 
     protected DatabaseObject() {}
 
@@ -10,7 +12,7 @@ public abstract class DatabaseObject {
      * @return the unique key of this object
      */
     public int getId() {
-        return id;
+        return idProperty.get();
     }
 
     /**
@@ -19,7 +21,7 @@ public abstract class DatabaseObject {
      */
     public void setId(int id)
     {
-        this.id = id;
+        idProperty.set(id);
     }
 
     /**
@@ -27,6 +29,6 @@ public abstract class DatabaseObject {
      * @return whether or not this object has an identifier key
      */
     public boolean hasId() {
-        return id == -1;
+        return idProperty.get() == -1;
     }
 }

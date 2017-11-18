@@ -6,7 +6,11 @@ import models.ProblemSet;
 import java.util.List;
 
 public interface OutputGen {
-	
+
+	enum OutputMode {
+		COMMAND_LINE, GUI
+	};
+
 	/**
 	 * Output a String out onto the UI
 	 * @param out
@@ -31,6 +35,10 @@ public interface OutputGen {
 	 */
 	void problemSetOutput(List<String[]> problemSet);
 
-
+	/**
+	 * Returns the last Object that was sent to this OutputGenerator.
+	 * @return the last Object that was sent to this OutputGenerator
+	 */
+	Object getLastResult();
 	
 }

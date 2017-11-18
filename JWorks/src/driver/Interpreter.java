@@ -4,14 +4,13 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Hashtable;
 
-import command.Command;
-import command.AddSimpleProblemCommand;
-import command.ViewProblemsCommand;
-
+import command.*;
 import databaseAPI.DatabaseDriverAPI;
 import databaseAPI.DatabaseExtractAPI;
 import databaseAPI.DatabaseStoreAPI;
+import io.GUIOutputGenerator;
 import io.OutputGen;
+import io.OutputGen.OutputMode;
 import io.OutputGenerator;
 
 /**
@@ -26,6 +25,9 @@ public class Interpreter {
 
   private AddSimpleProblemCommand addSimpleProblem;
   private ViewProblemsCommand viewProblem;
+  private AddSimpleProblemSetCommand addSimpleProblemSet;
+  private LoginCommand login;
+  private AddStudentCommand addStudent;
 
   private Command commandObject;
   private String[] parameters;
@@ -47,8 +49,10 @@ public class Interpreter {
   
   /**
    * Default constructor
+   * @param mode 1 for command line mode, 2 for GUI mode.
    */
-  private Interpreter() {
+
+  private Interpreter(OutputMode mode) {
     // database stuff
     connection = DatabaseDriverAPI.connectOrCreateDataBase();
     DatabaseDriverAPI.initialize(connection);
@@ -56,15 +60,25 @@ public class Interpreter {
     databaseStore = new DatabaseStoreAPI();
     databaseExtract = new DatabaseExtractAPI();
 
-    // initialize output generator
-    outputGenerator = new OutputGenerator();
+    // initialize output generator depending on application mode
+    switch(mode) {
+      case COMMAND_LINE:
+        outputGenerator = new OutputGenerator();
+        break;
+      case GUI:
+        outputGenerator = new GUIOutputGenerator();
+        break;
+    }
 
     // create all command object being used
     addSimpleProblem = new AddSimpleProblemCommand(databaseStore, outputGenerator);
     viewProblem = new ViewProblemsCommand(databaseExtract, outputGenerator);
+    addSimpleProblemSet = new AddSimpleProblemSetCommand(databaseStore, outputGenerator);
+    login = new LoginCommand(databaseExtract, outputGenerator);
+    addStudent = new AddStudentCommand(databaseStore, outputGenerator);
 
     // add the commands into an array
-    Command[] commands = {addSimpleProblem, viewProblem};
+    Command[] commands = {addSimpleProblem, viewProblem, login, addStudent, addSimpleProblemSet};
 
     // add the commands to the hashtable
     for (int i = 0; i < commands.length; i++) {
@@ -72,9 +86,9 @@ public class Interpreter {
     }
   }
   
-  public static Interpreter createNewInterpreter() {
+  public static Interpreter createNewInterpreter(OutputMode mode) {
     if(referencedInterpreter == null) {
-      referencedInterpreter = new Interpreter();
+      referencedInterpreter = new Interpreter(mode);
     }
     return referencedInterpreter;
   }
@@ -83,8 +97,9 @@ public class Interpreter {
    * Execute the action base on the user input
    * 
    * @param formattedInput
+   * @return Whether or not the command successfully executed
    */
-  public void executeAction(String[] formattedInput) {
+  public boolean executeAction(String[] formattedInput) {
     // extract the command and parameters from the formattedInput
     command = formattedInput[0];
     parameters = Arrays.copyOfRange(formattedInput, 1, formattedInput.length);
@@ -93,8 +108,13 @@ public class Interpreter {
     if (commandList.containsKey(command)) {
       // Find the corresponding command and execute it
       commandObject = commandList.get(command);
-      commandObject.execute(parameters);
+      return commandObject.execute(parameters);
     }
     // TODO: raise error for invalid commands
+    return false;
+  }
+
+  public OutputGen getOutputGenerator() {
+    return outputGenerator;
   }
 }

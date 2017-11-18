@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import driver.Interpreter;
+import io.OutputGen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,7 +13,7 @@ import javafx.scene.layout.Pane;
 
 public class Manager {
   
-  protected static Interpreter interpreter = Interpreter.createNewInterpreter();
+  protected static Interpreter interpreter = Interpreter.createNewInterpreter(OutputGen.OutputMode.GUI);
   protected FXMLLoader loader;
 
   /**

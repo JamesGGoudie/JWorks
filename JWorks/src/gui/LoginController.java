@@ -31,11 +31,17 @@ public class LoginController extends Controller {
       public void handle(ActionEvent arg0) {
         // get the uesr name from the user name tex field
         String user = username.getText();
+        String pw = password.getText();
         // check for any empty field
-        if (user.equals("")) {
-          errorMessage.setText("Please enter the username");
+        if (user.equals("") || pw.equals("")) {
+          errorMessage.setText("Please enter all required fields");
         } else {
-          loginManager.Login(user);
+          // Show validation error and clear fields if login failed
+          if (!loginManager.Login(user, pw)) {
+            errorMessage.setText("Incorrect username or password");
+            username.clear();
+            password.clear();
+          };
         }
       }
     });

@@ -15,8 +15,9 @@ public class UI implements UIGen{
 		
 		System.out.println("1. Create a question.\n");
 		System.out.println("2. View a question.\n");
+		System.out.println("4. Add a student.\n");
 		System.out.println("--------------------------");
-		System.out.println("Choose a option: ");
+		System.out.println("Choose a option or type \"exit\" to exit: ");
 		String  choice = userInput.nextLine();
 				
 		return choice;
