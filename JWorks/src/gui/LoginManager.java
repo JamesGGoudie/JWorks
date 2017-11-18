@@ -7,6 +7,7 @@ public class LoginManager extends Manager {
   private LoginController controller;
   private InstructorMainScreenManager instructorMainScreenManager;
   private StudentMainScreenManager studentMainScreenManager;
+  private final String COMMAND = "LoginCommand";
 
   /**
    * Default constructor
@@ -26,7 +27,7 @@ public class LoginManager extends Manager {
    */
 
   public boolean Login(String user, String password) {
-    String[] args = { "3", user, password };
+    String[] args = {COMMAND, user, password };
     if (interpreter.executeAction(args)) {
 		if (user.matches("[0-9]+")) {
 			showStudentMainScreen(user);
