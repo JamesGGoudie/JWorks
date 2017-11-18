@@ -52,7 +52,7 @@ In the command line version, the following commands can be typed into the comman
 To add a new question:
 
 ```
-1 "Question" answer
+AddSimpleProblemCommand "Question" answer
 ```
 
 Where Question is a string wrapped by double quotes, and answer is a string without a space.
@@ -60,8 +60,16 @@ Where Question is a string wrapped by double quotes, and answer is a string with
 To view all saved questions:
 
 ```
-2
+ViewProblemsCommand
 ```
+
+To add a student:
+
+```
+AddStudentCommand "Student_First_Last_Name" email password student#
+```
+
+Where Student_First_Last_Name is a string wrapped by double quotes, space is allowed.
 
 #### Running the GUI Version:
 1. Compile and run the project using JWorks/src/gui/JWorksGUI.java as the main class.
