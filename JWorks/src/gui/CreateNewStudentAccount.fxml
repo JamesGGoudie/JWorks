@@ -2,24 +2,31 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane fx:id="innerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CreateNewStudentAccountController">
    <children>
-      <TextField fx:id="firstName" layoutX="144.0" layoutY="178.0" />
-      <TextField fx:id="studentNumber" layoutX="144.0" layoutY="267.0" />
-      <TextField fx:id="lastName" layoutX="316.0" layoutY="178.0" />
-      <TextField fx:id="emailAddress" layoutX="144.0" layoutY="359.0" prefHeight="25.0" prefWidth="259.0" />
-      <Label layoutX="144.0" layoutY="154.0" text="First Name" />
-      <Label layoutX="316.0" layoutY="154.0" text="Last Name" />
-      <Label layoutX="144.0" layoutY="240.0" text="Student Number" />
-      <Label layoutX="144.0" layoutY="337.0" text="Email Address" />
-      <Button fx:id="submitButton" layoutX="363.0" layoutY="476.0" mnemonicParsing="false" text="Submit" />
-      <Label fx:id="successfulMessage" layoutX="323.0" layoutY="513.0" text=" " textFill="BLUE" />
-      <Label fx:id="firstNameError" layoutX="144.0" layoutY="210.0" text=" " textFill="RED" />
-      <Label fx:id="lastNameError" layoutX="315.0" layoutY="210.0" text=" " textFill="RED" />
-      <Label fx:id="studentNumberError" layoutX="144.0" layoutY="299.0" text=" " textFill="RED" />
-      <Label fx:id="emailError" layoutX="144.0" layoutY="395.0" text=" " textFill="RED" />
+      <TextField fx:id="firstName" layoutX="146.0" layoutY="111.0" />
+      <TextField fx:id="studentNumber" layoutX="146.0" layoutY="200.0" />
+      <TextField fx:id="lastName" layoutX="318.0" layoutY="111.0" />
+      <TextField fx:id="emailAddress" layoutX="146.0" layoutY="292.0" prefHeight="25.0" prefWidth="259.0" />
+      <Label layoutX="146.0" layoutY="87.0" text="First Name" />
+      <Label layoutX="318.0" layoutY="87.0" text="Last Name" />
+      <Label layoutX="146.0" layoutY="173.0" text="Student Number" />
+      <Label layoutX="146.0" layoutY="270.0" text="Email Address" />
+      <Button fx:id="submitButton" layoutX="363.0" layoutY="543.0" mnemonicParsing="false" text="Submit" />
+      <Label fx:id="successfulMessage" layoutX="323.0" layoutY="580.0" text=" " textFill="BLUE" />
+      <Label fx:id="firstNameError" layoutX="146.0" layoutY="143.0" text=" " textFill="RED" />
+      <Label fx:id="lastNameError" layoutX="317.0" layoutY="143.0" text=" " textFill="RED" />
+      <Label fx:id="studentNumberError" layoutX="146.0" layoutY="232.0" text=" " textFill="RED" />
+      <Label fx:id="emailError" layoutX="146.0" layoutY="328.0" text=" " textFill="RED" />
+      <PasswordField fx:id="password" layoutX="146.0" layoutY="380.0" />
+      <PasswordField fx:id="confirmPassword" layoutX="146.0" layoutY="465.0" />
+      <Label layoutX="146.0" layoutY="356.0" text="Password" />
+      <Label layoutX="146.0" layoutY="440.0" text="Confirm Password" />
+      <Label fx:id="passwordError" layoutX="148.0" layoutY="413.0" text="  " textFill="RED" />
+      <Label fx:id="passwordConfirmError" layoutX="148.0" layoutY="500.0" text="  " textFill="RED" />
    </children>
 </Pane>
