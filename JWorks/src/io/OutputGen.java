@@ -36,6 +36,12 @@ public interface OutputGen {
 	void problemSetOutput(List<String[]> problemSet);
 
 	/**
+	 * Outputs a general object to the stream.
+	 * @param obj the object to output
+	 */
+	void outputPayload(Object obj);
+
+	/**
 	 * Returns the last Object that was sent to this OutputGenerator.
 	 * @return the last Object that was sent to this OutputGenerator
 	 */

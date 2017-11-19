@@ -62,6 +62,16 @@ public class OutputGenerator implements OutputGen{
 	}
 
 	/**
+	 * Outputs a general object to the stream.
+	 *
+	 * @param obj the object to output
+	 */
+	@Override
+	public void outputPayload(Object obj) {
+		System.out.println(obj.toString());
+	}
+
+	/**
 	 * Returns the last Object that was sent to this OutputGenerator.
 	 *
 	 * @return the last Object that was sent to this OutputGenerator

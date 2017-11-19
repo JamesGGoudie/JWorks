@@ -51,6 +51,16 @@ public class GUIOutputGenerator implements OutputGen {
     }
 
     /**
+     * Outputs a general object to the stream.
+     *
+     * @param obj the object to output
+     */
+    @Override
+    public void outputPayload(Object obj) {
+        this.lastResult = obj;
+    }
+
+    /**
      * Returns the last Object that was sent to this OutputGenerator.
      *
      * @return the last Object that was sent to this OutputGenerator
