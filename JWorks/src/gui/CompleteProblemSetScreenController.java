@@ -124,7 +124,7 @@ public class CompleteProblemSetScreenController extends Controller {
         problemAnswer.setText(currentAttempt.getAnswers().get(index));
 
         // Update progress bar
-        progressBar.setProgress((index + 1) / numProblems);
+        progressBar.setProgress((double) (index + 1) / (double) numProblems);
 
         // Update button disable state if necessary
         // Prev button disabled on first question
