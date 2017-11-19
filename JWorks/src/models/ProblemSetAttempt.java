@@ -27,6 +27,10 @@ public class ProblemSetAttempt extends DatabaseObject {
         this.timeAttempted = Date.from(Instant.now());
 
         this.answers = new ArrayList<>(problemSet.getQuestions().size());
+        // Fill answers with blanks
+        for (int i = 0; i < problemSet.getQuestions().size(); i++) {
+            answers.add("");
+        }
     }
 
     /**
