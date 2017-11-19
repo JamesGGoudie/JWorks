@@ -21,6 +21,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         //store the primary key of row inserted
         int result;
         result = DatabaseInserter.insertProblem(1, newProblem.getProblem(), newProblem.getAnswer(), 0, connection);
+        newProblem.setId(result);
         return result;
     }
 
@@ -31,7 +32,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      * @throws DatabaseInsertException
      * @throws SQLException
      */
-    public int actOnDatabse(ProblemSet newPSet) throws DatabaseInsertException, SQLException{
+    public int actOnDatabase(ProblemSet newPSet) throws DatabaseInsertException, SQLException{
         this.actOnDatabase();
         //store the primary key of row inserted
         int result;
@@ -40,7 +41,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
             pIDs[i] = (newPSet.getQuestions().get(i)).getId();
         }
         result = DatabaseInserter.insertProblemSet(newPSet.getMaxAttempts(), pIDs, newPSet.getStartTime(), newPSet.getEndTime(), 1, connection);
-        result = 0;
+        newPSet.setId(result);
         return result;
     }
 
@@ -51,7 +52,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      * @throws DatabaseInsertException
      * @throws SQLException
      */
-    public int actOnDatabse(Student newStudent) throws DatabaseInsertException, SQLException{
+    public int actOnDatabase(Student newStudent) throws DatabaseInsertException, SQLException{
         this.actOnDatabase();
         //store the primary key of row inserted
         int result;
@@ -71,7 +72,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      * @throws DatabaseInsertException
      * @throws SQLException
      */
-    public int actOnDatabse(Instructor newInstructor) throws DatabaseInsertException, SQLException{
+    public int actOnDatabase(Instructor newInstructor) throws DatabaseInsertException, SQLException{
         this.actOnDatabase();
         int result;
         boolean test = DatabaseInserter.insertInstructor(newInstructor.getInstructorID(), newInstructor.getName(), newInstructor.getEmailAddress(), newInstructor.getPassword(), connection);
