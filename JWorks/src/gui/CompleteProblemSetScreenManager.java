@@ -6,6 +6,9 @@ import models.ProblemSetAttempt;
 import models.Student;
 
 public class CompleteProblemSetScreenManager extends Manager {
+    private StudentInnerScreenManager homeScreenManager;
+    private Pane innerPane;
+
     /**
      * Load a screen to attempt a problem set.
      *
@@ -13,11 +16,13 @@ public class CompleteProblemSetScreenManager extends Manager {
      * @param student   The currently logged in Student
      * @param problemSet The problem set the student is attempting
      */
-    public void showScreen(Pane innerPane, Student student, ProblemSet problemSet) {
+    public void showScreen(Pane innerPane, Student student, ProblemSet problemSet, StudentInnerScreenManager homeScreenManager) {
         loader = loadNewPane(loader, innerPane, "CompleteProblemSetScreen.fxml");
         CompleteProblemSetScreenController controller =
                 loader.getController();
         controller.start(this, problemSet, student);
+        this.homeScreenManager = homeScreenManager;
+        this.innerPane = innerPane;
     }
 
     /**
@@ -39,5 +44,10 @@ public class CompleteProblemSetScreenManager extends Manager {
                 + score
                 + "%.");
 
+        returnToMainScreen();
+    }
+
+    public void returnToMainScreen() {
+        homeScreenManager.showScreen(innerPane);
     }
 }
