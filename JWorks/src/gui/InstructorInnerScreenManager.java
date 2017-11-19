@@ -8,6 +8,13 @@ public class InstructorInnerScreenManager extends Manager {
       new CreateNewQuestionScreenManager();
   private CreateNewStudentAccountManager createNewStudentAccountManager =
       new CreateNewStudentAccountManager();
+<<<<<<< HEAD
+=======
+  private ViewAllProblemsManager viewAllProblemsManager =
+      new ViewAllProblemsManager();
+  private AddProblemSetScreenManager addProblemSetScreenManager =
+      new AddProblemSetScreenManager();
+>>>>>>> origin/dev
 
   /**
    * Go to the create new question screen
@@ -51,5 +58,16 @@ public class InstructorInnerScreenManager extends Manager {
   
   private void showCreateNewStudentAccountScreen(Pane innerPane) {
     createNewStudentAccountManager.showScreen(innerPane);
+<<<<<<< HEAD
+=======
+  }
+
+  private void showViewAllProblemsScreen(Pane innerPane) {
+    viewAllProblemsManager.showScreen(innerPane);
+  }
+
+  private void showAddProblemSetScreen(Pane innerPane) {
+    addProblemSetScreenManager.showScreen(innerPane);
+>>>>>>> origin/dev
   }
 }

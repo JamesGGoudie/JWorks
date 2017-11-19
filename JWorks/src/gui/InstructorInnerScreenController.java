@@ -13,6 +13,11 @@ public class InstructorInnerScreenController extends Controller {
   private Button viewQuestionsButton;
   @FXML
   private Button createStudentAccount;
+<<<<<<< HEAD
+=======
+  @FXML
+  private Button addProblemSetButton;
+>>>>>>> origin/dev
   @FXML
   private Pane innerScreen;
 
