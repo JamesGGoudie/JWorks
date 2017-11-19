@@ -7,7 +7,12 @@ import org.junit.Test;
 public class TestViewQuestionAction {
 
 	@Test
-	public void test() {
+	public void testGetAllProblems() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testGetWhenNoProblems() {
 		fail("Not yet implemented");
 	}
 

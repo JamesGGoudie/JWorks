@@ -20,11 +20,12 @@ import exceptions.DatabaseInsertException;
 import models.Problem;
 import models.SingleAnswerProblem; 
 
-public class TestAddQuetionAction {
-	
-	@Rule
-	public final ExpectedException exception = ExpectedException.none();
 
+public class TestAddQuetionAction {
+
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
 	@Test
 	public void testAddQuestion() {
 		String[] question = {"Blue","4"};
@@ -45,8 +46,13 @@ public class TestAddQuetionAction {
 
 	}
 	
-	@Test
+	// not catching the error
+	@Test(expected = DatabaseInsertException.class)
 	public void testAddNULLQuestion() {
+		// the second way of exception catching- NOT WORKING AS WELL
+		//exception.expect(DatabaseInsertException.class);
+		//exception.expectMessage("Failed to insert a problem into the database.");
+		
 		String[] question = {null, null};
 		Problem problem = new SingleAnswerProblem(question[0], question[1]);
 		
@@ -54,19 +60,8 @@ public class TestAddQuetionAction {
 		
 		Action action = new AddQuestionAction();
 		
-		Object actual = action.execute(problem, databaseAPI);
-		Problem expected = problem;
-		
-		assertEquals(expected, actual);
-		
+		action.execute(problem, databaseAPI);
 	}
 	
-	@Test
-	public void testAddQuestionExpectError() {
-		// how to break this
-		
-		//exception.expect(DatabaseInsertException.class);
-		assertTrue(true);
-	}
 
 }
