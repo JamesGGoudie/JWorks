@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -72,9 +73,9 @@ public class CompleteProblemSetScreenController extends Controller {
      */
     @Override
     public void initialize() {
-        nextQuestionButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        nextQuestionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 // Move to the next question only if there is an answer entered
                 if (problemAnswer.getText().trim().length() > 0) {
                     // Save and move on!
@@ -86,18 +87,18 @@ public class CompleteProblemSetScreenController extends Controller {
             }
         });
 
-        prevQuestionButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        prevQuestionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 // Save current answer and go back to previous
                 currentAttempt.setAnswer(currentProblemIndex, problemAnswer.getText());
                 setupQuestion(--currentProblemIndex);
             }
         });
 
-        submitAnswersButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        submitAnswersButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 // Submit if there is an answer entered
                 if (problemAnswer.getText().trim().length() > 0) {
                     currentAttempt.setAnswer(currentProblemIndex, problemAnswer.getText());
