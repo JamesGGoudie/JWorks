@@ -1,5 +1,6 @@
 package models;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,8 @@ public abstract class ProblemSet extends DatabaseObject {
 
     protected ProblemSet() {
         super();
+        this.startTime = Date.from(Instant.now());
+        this.endTime = Date.from(Instant.now());
     }
 
     /**

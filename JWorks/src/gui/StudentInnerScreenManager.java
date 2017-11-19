@@ -17,4 +17,9 @@ public class StudentInnerScreenManager extends Manager{
     controller = loader.<StudentInnerScreenController>getController();
     controller.start(this);
   }
+
+  public void viewProblemSets(Pane innerPane) {
+    ViewProblemSetScreenManager manager = new ViewProblemSetScreenManager();
+    manager.showScreen(innerPane);
+  }
 }
