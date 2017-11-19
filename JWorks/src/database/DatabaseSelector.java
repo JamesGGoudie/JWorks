@@ -115,7 +115,8 @@ public class DatabaseSelector {
   }
   
   /**
-   * Returns a problem set from the database.
+   * Returns a problem set from the database. Note that the times need to be multiplied by 1000 to
+   * be used as a Date object.
    * @param problemSetKey The unique ID of the problem set.
    * @param connection The connection to the database file.
    * @return A ResultSet containing data about a problem set, null if there was a uncaught error.
