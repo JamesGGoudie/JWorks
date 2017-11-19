@@ -116,6 +116,16 @@ public class DatabaseDriver {
           + "FOREIGN KEY(PROBLEMSET) REFERENCES PROBLEMSETS(ID))";
       statement.executeUpdate(sql);
       
+      sql = "CREATE TABLE IF NOT EXISTS PREVIOUSATTEMPTS "
+          + "(STUDENTNUMBER INTEGER PRIMARY KEY NOT NULL,"
+          + "PROBLEMSET INTEGER NOT NULL,"
+          + "PROBLEM INTEGER NOT NULL,"
+          + "STUDENTANSWER STRING NOT NULL,"
+          + "FOREIGN KEY(STUDENTNUMBER) REFERENCES STUDENTS(STUDENTNUMBER)"
+          + "FOREIGN KEY(PROBLEMSET) REFERENCES PROBLEMSETS(ID)"
+          + "FOREIGN KEY(PROBLEM) REFERENCES PROBLEMS(ID))";
+      statement.executeUpdate(sql);
+      
       statement.close();
       result = true;
       
