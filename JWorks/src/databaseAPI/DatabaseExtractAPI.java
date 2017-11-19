@@ -3,6 +3,7 @@ package databaseAPI;
 import database.DatabaseSelector;
 import exceptions.DatabaseInsertException;
 import exceptions.DatabaseSelectException;
+import io.GUIOutputGenerator;
 import io.OutputGenerator;
 import models.*;
 
@@ -11,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,11 +31,9 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     public void actOnDatabase(int actObj, String[] args) {
         this.actOnDatabase();
         //to send message to UI
-        OutputGenerator outTo = new OutputGenerator();
+        GUIOutputGenerator outTo = new GUIOutputGenerator();
         try {
             this.actOnDatabase();
-            // the query result will always be parsed into an Array list
-            List<String[]> problems = new ArrayList<String[]>();
             // stores value returned from respective table
             ResultSet results;
             // store metadata for corresponding ResultSet
@@ -41,16 +41,10 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             switch (actObj){
                 // when a request is made to return all problems
                 case 1:
-                    results = DatabaseSelector.getAllProblems(connection);
-                    rsmd = results.getMetaData();
-                    formatResult(results, rsmd, problems);
-                    outTo.problemSetOutput(problems);
+                    outputAllProblems();
                     break;
                 case 2:
-                    results = DatabaseSelector.getProblemSet(Integer.parseInt(args[0]), connection);
-                    rsmd = results.getMetaData();
-                    formatResult(results, rsmd, problems);
-                    outTo.problemSetOutput(problems);
+                    outputProblemSet(Integer.parseInt(args[0]));
                     break;
                 case 3:
                     results = DatabaseSelector.getStudent(Integer.parseInt(args[0]), connection);
@@ -214,5 +208,135 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         emptyStudent.setEmailAddress(studentArray[2]);
         emptyStudent.setPassword(studentArray[3]);
         return emptyStudent;
+    }
+    
+    /**
+     * Gets all of the problems from the database as a ResultSet and then passes each problem
+     * individually to the GUI output generator.
+     * @throws DatabaseSelectException Thrown if the result set could not be retrieved from the
+     *                                 database.
+     * @throws SQLException Thrown if there was an attempt to access an inaccessible resultSet.
+     */
+    private void outputAllProblems() throws DatabaseSelectException, SQLException {
+        GUIOutputGenerator outTo = new GUIOutputGenerator();
+        List<Problem> allProblems = new ArrayList<Problem>();
+        ResultSet problemsRaw = DatabaseSelector.getAllProblems(this.connection);
+        
+        // If the databaseSelector failed, then we do not want to continue.
+        if (problemsRaw == null) {
+            String errorMessage = "Got a null object instead of a resultSet when trying to get";
+            errorMessage += " all problems from the database.";
+            throw new DatabaseSelectException(errorMessage);
+        } else {
+            // For every problem in the result set.
+            while (problemsRaw.next()) {
+                // Get all of the information from the current item in the result set.
+                int id = problemsRaw.getInt(1);
+                int questionType = problemsRaw.getInt(2);
+                String question = problemsRaw.getString(3);
+                String answer = problemsRaw.getString(4);
+                
+                // If we had more than one question type, this switch statement would be
+                // useful.
+                switch (questionType) {
+                    case (1):
+                        // Instantiate the problem with data from the result set.
+                        SingleAnswerProblem problem = new SingleAnswerProblem(question,
+                            answer);
+                        problem.setId(id);
+                        
+                        // This is just in case in a future build we need to send the problems
+                        // together to the output generator.
+                        allProblems.add(problem);
+                        
+                        // Pass the problem to the GUI output generator.
+                        outTo.output(problem);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+            // Close the result set to allow for modification of the data.
+            problemsRaw.close();
+        }
+    }
+
+    /**
+     * 
+     * @param problemSetKey The unique ID of the problem set.
+     * @throws DatabaseSelectException Thrown if a resultSet could not be retrieved from the
+     *                                 database.
+     * @throws SQLException Thrown if there was an attempt to access an inaccessible resultSet.
+     */
+    private void outputProblemSet(int problemSetKey) throws DatabaseSelectException, SQLException {
+        GUIOutputGenerator outTo = new GUIOutputGenerator();
+        ResultSet problemsRaw = DatabaseSelector.getProblemsInProblemSet(problemSetKey,
+            this.connection);
+        
+        ResultSet problemSetRaw = DatabaseSelector.getProblemSet(problemSetKey, this.connection);
+        
+        // If the databaseSelector failed, then we do not want to continue.
+        if (problemsRaw == null) {
+            String errorMessage = "Got a null object instead of a resultSet when trying to get";
+            errorMessage += " the problems contained in a problem set from the database.";
+            throw new DatabaseSelectException(errorMessage);
+        } else if (problemSetRaw == null) {
+            String errorMessage = "Got a null object instead of a resultSet when trying to get a";
+            errorMessage += " problem set from the database.";
+            throw new DatabaseSelectException(errorMessage);
+        } else {
+            List<Problem> problems = new ArrayList<Problem>();
+            
+            // For every problem in the problem set.
+            while (problemsRaw.next()) {
+                // Get all of the information from the current item in the result set.
+                int id = problemsRaw.getInt(1);
+                int questionType = problemsRaw.getInt(2);
+                String question = problemsRaw.getString(3);
+                String answer = problemsRaw.getString(4);
+                
+                Problem problem = null;
+                
+                // If we had more than one question type, this switch statement would be
+                // useful.
+                switch (questionType) {
+                    case (1):
+                        // Instantiate the problem with data from the result set.
+                        problem = new SingleAnswerProblem(question,
+                            answer);
+                        problem.setId(id);
+                        break;
+                    default:
+                        break;
+                }
+                
+                // Make sure that we actually got a problem from the database.
+                if (problem != null) {
+                    problems.add(problem);
+                }
+            }
+            
+            ProblemSet problemSet = new SimpleProblemSet(problems);
+            
+            // Get the data from the result set.
+            int id = problemSetRaw.getInt(1);
+            int maxAttempts = problemSetRaw.getInt(2);
+            // These values from the result set need to be multiplied by 1000 because time is
+            // stored as seconds in the database, but the Date object requires milliseconds.
+            Date startTime = new Date(problemSetRaw.getInt(3) * 1000L);
+            Date endTime = new Date(problemSetRaw.getInt(3) * 1000L);
+            
+            problemSet.setId(id);
+            problemSet.setMaxAttempts(maxAttempts);
+            problemSet.setStartTime(startTime);
+            problemSet.setEndTime(endTime);
+            
+            outTo.output(problemSet);
+
+            // Close the result sets to allow for modification of the data.
+            problemsRaw.close();
+            problemSetRaw.close();
+        }
     }
 }
