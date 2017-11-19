@@ -403,4 +403,27 @@ public class DatabaseSelector {
     
     return result;
   }
+  
+  protected static ResultSet getStudentsResults(int studentNumber, int problemSet,
+      int attemptNumber, Connection connection) throws DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT PROBLEM, STUDENTANSWER FROM PREVIOUSATTEMPTS WHERE (STUDENTNUMBER,"
+        + "PROBLEMSET, ATTEMPTNUMBER) = (?,?,?)";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      
+      preparedStatement.setInt(1, studentNumber);
+      preparedStatement.setInt(2, problemSet);
+      preparedStatement.setInt(3, attemptNumber);
+      
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      String errorMessage = "Could not retrieve student's results from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
 }

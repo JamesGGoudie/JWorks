@@ -237,7 +237,7 @@ public class DatabaseInserter {
       throws DatabaseInsertException {
     
     boolean result = false;
-    String sql = "INSERT INTO PREVIOUSATTEMPTS(STUDENTNUMBER, ATTEMPTNUMBER, PROBLEMSET, PROBLEM, "
+    String sql = "INSERT INTO PREVIOUSATTEMPTS(STUDENTNUMBER, PROBLEMSET, ATTEMPTNUMBER, PROBLEM, "
         + "STUDENTANSWER) VALUES(?,?,?,?,?)";
     
     PreparedStatement preparedStatement = null;
@@ -246,8 +246,8 @@ public class DatabaseInserter {
       preparedStatement = connection.prepareStatement(sql);
       // These values shouldn't change across the different problems.
       preparedStatement.setInt(1, studentNumber);
-      preparedStatement.setInt(2, attemptNumber);
-      preparedStatement.setInt(3, problemSetKey);
+      preparedStatement.setInt(2, problemSetKey);
+      preparedStatement.setInt(3, attemptNumber);
       
       for (int i = 0; i < problems.length; i++) {
         preparedStatement.setInt(4, problems[i]);
