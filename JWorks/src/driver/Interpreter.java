@@ -12,6 +12,7 @@ import io.GUIOutputGenerator;
 import io.OutputGen;
 import io.OutputGen.OutputMode;
 import io.OutputGenerator;
+import models.User;
 
 /**
  * Interprets the user input and execute the execute the action
@@ -38,6 +39,7 @@ public class Interpreter {
   private Connection connection;
 
   private OutputGen outputGenerator;
+  private User sessionUser;
 
 
 
@@ -126,5 +128,21 @@ public class Interpreter {
 
   public OutputGen getOutputGenerator() {
     return outputGenerator;
+  }
+
+  /**
+   * Gets the current logged in user. Null if no user is logged in.
+   * @return the logged in user. Null if no user is logged in.
+   */
+  public User getCurrentUser() {
+    return sessionUser;
+  }
+
+  /**
+   * Sets the current logged in user.
+   * @param sessionUser the user to set the session to
+   */
+  public void setCurrentUser(User sessionUser) {
+    this.sessionUser = sessionUser;
   }
 }

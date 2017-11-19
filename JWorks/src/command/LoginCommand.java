@@ -4,6 +4,7 @@ import action.LoginAction;
 import databaseAPI.DatabaseAPI;
 import io.OutputGen;
 import models.Student;
+import models.User;
 
 public class LoginCommand extends Command {
 
@@ -32,10 +33,8 @@ public class LoginCommand extends Command {
         Object result = action.execute(user, password, this.databaseAPI);
         
         // Parse result
-        if (result instanceof Student) {
-        	Student student = (Student) result;
-        	// TODO: Change output stream to handle non-problem/string payloads
-        	// outputStream.output(student.toString());
+        if (result instanceof User) {
+        	outputStream.outputPayload(result);
         	return true;
         }
         
