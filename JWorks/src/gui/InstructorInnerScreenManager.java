@@ -8,13 +8,10 @@ public class InstructorInnerScreenManager extends Manager {
       new CreateNewQuestionScreenManager();
   private CreateNewStudentAccountManager createNewStudentAccountManager =
       new CreateNewStudentAccountManager();
-<<<<<<< HEAD
-=======
   private ViewAllProblemsManager viewAllProblemsManager =
       new ViewAllProblemsManager();
   private AddProblemSetScreenManager addProblemSetScreenManager =
       new AddProblemSetScreenManager();
->>>>>>> origin/dev
 
   /**
    * Go to the create new question screen
