@@ -56,63 +56,62 @@ public class CreateNewStudentAccountController {
 					resetFields();
 					successfulMessage.setText("Sussefully added account");
 				}
-
 			}
 		});
 	}
 	
+
 	private boolean passwordMatched() {
 		boolean result = false;
-		if(password.getText().equals(confirmPassword.getText())) {
+		if (password.getText().equals(confirmPassword.getText())) {
 			result = true;
-		}else {
+		} else {
 			passwordConfirmError.setText("Password and confirmation password did not match");
 		}
-		
-		
 		return result;
 	}
+
 
 	private boolean hasEmptyFields() {
 		boolean result = false;
 		if (firstName.getText().equals("")) {
 			firstNameError.setText("Please enter the first name");
 			result = true;
-		}else {
+		} else {
 			firstNameError.setText("");
 		}
 		if (lastName.getText().equals("")) {
 			lastNameError.setText("Please enter the last name");
 			result = true;
-		}else {
+		} else {
 			lastNameError.setText("");
 		}
 		if (studentNumber.getText().equals("")) {
 			studentNumberError.setText("Please enter the student number");
 			result = true;
-		}else {
+		} else {
 			studentNumberError.setText("");
 		}
 		if (emailAddress.getText().equals("")) {
 			emailError.setText("Please enter the email address");
 			result = true;
-		}else {
+		} else {
 			emailError.setText("");
 		}
 		if (password.getText().equals("")) {
 			passwordError.setText("Please enter the password");
 			result = true;
-		}else {
+		} else {
 			passwordError.setText("");
 		}
 		if (confirmPassword.getText().equals("")) {
 			if (password.getText().equals("")) {
 				passwordConfirmError.setText("Please enter the password");
-			}else {
+			} else {
 				passwordConfirmError.setText("Please enter the password again");
 			}
 			result = true;
-		}else {
+		} else {
 			passwordConfirmError.setText("");
 		}
 		successfulMessage.setText("");
@@ -131,6 +130,7 @@ public class CreateNewStudentAccountController {
 		studentNumber.setText("");
 		emailAddress.setText("");
 		password.setText("");
-		confirmPassword.setText("");;
+		confirmPassword.setText("");
+		;
 	}
 }
