@@ -31,7 +31,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      * @throws DatabaseInsertException
      * @throws SQLException
      */
-    public int actOnDatabse(ProblemSet newPSet) throws DatabaseInsertException, SQLException{
+    public int actOnDatabase(ProblemSet newPSet) throws DatabaseInsertException, SQLException{
         this.actOnDatabase();
         //store the primary key of row inserted
         int result;
@@ -51,7 +51,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      * @throws DatabaseInsertException
      * @throws SQLException
      */
-    public int actOnDatabse(Student newStudent) throws DatabaseInsertException, SQLException{
+    public int actOnDatabase(Student newStudent) throws DatabaseInsertException, SQLException{
         this.actOnDatabase();
         //store the primary key of row inserted
         int result;
@@ -71,7 +71,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      * @throws DatabaseInsertException
      * @throws SQLException
      */
-    public int actOnDatabse(Instructor newInstructor) throws DatabaseInsertException, SQLException{
+    public int actOnDatabase(Instructor newInstructor) throws DatabaseInsertException, SQLException{
         this.actOnDatabase();
         int result;
         boolean test = DatabaseInserter.insertInstructor(newInstructor.getInstructorID(), newInstructor.getName(), newInstructor.getEmailAddress(), newInstructor.getPassword(), connection);
