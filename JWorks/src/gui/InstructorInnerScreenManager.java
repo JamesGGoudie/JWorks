@@ -31,6 +31,9 @@ public class InstructorInnerScreenManager extends Manager {
     showCreateNewStudentAccountScreen(innerPane);
   }
 
+  public void viewAllProblems(Pane innerPane) {
+    showViewAllProblemsScreen(innerPane);
+  }
   /**
    * Load and display the inner screen for instructor
    * 
