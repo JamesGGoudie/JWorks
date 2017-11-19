@@ -60,6 +60,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             }
             connection.close();
         }catch (SQLException e){
+            e.printStackTrace();
             outTo.output(e.getMessage());
         } catch (DatabaseSelectException e) {
             outTo.output(e.getMessage());
@@ -290,30 +291,42 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             
             // For every problem in the problem set.
             while (problemsRaw.next()) {
-                // Get all of the information from the current item in the result set.
+                // Get the ID of the problem from the result set.
                 int id = problemsRaw.getInt(1);
-                int questionType = problemsRaw.getInt(2);
-                String question = problemsRaw.getString(3);
-                String answer = problemsRaw.getString(4);
                 
-                Problem problem = null;
+                // Get the data for the current problem from the database.
+                ResultSet problemRaw = DatabaseSelector.getSingleProblem(id, this.connection);
                 
-                // If we had more than one question type, this switch statement would be
-                // useful.
-                switch (questionType) {
-                    case (1):
-                        // Instantiate the problem with data from the result set.
-                        problem = new SingleAnswerProblem(question,
-                            answer);
-                        problem.setId(id);
-                        break;
-                    default:
-                        break;
-                }
-                
-                // Make sure that we actually got a problem from the database.
-                if (problem != null) {
-                    problems.add(problem);
+                // Make sure that the problem is not null.
+                if (problemRaw == null) {
+                  String errorMessage = "Got a null object instead of a resultSet when trying to";
+                  errorMessage += " get a problem from the database.";
+                  throw new DatabaseSelectException(errorMessage);
+                } else {
+                  
+                  int questionType = problemRaw.getInt(2);
+                  String question = problemRaw.getString(3);
+                  String answer = problemRaw.getString(4);
+                  
+                  Problem problem = null;
+                  
+                  // If we had more than one question type, this switch statement would be
+                  // useful.
+                  switch (questionType) {
+                      case (1):
+                          // Instantiate the problem with data from the result set.
+                          problem = new SingleAnswerProblem(question,
+                              answer);
+                          problem.setId(id);
+                          break;
+                      default:
+                          break;
+                  }
+                  
+                  // Make sure that we actually got a problem from the database.
+                  if (problem != null) {
+                      problems.add(problem);
+                  }
                 }
             }
             
@@ -325,7 +338,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             // These values from the result set need to be multiplied by 1000 because time is
             // stored as seconds in the database, but the Date object requires milliseconds.
             Date startTime = new Date(problemSetRaw.getInt(3) * 1000L);
-            Date endTime = new Date(problemSetRaw.getInt(3) * 1000L);
+            Date endTime = new Date(problemSetRaw.getInt(4) * 1000L);
             
             problemSet.setId(id);
             problemSet.setMaxAttempts(maxAttempts);
