@@ -38,7 +38,6 @@ public class LoginManager extends Manager {
 			showStudentMainScreen(user);
 		} else {
 			ShowInstructorMainScreen(user);
-
 		}
 		return true;
     }
