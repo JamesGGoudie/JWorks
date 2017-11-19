@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class DatabaseObject {
     protected final SimpleIntegerProperty idProperty = new SimpleIntegerProperty(-1);
 
+    protected int creatorID;
+
     protected DatabaseObject() {}
 
     /**
@@ -30,5 +32,13 @@ public abstract class DatabaseObject {
      */
     public boolean hasId() {
         return idProperty.get() == -1;
+    }
+
+    public int getCreatorID() {
+        return creatorID;
+    }
+
+    public void setCreatorID(int creatorID) {
+        this.creatorID = creatorID;
     }
 }
