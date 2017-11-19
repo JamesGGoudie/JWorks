@@ -219,13 +219,65 @@ public class DatabaseInserter {
   }
   
   /**
+   * Keeps a record of a students attempt for a problem set including the problem set key
+   * @param studentNumber The unique ID of the student.
+   * @param attemptNumber The students current attempt for the problem set.
+   * @param problemSetKey The unique ID of the problem set.
+   * @param problems The unique IDs of the problems in the problem set.
+   * @param answers The student's answers to the problems. This list should correspond directly
+   *                with the problems list by index.
+   * @param connection The connection to the database file.
+   * @return True if the attempt was stored in the database; false indicates that some error
+   *         occurred.
+   * @throws DatabaseInsertException Thrown if the students attempt could not be stored in the
+   *                                 database.
+   */
+  protected static boolean insertStudentsAttempt(int studentNumber, int attemptNumber,
+      int problemSetKey, int[] problems, String [] answers, Connection connection)
+      throws DatabaseInsertException {
+    
+    boolean result = false;
+    String sql = "INSERT INTO PREVIOUSATTEMPTS(STUDENTNUMBER, ATTEMPTNUMBER, PROBLEMSET, PROBLEM, "
+        + "STUDENTANSWER) VALUES(?,?,?,?,?)";
+    
+    PreparedStatement preparedStatement = null;
+    
+    try {
+      preparedStatement = connection.prepareStatement(sql);
+      // These values shouldn't change across the different problems.
+      preparedStatement.setInt(1, studentNumber);
+      preparedStatement.setInt(2, attemptNumber);
+      preparedStatement.setInt(3, problemSetKey);
+      
+      for (int i = 0; i < problems.length; i++) {
+        preparedStatement.setInt(4, problems[i]);
+        preparedStatement.setString(5, answers[i]);
+        
+        preparedStatement.executeUpdate();
+      }
+      
+      preparedStatement.close();
+      
+      result = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      String errorMessage = "Failed to insert the result of a students attempt.";
+      throw new DatabaseInsertException(errorMessage);
+    }
+    
+    return result;
+  }
+  
+  /**
    * For each student, gives them the initial attempt count for the given problem set.
    * @param problemSetKey The unique key of the problem set.
    * @param connection The connection to the database file.
    * @return True if the initial attempt counts were added, false otherwise.
+   * @throws DatabaseInsertException Thrown if the problem sets initial attempt count could not be
+   *                                 set for all students.
    */
   private static boolean insertProblemSetsInitialAttemptCount(int problemSetKey, int maxAttempts,
-      Connection connection) {
+      Connection connection) throws DatabaseInsertException {
     
     String sql = "SELECT STUDENTNUMBER FROM STUDENTS";
     boolean result = false;
@@ -261,7 +313,7 @@ public class DatabaseInserter {
     } catch (SQLException e) {
       e.printStackTrace();
       String errorMessage = "Failed to insert inital attempt count for new problem set.";
-      System.out.println(errorMessage);
+      throw new DatabaseInsertException(errorMessage);
     }
     
     return result;
@@ -273,9 +325,11 @@ public class DatabaseInserter {
    * @param connection The connection to the database file.
    * @return True if the attempt counts were added for the student, false if an uncaught error
    *         occurs.
+   * @throws DatabaseInsertException Thrown if the initial attempt count for each problem set could
+   *                                 not be stored for the student.
    */
   private static boolean insertStudentsInitialAttemptCount(int studentNumber,
-      Connection connection) {
+      Connection connection) throws DatabaseInsertException {
     
     boolean result = false;
 
@@ -311,11 +365,11 @@ public class DatabaseInserter {
       
       result = true;
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to insert inital attempt count for new student.";
-      System.out.println(errorMessage);
+      throw new DatabaseInsertException(errorMessage);
     }
     
     return result;
   }
+
 }
