@@ -23,8 +23,6 @@ public class CreateNewStudentAccountController {
 	@FXML
 	private Button submitButton;
 	@FXML
-	private Label successfulMessage;
-	@FXML
 	private Label firstNameError;
 	@FXML
 	private Label lastNameError;
@@ -54,7 +52,6 @@ public class CreateNewStudentAccountController {
 					passwordInput = password.getText();
 					createNewStudentAccountManager.createStudentAccount(name, email, passwordInput, studentNumberInput);
 					resetFields();
-					successfulMessage.setText("Sussefully added account");
 				}
 			}
 		});
@@ -114,7 +111,6 @@ public class CreateNewStudentAccountController {
 		} else {
 			passwordConfirmError.setText("");
 		}
-		successfulMessage.setText("");
 		return result;
 	}
 

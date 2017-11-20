@@ -27,7 +27,6 @@ public class DatabaseSelector {
       Statement statement = connection.createStatement();
       results = statement.executeQuery(sql);
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get entire problem collection from database.";
       throw new DatabaseSelectException(errorMessage);
     }
@@ -54,7 +53,6 @@ public class DatabaseSelector {
       preparedStatement.setInt(1, problemKey);
       results = preparedStatement.executeQuery();
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get the problem from database.";
       throw new DatabaseSelectException(errorMessage);
     }
@@ -264,7 +262,7 @@ public class DatabaseSelector {
       throws DatabaseSelectException {
     
     ResultSet results = null;
-    String sql = "SELECT PROBLEMSET INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE INSTRUCTOR = ?";
+    String sql = "SELECT PROBLEMSET FROM INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE INSTRUCTOR = ?";
     
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -291,7 +289,7 @@ public class DatabaseSelector {
       throws DatabaseSelectException {
   
     int result = -1;
-    String sql = "SELECT INSTRUCTOR FROM INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE"
+    String sql = "SELECT INSTRUCTOR FROM INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE "
         + "PROBLEMSET = ?";
     
     try {
@@ -320,17 +318,17 @@ public class DatabaseSelector {
   protected static int getAttemptsRemaining(int studentNumber, int problemSetKey,
       Connection connection) throws DatabaseSelectException {
     
-    String sql = "SELECT * FROM ATTEMPTSREMAINING WHERE STUDENTNUMBER = ?";
+    String sql = "SELECT ATTEMPTSREMAINING FROM ATTEMPTSREMAINING WHERE (STUDENTNUMBER, PROBLEMSET)"
+        + " = (?,?)";
     int result = -1;
     ResultSet data = null;
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, studentNumber);
+      preparedStatement.setInt(2, problemSetKey);
       data = preparedStatement.executeQuery();
       
-      String columnName = "PROBLEMSET" + problemSetKey;
-      
-      result = data.getInt(columnName);
+      result = data.getInt(1);
       
       data.close();
     } catch (SQLException e) {
@@ -365,7 +363,6 @@ public class DatabaseSelector {
       data.close();
       
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get the problem sets release time from the database.";
       throw new DatabaseSelectException(errorMessage);
     }
@@ -397,7 +394,6 @@ public class DatabaseSelector {
       data.close();
       
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get the problem sets due date from the database.";
       throw new DatabaseSelectException(errorMessage);
     }
@@ -405,6 +401,15 @@ public class DatabaseSelector {
     return result;
   }
   
+  /**
+   * Returns a result set containing the answers submitted by the student for a problem set.
+   * @param studentNumber The unique ID of the student.
+   * @param problemSet The unique ID of the problem set.
+   * @param attemptNumber The attempt number that we want to access.
+   * @param connection The connection to the database file.
+   * @return A result set containing a problem ID correlating to a student's answer.
+   * @throws DatabaseSelectException Thrown if the previous attempt could not be retrieved.
+   */
   protected static ResultSet getStudentsResults(int studentNumber, int problemSet,
       int attemptNumber, Connection connection) throws DatabaseSelectException {
     

@@ -96,7 +96,7 @@ public class DatabaseDriver {
       
       sql = "CREATE TABLE IF NOT EXISTS INSTRUCTORS_PROBLEMS_RELATIONSHIP "
           + "(INSTRUCTOR INTEGER NOT NULL,"
-          + "PROBLEM INTEGER NOT NULL,"
+          + "PROBLEM INTEGER PRIMARY KEY NOT NULL,"
           + "FOREIGN KEY (INSTRUCTOR) REFERENCES INSTRUCTORS(ID),"
           + "FOREIGN KEY (PROBLEM) REFERENCES PROBLEMS(ID))";
       statement.executeUpdate(sql);
