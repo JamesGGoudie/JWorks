@@ -76,7 +76,7 @@ Open a terminal/command prompt/PowerShell, navigate to the src directory under t
 	* To compile and run the command line version, type:
 	```
 	javac driver\JWorks.java
-	java -cp ".;..\..\JAR_Files\sqlite-jdbc-3.18.0.jar" driver\JWork
+	java -cp ".;..\..\JAR_Files\sqlite-jdbc-3.18.0.jar" driver\JWorks
 	```
 	* To compile and run the GUI version, type:
 	```
@@ -85,23 +85,23 @@ Open a terminal/command prompt/PowerShell, navigate to the src directory under t
 	```	
 
 #### Using the Command Line Version:
+
+**Note that the command line version is no longer maintained.**
 In the command line version, the following commands can be typed into the command line:
 
 To add a new question:
 
 ```
-1 "Question" answer
+AddSimpleProblemCommand "Question" answer
 ```
 
 Where Question is a string wrapped by double quotes, and answer is a string without any space.
 
-To view all saved questions:
-
-```
-2
-```
 
 #### Using the GUI Version:
-To login, enter any non-empty username and press the Login button.
-Currently, a user can create a new question, return to the home page, or log out.
+To login, enter any non-empty username along with a non-empty password and press the Login button.
+On the main screen, a user can:
+* Add a new question
+* View all saved questions
+* Logout
 
