@@ -22,8 +22,6 @@ public class LoginManager extends Manager {
    * Load the corresponding instructor/student screen based on the user's input
    * 
    * @param user The name of the user
-   * @param password The password for the user
-   * @return Whether or not the login attempt is successful
    */
 
   public boolean Login(String user, String password) {

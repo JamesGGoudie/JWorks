@@ -22,14 +22,6 @@ public class InstructorInnerScreenManager extends Manager {
     showCreateNewQuestionScreen(innerPane);
   }
 
-  public void viewAllProblems(Pane innerPane) {
-    showViewAllProblemsScreen(innerPane);
-  }
-
-  public void addProblemSet(Pane innerPane) {
-    showAddProblemSetScreen(innerPane);
-  }
-
   /**
    * Go to the create new student account screen
    * 
@@ -39,6 +31,9 @@ public class InstructorInnerScreenManager extends Manager {
     showCreateNewStudentAccountScreen(innerPane);
   }
 
+  public void viewAllProblems(Pane innerPane) {
+    showViewAllProblemsScreen(innerPane);
+  }
   /**
    * Load and display the inner screen for instructor
    * 

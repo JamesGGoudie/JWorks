@@ -47,12 +47,5 @@ public class InstructorInnerScreenController extends Controller {
       }
     });
 
-    addProblemSetButton.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        instructorInnerScreenManager.addProblemSet(innerScreen);
-      }
-    });
-
   }
 }

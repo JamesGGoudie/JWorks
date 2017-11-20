@@ -49,7 +49,7 @@ public class DatabaseDeleter {
       
       preparedStatement.close();
       
-      result = DatabaseAlterer.removeProblemSetFromAttemptsRemaining(problemSetKey, connection);
+      result = true;
     } catch (SQLException e) {
       e.printStackTrace();
       System.out.println("A problem occurred while attempting to delete a problem set.");
@@ -79,6 +79,32 @@ public class DatabaseDeleter {
     } catch (SQLException e) {
       e.printStackTrace();
       System.out.println("A problem occurred while attempting to delete a student.");
+    }
+    
+    return result;
+  }
+  
+  /**
+   * Removes an instructor from the database.
+   * @param instructorID The unique ID of the instructor.
+   * @param connection The connection to the database file.
+   * @return True if the instructor was deleted, false otherwise.
+   */
+  protected static boolean deleteInstructor(int instructorID, Connection connection) {
+    String sql = "DELETE FROM INSTRUCTORS WHERE ID = ?";
+    boolean result = false;
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, instructorID);
+      preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
+      
+      result = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      System.out.println("A problem occurred while attempting to delete an instructor.");
     }
     
     return result;
