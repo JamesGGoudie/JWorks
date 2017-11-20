@@ -99,9 +99,13 @@ Where Question is a string wrapped by double quotes, and answer is a string with
 
 
 #### Using the GUI Version:
-To login, enter any non-empty username along with a non-empty password and press the Login button.
-On the main screen, a user can:
-* Add a new question
-* View all saved questions
-* Logout
+To login as an instructor, enter any non-empty username that does not consist of solely digits, along with a non-empty password and press the Login button.
+On the main screen, a user click the appropriate navigation buttons to:
+
+- Add a new question
+- View all saved questions
+- Create a new student account
+- Logout
+
+A student logs in with their student number and password as created by an instructor. Currently, no student functionality is implemented.
 
