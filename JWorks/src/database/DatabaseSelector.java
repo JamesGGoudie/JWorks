@@ -401,6 +401,15 @@ public class DatabaseSelector {
     return result;
   }
   
+  /**
+   * Returns a result set containing the answers submitted by the student for a problem set.
+   * @param studentNumber The unique ID of the student.
+   * @param problemSet The unique ID of the problem set.
+   * @param attemptNumber The attempt number that we want to access.
+   * @param connection The connection to the database file.
+   * @return A result set containing a problem ID correlating to a student's answer.
+   * @throws DatabaseSelectException Thrown if the previous attempt could not be retrieved.
+   */
   protected static ResultSet getStudentsResults(int studentNumber, int problemSet,
       int attemptNumber, Connection connection) throws DatabaseSelectException {
     

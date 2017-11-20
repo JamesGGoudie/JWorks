@@ -197,8 +197,8 @@ public class DatabaseUpdater {
   protected static boolean updateAttemptsRemaining(int problemSetKey, int studentNumber,
       int attemptsRemaining, Connection connection) {
     
-    String sql = "UPDATE ATTEMPTSREMAINING SET ATTEMPTSREMAINING = ? WHERE STUDENTNUMBER = ?, "
-        + "PROBLEMSET = ?";
+    String sql = "UPDATE ATTEMPTSREMAINING SET ATTEMPTSREMAINING = ? WHERE (STUDENTNUMBER, "
+        + "PROBLEMSET) = (?,?)";
     
     boolean result = false;
     
@@ -214,7 +214,7 @@ public class DatabaseUpdater {
       
       result = true;
     } catch (SQLException e) {
-      
+      e.printStackTrace();
     }
     
     return result;
