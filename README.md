@@ -44,12 +44,6 @@
     
     This is the Java application that the team is building, it contains the code for the entire 
     application. This application is a still in progress and in its early stages.
-
-## JWorks/test:              
-    
-    A work in progress collection of jUnit test cases for the jWorks application. Note that do to
-    function visibility, the jUnit file for directly testing the database classes,databaseTester,
-    is present in the JWorks/src/database package.
     
 ### Build Instructions: 
 
@@ -119,3 +113,8 @@ On the main screen, a user click the appropriate navigation buttons to:
 
 A student logs in with their student number and password as created by an instructor. Currently, no student functionality is implemented.
 
+## JWorks/test:              
+    
+    A work in progress collection of jUnit test cases for the jWorks application. Note that do to
+    function visibility, the jUnit file for directly testing the database classes,databaseTester,
+    is present in the JWorks/src/database package.
