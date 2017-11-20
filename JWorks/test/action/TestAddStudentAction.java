@@ -28,10 +28,16 @@ public class TestAddStudentAction {
 		assertEquals( "FAILED TO ADD STUDENT", expected, actual);
 	}
 	
+	// should throw exceptions
 	@Test
 	public void testAddStudentWithNullProperties() {
+		Student student = new Student(null, null, null, 1);
 		
-		assertTrue(true);
+		DatabaseAPI databaseAPI = new DatabaseStoreAPI();
+		Action action = new AddStudentAction();
+		
+		action.execute(student, databaseAPI);
+		
 	}
 	
 	@Test

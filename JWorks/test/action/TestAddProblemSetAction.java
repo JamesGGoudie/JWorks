@@ -49,7 +49,7 @@ public class TestAddProblemSetAction {
 		
 	    Object expected = pSet;
 	    
-		assertEquals(pSet, actual);
+		assertEquals(expected, actual);
 	}
 	
 	@Test

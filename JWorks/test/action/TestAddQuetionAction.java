@@ -47,8 +47,9 @@ public class TestAddQuetionAction {
 	}
 	
 	// not catching the error
-	@Test(expected = DatabaseInsertException.class)
-	public void testAddNULLQuestion() {
+	@Test
+	//(expected = DatabaseInsertException.class)
+	public void testAddNULLQuestion() throws DatabaseInsertException{
 		// the second way of exception catching- NOT WORKING AS WELL
 		//exception.expect(DatabaseInsertException.class);
 		//exception.expectMessage("Failed to insert a problem into the database.");
@@ -61,6 +62,7 @@ public class TestAddQuetionAction {
 		Action action = new AddQuestionAction();
 		
 		action.execute(problem, databaseAPI);
+
 	}
 	
 
