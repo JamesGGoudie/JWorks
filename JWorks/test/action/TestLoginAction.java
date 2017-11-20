@@ -44,19 +44,20 @@ public class TestLoginAction {
 		Action login = new LoginAction();
 		DatabaseAPI extract = new DatabaseExtractAPI();
 		
-		login.execute("1235","notreal", extract);
+		Object actual = login.execute("1235","notreal", extract);
+		Object expected = false;
 		
-		
-		fail("Not yet implemented");
+		assertEquals(expected, false);
 	}
 	
-	// throws exceptions
+	// throws exceptions, what to throw if a user enters invalids logins
 	@Test
 	public void testInvalidInputs() {
 		Action login = new LoginAction();
 		DatabaseAPI extract = new DatabaseExtractAPI();
 		
 		login.execute("1235HiCHAR","notreal", extract);
+		fail("Not yet implemented");
 		
 	}
 	

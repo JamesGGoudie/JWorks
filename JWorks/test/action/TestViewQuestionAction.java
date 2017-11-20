@@ -3,6 +3,7 @@ package action;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.sqlite.SQLiteException;
 
 import databaseAPI.DatabaseAPI;
 import databaseAPI.DatabaseExtractAPI;
@@ -32,17 +33,13 @@ public class TestViewQuestionAction {
 	}
 	
 	// expect to return a exception or msg to say no questions or something???
-	@Test
+	@Test(expected = SQLiteException.class)
 	public void testGetWhenNoProblems() {
 		DatabaseAPI extract = new DatabaseExtractAPI();
 		Action viewAll = new ViewQuestionAction();
 		
-		Object actual = viewAll.execute(extract);
-		Object expected = true;
+		viewAll.execute(extract);
 		
-		assertEquals(expected, actual);
-		
-		fail("Not yet implemented");
 	}
 
 }
