@@ -33,17 +33,17 @@ public class Main {
             //System.out.println(insert.actOnDatabase(ps1));
             //System.out.println(insert.actOnDatabase(sUser));
             //System.out.println(insert.actOnDatabase(iUser));
-            Problem sp = select.actOnDatabase(1, new SingleAnswerProblem());
+            //Problem sp = select.actOnDatabase(1, new SingleAnswerProblem());
             ProblemSet sps = select.actOnDatabase(1, new SimpleProblemSet());
-            Instructor si = select.actOnDatabase(2008, new Instructor());
-            Student ss = select.actOnDatabase(12, new Student());
-            printProblem(sp);
+            //Instructor si = select.actOnDatabase(2008, new Instructor());
+            //Student ss = select.actOnDatabase(12, new Student());
+            //printProblem(sp);
             printpSet(sps);
-            printUser(si);
-            printUser(ss);
+            //printUser(si);
+            //printUser(ss);
         }
         catch (Exception e){
-            System.out.println("FAIL!!!");
+            System.out.println(e.getMessage());
         }
         String[] out = {"1", "2", "3"};
         //select.actOnDatabase(1, out);
