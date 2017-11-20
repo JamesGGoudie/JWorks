@@ -56,7 +56,6 @@ public class DatabaseInserter {
         preparedStatement.close();
       }
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to insert a problem into the database.";
       throw new DatabaseInsertException(errorMessage);
     }
@@ -311,7 +310,6 @@ public class DatabaseInserter {
       
       result = true;
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to insert inital attempt count for new problem set.";
       throw new DatabaseInsertException(errorMessage);
     }

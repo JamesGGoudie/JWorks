@@ -27,7 +27,6 @@ public class DatabaseSelector {
       Statement statement = connection.createStatement();
       results = statement.executeQuery(sql);
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get entire problem collection from database.";
       throw new DatabaseSelectException(errorMessage);
     }
@@ -54,7 +53,6 @@ public class DatabaseSelector {
       preparedStatement.setInt(1, problemKey);
       results = preparedStatement.executeQuery();
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get the problem from database.";
       throw new DatabaseSelectException(errorMessage);
     }
@@ -320,17 +318,17 @@ public class DatabaseSelector {
   protected static int getAttemptsRemaining(int studentNumber, int problemSetKey,
       Connection connection) throws DatabaseSelectException {
     
-    String sql = "SELECT * FROM ATTEMPTSREMAINING WHERE STUDENTNUMBER = ?";
+    String sql = "SELECT ATTEMPTSREMAINING FROM ATTEMPTSREMAINING WHERE (STUDENTNUMBER, PROBLEMSET)"
+        + " = (?,?)";
     int result = -1;
     ResultSet data = null;
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, studentNumber);
+      preparedStatement.setInt(2, problemSetKey);
       data = preparedStatement.executeQuery();
       
-      String columnName = "PROBLEMSET" + problemSetKey;
-      
-      result = data.getInt(columnName);
+      result = data.getInt(1);
       
       data.close();
     } catch (SQLException e) {
@@ -365,7 +363,6 @@ public class DatabaseSelector {
       data.close();
       
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get the problem sets release time from the database.";
       throw new DatabaseSelectException(errorMessage);
     }
@@ -397,7 +394,6 @@ public class DatabaseSelector {
       data.close();
       
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get the problem sets due date from the database.";
       throw new DatabaseSelectException(errorMessage);
     }
