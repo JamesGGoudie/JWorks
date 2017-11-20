@@ -291,7 +291,7 @@ public class DatabaseSelector {
       throws DatabaseSelectException {
   
     int result = -1;
-    String sql = "SELECT INSTRUCTOR FROM INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE"
+    String sql = "SELECT INSTRUCTOR FROM INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE "
         + "PROBLEMSET = ?";
     
     try {
@@ -301,6 +301,7 @@ public class DatabaseSelector {
       
       result = data.getInt(1);
     } catch (SQLException e) {
+      e.printStackTrace();
       String errorMessage = "Failed to get the instructor who created the problem set.";
       throw new DatabaseSelectException(errorMessage);
     }
