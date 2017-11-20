@@ -1,10 +1,8 @@
 package databaseAPI;
 
 import database.DatabaseSelector;
-import exceptions.DatabaseInsertException;
 import exceptions.DatabaseSelectException;
 import io.GUIOutputGenerator;
-import io.OutputGenerator;
 import models.*;
 
 import java.sql.Connection;
@@ -13,7 +11,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
@@ -22,51 +19,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     public void actOnDatabase(){
         connection = DatabaseDriverAPI.connectOrCreateDataBase();
     }
-
-    /**
-     * Gets result from query run by DatabaseSelector class, parses it and sends it to output generator
-     * @param actObj 1 for problem, 2 for problem set, 3 for Student User
-     * @param args {Primary key for user}
-     */
-    public void actOnDatabase(int actObj, String[] args) {
-        this.actOnDatabase();
-        //to send message to UI
-        GUIOutputGenerator outTo = new GUIOutputGenerator();
-        try {
-            this.actOnDatabase();
-            // stores value returned from respective table
-            ResultSet results;
-            // store metadata for corresponding ResultSet
-            ResultSetMetaData rsmd;
-            switch (actObj){
-                // when a request is made to return all problems
-                case 1:
-                    outputAllProblems();
-                    break;
-                case 2:
-                    outputProblemSet(Integer.parseInt(args[0]));
-                    break;
-                case 3:
-                    results = DatabaseSelector.getStudent(Integer.parseInt(args[0]), connection);
-                    rsmd = results.getMetaData();
-                    if (results.isClosed()){
-                        throw new DatabaseSelectException("student with student number: "+args[0]+" wasn't be found");
-                    }
-                    else{
-                        String[] studentRow = formatUser(results, rsmd);
-                        outTo.output("User has student number: "+studentRow[0]+" name: "+studentRow[1]+" and email: "+studentRow[2]);
-                    }
-                    break;
-            }
-            connection.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-            outTo.output(e.getMessage());
-        } catch (DatabaseSelectException e) {
-            outTo.output(e.getMessage());
-        }
-    }
-
+    
     /**
      * assigns values to problem with the corresponding problem key
      * @param pKey primary key to identify the problem in database
@@ -95,30 +48,6 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     }
 
     /**
-     * Gets all the problems in the database are organizes them into a list of problems
-     * @param pList list of problem objects that will populated using info from database
-     * @return list with all the problems in currently being stored in the database
-     * @throws DatabaseSelectException
-     * @throws SQLException
-     */
-    public List<Problem> actOnDatabase(List<Problem> pList) throws DatabaseSelectException, SQLException{
-        this.actOnDatabase();
-        // the query result will always be parsed into an Array list
-        List<String[]> problems = new ArrayList<String[]>();
-        // stores value returned from respective table
-        ResultSet results;
-        // store metadata for corresponding ResultSet
-        ResultSetMetaData rsmd;
-        results = DatabaseSelector.getAllProblems(connection);
-        rsmd = results.getMetaData();
-        formatResult(results, rsmd, problems);
-        for (int problemIndex = 0; problemIndex < problems.size(); problemIndex++){
-            pList.add(populateProblem(problems.get(problemIndex)));
-        }
-        return pList;
-    }
-
-    /**
      * Use information from array to assign attributes to Problem
      */
     private Problem populateProblem(String[] aRow) {
@@ -131,30 +60,6 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         newProblem = new SingleAnswerProblem(question, answer);
         newProblem.setId(pid);
         return newProblem;
-    }
-
-    /**
-     * populates problems list with info stored in rs
-     * @param rs the result set from requesting all problems
-     * @param rm metadata for rs
-     * @param problems list of string arrays each representing a row on problems table
-     * @throws DatabaseSelectException
-     * @throws SQLException
-     */
-    private void formatResult(ResultSet rs, ResultSetMetaData rm, List<String[]> problems)
-            throws DatabaseSelectException, SQLException{
-        // each problem will be an array, they will be stored into the list of problems
-        // parse each result into problem attribute and add it to the list of problems
-        String[] row;
-        while (rs.next()){
-            row = new String[rm.getColumnCount()];
-            for(int col = 1; col <= rm.getColumnCount();col++){
-                //System.out.print(rs.getString(col)+"   ");
-                row[col - 1] = rs.getString(col);
-            }
-            //System.out.print("\n");
-            problems.add(row);
-        }
     }
 
     /**
@@ -234,16 +139,19 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     }
     
     /**
-     * Gets all of the problems from the database as a ResultSet and then passes each problem
-     * individually to the GUI output generator.
+     * Gets all of the problems from the database and appends them to the given list. The list
+     * given will first be cleared of any problems already present.
+     * @problems A list of problems.
      * @throws DatabaseSelectException Thrown if the result set could not be retrieved from the
      *                                 database.
      * @throws SQLException Thrown if there was an attempt to access an inaccessible resultSet.
      */
-    private void outputAllProblems() throws DatabaseSelectException, SQLException {
+    public List<Problem> actOnDatabase(List<Problem> allProblems) throws DatabaseSelectException,
+            SQLException {
         GUIOutputGenerator outTo = new GUIOutputGenerator();
-        List<Problem> allProblems = new ArrayList<Problem>();
         ResultSet problemsRaw = DatabaseSelector.getAllProblems(this.connection);
+        
+        allProblems.clear();
         
         // If the databaseSelector failed, then we do not want to continue.
         if (problemsRaw == null) {
@@ -283,16 +191,25 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             // Close the result set to allow for modification of the data.
             problemsRaw.close();
         }
+        
+        return allProblems;
     }
 
     /**
-     * 
-     * @param problemSetKey The unique ID of the problem set.
+     * Modifies the given problem set and adds each problem from that the problem set should
+     * contain to the list of problems. Any problems currently stored in the problem set will be
+     * lost.
+     * @param problemSetKey The unique ID of the problemSet.
+     * @param problemSet The problem set object to append the questions to. It must already have
+     *                   it's ID assigned.
+     * @return A problem set containing all of the problems that the problem set should contain
+     *         based on the given ID.
      * @throws DatabaseSelectException Thrown if a resultSet could not be retrieved from the
      *                                 database.
      * @throws SQLException Thrown if there was an attempt to access an inaccessible resultSet.
      */
-    private void outputProblemSet(int problemSetKey) throws DatabaseSelectException, SQLException {
+    public ProblemSet actOnDatabase(int problemSetKey, ProblemSet problemSet) throws
+            DatabaseSelectException, SQLException {
         GUIOutputGenerator outTo = new GUIOutputGenerator();
         ResultSet problemsRaw = DatabaseSelector.getProblemsInProblemSet(problemSetKey,
             this.connection);
@@ -352,7 +269,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                 }
             }
             
-            ProblemSet problemSet = new SimpleProblemSet(problems);
+            problemSet = new SimpleProblemSet(problems);
             
             // Get the data from the result set.
             int id = problemSetRaw.getInt(1);
@@ -373,5 +290,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             problemsRaw.close();
             problemSetRaw.close();
         }
+        
+        return problemSet;
     }
 }
