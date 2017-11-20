@@ -132,7 +132,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      * @return Student object that has been assigned all its attributes
      */
     private Student populateStudent(Student emptyStudent, String[] studentArray){
-        emptyStudent.setStudentNumber(Integer.getInteger(studentArray[0]));
+        emptyStudent.setStudentNumber(Integer.parseInt(studentArray[0]));
         emptyStudent.setName(studentArray[1]);
         emptyStudent.setEmailAddress(studentArray[2]);
         emptyStudent.setPassword(studentArray[3]);

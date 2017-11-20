@@ -4,7 +4,11 @@
 package action;
 
 import databaseAPI.DatabaseExtractAPI;
+import exceptions.DatabaseSelectException;
 import models.Student;
+
+import java.sql.SQLException;
+import java.text.ParseException;
 
 /**
  * Action responsible for passing login credentials to the API
@@ -28,16 +32,24 @@ public class LoginAction extends Action {
 		DatabaseExtractAPI api = (DatabaseExtractAPI) params[2];
 		
 		// Get user object from API
-		// TODO: After extraction is complete. Also need try-catch for exception handling
-		Student student = new Student(user, "test@email.com", "password" , 1561); // = api.actOnDatabase(...)
-		
+		Student student = new Student();
+		try {
+			api.actOnDatabase(Integer.parseInt(user), student);
+		} catch (DatabaseSelectException | SQLException e) {
+			// Authentication failed case
+			return false;
+		} catch (NumberFormatException e) {
+			// Instructor login case
+			return true;
+		}
+
 		// Compare credentials
 		if (student.getPassword().equals(password)) {
 			return student;
 		}
-		
-		// Only reached if no authentication occurs -- temporarily authenticates anyways
-		return student;
+
+		// Only reached if no authentication occurs
+		return false;
 	}
 
 }
