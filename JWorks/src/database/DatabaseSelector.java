@@ -262,7 +262,7 @@ public class DatabaseSelector {
       throws DatabaseSelectException {
     
     ResultSet results = null;
-    String sql = "SELECT PROBLEMSET INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE INSTRUCTOR = ?";
+    String sql = "SELECT PROBLEMSET FROM INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE INSTRUCTOR = ?";
     
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
