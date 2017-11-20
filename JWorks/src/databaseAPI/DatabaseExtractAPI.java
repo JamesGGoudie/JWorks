@@ -124,8 +124,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     private Problem populateProblem(String[] aRow) {
         Problem newProblem;
         int pid = Integer.parseInt(aRow[0]);
-        String question = aRow[1];
-        String answer = aRow[2];
+        String question = aRow[2];
+        String answer = aRow[3];
         //once instructor model has been created
         //int iid = Integer.getInteger(aRow[3]);
         newProblem = new SingleAnswerProblem(question, answer);
