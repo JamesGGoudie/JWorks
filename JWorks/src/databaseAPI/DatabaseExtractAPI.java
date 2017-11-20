@@ -92,6 +92,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         rsmd = results.getMetaData();
         String[] resultRow = new String[rsmd.getColumnCount()];
         resultRow = formatUser(results, rsmd);
+        searchInstructor = populateInstructor(searchInstructor, resultRow);
         return searchInstructor;
     }
 
@@ -200,8 +201,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      * contain to the list of problems. Any problems currently stored in the problem set will be
      * lost.
      * @param problemSetKey The unique ID of the problemSet.
-     * @param problemSet The problem set object to append the questions to. It must already have
-     *                   it's ID assigned.
+     * @param problemSet The problem set object to append the questions to.
      * @return A problem set containing all of the problems that the problem set should contain
      *         based on the given ID.
      * @throws DatabaseSelectException Thrown if a resultSet could not be retrieved from the
