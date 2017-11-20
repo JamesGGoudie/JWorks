@@ -301,7 +301,6 @@ public class DatabaseSelector {
       
       result = data.getInt(1);
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to get the instructor who created the problem set.";
       throw new DatabaseSelectException(errorMessage);
     }
