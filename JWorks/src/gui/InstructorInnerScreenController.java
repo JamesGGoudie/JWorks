@@ -14,6 +14,8 @@ public class InstructorInnerScreenController extends Controller {
   @FXML
   private Button createStudentAccount;
   @FXML
+  private Button addProblemSetButton;
+  @FXML
   private Pane innerScreen;
 
   /**
@@ -35,6 +37,13 @@ public class InstructorInnerScreenController extends Controller {
       @Override
       public void handle(ActionEvent event) {
         instructorInnerScreenManager.createNewStudentAccount(innerScreen);
+      }
+    });
+
+    viewQuestionsButton.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        instructorInnerScreenManager.viewAllProblems(innerScreen);
       }
     });
 

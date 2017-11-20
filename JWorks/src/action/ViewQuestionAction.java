@@ -2,8 +2,13 @@ package action;
 
 import databaseAPI.DatabaseAPI;
 import databaseAPI.DatabaseExtractAPI;
+import exceptions.DatabaseSelectException;
 import io.OutputGenerator;
 import models.Problem;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewQuestionAction extends Action {
     /**
@@ -13,12 +18,15 @@ public class ViewQuestionAction extends Action {
      */
     @Override
     public Object execute(Object... params) {
-        // Read from api
-        /*Problem[] problems = new Problem[0]; // TODO: get problems from database API
+        // Read from API
+        DatabaseExtractAPI api = (DatabaseExtractAPI) params[0];
+        List<Problem> problems = new ArrayList<>();
+        try {
+            problems = api.actOnDatabase(problems);
+        } catch (DatabaseSelectException | SQLException e) {
+            e.printStackTrace();
+        }
+
         return problems;
-         */
-        DatabaseAPI api = (DatabaseAPI) params[0];
-        api.actOnDatabase(1, new String[0]);
-        return true;
     }
 }
