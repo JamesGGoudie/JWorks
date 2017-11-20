@@ -10,6 +10,7 @@ public abstract class Problem extends DatabaseObject {
     // Properties
     protected final SimpleStringProperty problemProperty = new SimpleStringProperty("");
     protected final SimpleStringProperty answerProperty = new SimpleStringProperty("");
+    protected int creatorID;
 
     /**
      * Creates a new Problem.
@@ -29,4 +30,12 @@ public abstract class Problem extends DatabaseObject {
      * @return The answer to the problem.
      */
     public abstract String getAnswer();
+
+    public int getCreatorID() {
+        return creatorID;
+    }
+
+    public void setCreatorID(int creatorID) {
+        this.creatorID = creatorID;
+    }
 }

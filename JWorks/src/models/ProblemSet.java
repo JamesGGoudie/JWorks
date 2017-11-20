@@ -8,6 +8,7 @@ public abstract class ProblemSet extends DatabaseObject {
     protected int maxAttempts;
     protected Date startTime;
     protected Date endTime;
+    protected int creatorID;
 
 
     protected ProblemSet() {
@@ -50,5 +51,13 @@ public abstract class ProblemSet extends DatabaseObject {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public int getCreatorID() {
+        return creatorID;
+    }
+
+    public void setCreatorID(int creatorID) {
+        this.creatorID = creatorID;
     }
 }

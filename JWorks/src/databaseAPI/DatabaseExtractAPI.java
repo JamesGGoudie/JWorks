@@ -53,7 +53,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                         throw new DatabaseSelectException("student with student number: "+args[0]+" wasn't be found");
                     }
                     else{
-                        String[] studentRow = formatStudent(results, rsmd);
+                        String[] studentRow = formatUser(results, rsmd);
                         outTo.output("User has student number: "+studentRow[0]+" name: "+studentRow[1]+" and email: "+studentRow[2]);
                     }
                     break;
@@ -158,10 +158,52 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     }
 
     /**
-     *
-     * @param sid
-     * @param searchStudent
-     * @return
+     * parses info stored in rs into attributes for a student user
+     * @param rs result set from requesting student with specific student number
+     * @param rm metatata for rs
+     * @return String array which has parsed attributes of a student user
+     * @throws DatabaseSelectException
+     * @throws SQLException
+     */
+    private String[] formatUser(ResultSet rs, ResultSetMetaData rm)
+            throws DatabaseSelectException, SQLException{
+        // parse student into a string array
+        String[] row = new String[rm.getColumnCount()];
+        for(int col = 1; col <= rm.getColumnCount();col++){
+            //System.out.print(rs.getString(col)+"   ");
+            row[col - 1] = rs.getString(col);
+        }
+        //System.out.print("\n");
+        return row;
+    }
+
+    public Instructor actOnDatabase(int iid, Instructor searchInstructor) throws DatabaseSelectException, SQLException {
+        this.actOnDatabase();
+        // stores value returned from respective table
+        ResultSet results;
+        // store metadata for corresponding ResultSet
+        ResultSetMetaData rsmd;
+        results = DatabaseSelector.getInstructor(iid, connection);
+        rsmd = results.getMetaData();
+        String[] resultRow = new String[rsmd.getColumnCount()];
+        resultRow = formatUser(results, rsmd);
+        return searchInstructor;
+    }
+
+    private Instructor populateInstructor(Instructor emptyInstructor, String[] instructorArray){
+        emptyInstructor.setInstructorID(Integer.getInteger(instructorArray[0]));
+        emptyInstructor.setName(instructorArray[1]);
+        emptyInstructor.setEmailAddress(instructorArray[2]);
+        emptyInstructor.setPassword(instructorArray[3]);
+        return emptyInstructor;
+    }
+
+    /**
+     * Gets attributes for Student object with respective student id
+     * parse info into student object and returns it
+     * @param sid the unique key associated with student object
+     * @param searchStudent empty student object
+     * @return populated student object
      */
     public Student actOnDatabase(int sid, Student searchStudent) throws DatabaseSelectException, SQLException{
         this.actOnDatabase();
@@ -172,29 +214,9 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         results = DatabaseSelector.getStudent(sid, connection);
         rsmd = results.getMetaData();
         String[] resultRow = new String[rsmd.getColumnCount()];
-        resultRow = formatStudent(results, rsmd);
+        resultRow = formatUser(results, rsmd);
         searchStudent = populateStudent(searchStudent, resultRow);
         return searchStudent;
-    }
-
-    /**
-     * parses info stored in rs into attributes for a student user
-     * @param rs result set from requesting student with specific student number
-     * @param rm metatata for rs
-     * @return String array which has parsed attributes of a student user
-     * @throws DatabaseSelectException
-     * @throws SQLException
-     */
-    private String[] formatStudent(ResultSet rs, ResultSetMetaData rm)
-            throws DatabaseSelectException, SQLException{
-        // parse student into a string array
-        String[] row = new String[rm.getColumnCount()];
-        for(int col = 1; col <= rm.getColumnCount();col++){
-            //System.out.print(rs.getString(col)+"   ");
-            row[col - 1] = rs.getString(col);
-        }
-        //System.out.print("\n");
-        return row;
     }
 
     /**
