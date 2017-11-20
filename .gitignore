@@ -4,5 +4,6 @@ JWorks/bin/
 *.settings
 *.class
 JWorks/*.db
+JWorks/*.db-journal
 /bin/
 JWorks/src/database/Main.java
