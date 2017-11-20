@@ -10,6 +10,11 @@ public class Student extends User {
         super();
     }
 
+    public Student(int studentNumber){
+        super();
+        this.setStudentNumber(studentNumber);
+    }
+
     public Student(String name, String emailAddress, String password, int studentNumber) {
         super(name, emailAddress, password);
         this.studentNumber = studentNumber;
