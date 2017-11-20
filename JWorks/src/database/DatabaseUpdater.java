@@ -203,11 +203,8 @@ public class DatabaseUpdater {
   protected static boolean updateAttemptsRemaining(int problemSetKey, int studentNumber,
       int attemptsRemaining, Connection connection) {
     
-    String columnName = "PROBLEMSET" + problemSetKey;
-    
-    String sql = "UPDATE ATTEMPTSREMAINING SET "
-        + columnName
-        + " = ? WHERE STUDENTNUMBER = ?;";
+    String sql = "UPDATE ATTEMPTSREMAINING SET ATTEMPTSREMAINING = ? WHERE STUDENTNUMBER = ?, "
+        + "PROBLEMSET = ?";
     
     boolean result = false;
     
@@ -215,6 +212,7 @@ public class DatabaseUpdater {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, attemptsRemaining);
       preparedStatement.setInt(2, studentNumber);
+      preparedStatement.setInt(3, problemSetKey);
       
       preparedStatement.executeUpdate();
       

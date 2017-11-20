@@ -34,9 +34,11 @@ public class LoginCommand extends Command {
         // Parse result
         if (result instanceof Student) {
         	Student student = (Student) result;
-        	// TODO: Change output stream to handle non-problem/string payloads
-        	// outputStream.output(student.toString());
+        	outputStream.outputPayload(student);
         	return true;
+        } else if (result.equals(Boolean.TRUE)) {
+            // Instructor case
+            return true;
         }
         
         // Only reached if authentication fails

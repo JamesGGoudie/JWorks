@@ -15,12 +15,23 @@ import java.util.Iterator;
 import java.util.List;
 
 public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
+    private Connection connection;
     @Override
+    public void actOnDatabase(){
+        connection = DatabaseDriverAPI.connectOrCreateDataBase();
+    }
+
+    /**
+     * Gets result from query run by DatabaseSelector class, parses it and sends it to output generator
+     * @param actObj 1 for problem, 2 for problem set, 3 for Student User
+     * @param args {Primary key for user}
+     */
     public void actOnDatabase(int actObj, String[] args) {
+        this.actOnDatabase();
         //to send message to UI
         OutputGenerator outTo = new OutputGenerator();
         try {
-            Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
+            this.actOnDatabase();
             // the query result will always be parsed into an Array list
             List<String[]> problems = new ArrayList<String[]>();
             // stores value returned from respective table
@@ -70,16 +81,17 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      * @throws SQLException
      */
     public Problem actOnDatabase(int pKey, Problem searchProblem)throws DatabaseSelectException, SQLException{
-        Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
+        this.actOnDatabase();
         // stores value returned from respective table
         ResultSet results;
         // store metadata for corresponding ResultSet
         ResultSetMetaData rsmd;
-        results = DatabaseSelector.getProblemSet(pKey, connection);
+        results = DatabaseSelector.getSingleProblem(pKey, connection);
         rsmd = results.getMetaData();
         String[] resultRow = new String[rsmd.getColumnCount()];
         while(results.next()){
             for (int col = 1; col <= rsmd.getColumnCount(); col++){
+                // check what's being inserted
                 resultRow[col] = results.getString(col);
             }
         }
@@ -95,7 +107,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      * @throws SQLException
      */
     public List<Problem> actOnDatabase(List<Problem> pList) throws DatabaseSelectException, SQLException{
-        Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
+        this.actOnDatabase();
         // the query result will always be parsed into an Array list
         List<String[]> problems = new ArrayList<String[]>();
         // stores value returned from respective table
@@ -114,11 +126,13 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     /**
      * Use information from array to assign attributes to Problem
      */
-    private Problem populateProblem(String[] aRow){
+    private Problem populateProblem(String[] aRow) {
         Problem newProblem;
         int pid = Integer.parseInt(aRow[0]);
-        String question = aRow[1];
-        String answer = aRow[2];
+        String question = aRow[2];
+        String answer = aRow[3];
+        //once instructor model has been created
+        //int iid = Integer.getInteger(aRow[3]);
         newProblem = new SingleAnswerProblem(question, answer);
         newProblem.setId(pid);
         return newProblem;
@@ -149,6 +163,26 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     }
 
     /**
+     *
+     * @param sid
+     * @param searchStudent
+     * @return
+     */
+    public Student actOnDatabase(int sid, Student searchStudent) throws DatabaseSelectException, SQLException{
+        this.actOnDatabase();
+        // stores value returned from respective table
+        ResultSet results;
+        // store metadata for corresponding ResultSet
+        ResultSetMetaData rsmd;
+        results = DatabaseSelector.getStudent(sid, connection);
+        rsmd = results.getMetaData();
+        String[] resultRow = new String[rsmd.getColumnCount()];
+        resultRow = formatStudent(results, rsmd);
+        searchStudent = populateStudent(searchStudent, resultRow);
+        return searchStudent;
+    }
+
+    /**
      * parses info stored in rs into attributes for a student user
      * @param rs result set from requesting student with specific student number
      * @param rm metatata for rs
@@ -166,5 +200,19 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         }
         //System.out.print("\n");
         return row;
+    }
+
+    /**
+     * Use info in array provided to set attribute of student object supplied
+     * @param emptyStudent instance of Student user which needs attributes to be assigned
+     * @param studentArray result row from database represented as an array
+     * @return Student object that has been assigned all its attributes
+     */
+    private Student populateStudent(Student emptyStudent, String[] studentArray){
+        emptyStudent.setStudentNumber(Integer.parseInt(studentArray[0]));
+        emptyStudent.setName(studentArray[1]);
+        emptyStudent.setEmailAddress(studentArray[2]);
+        emptyStudent.setPassword(studentArray[3]);
+        return emptyStudent;
     }
 }

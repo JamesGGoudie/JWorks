@@ -6,6 +6,8 @@ public class LoginManager extends Manager {
   private Scene scene;
   private LoginController controller;
   private InstructorMainScreenManager instructorMainScreenManager;
+  private StudentMainScreenManager studentMainScreenManager;
+  private final String COMMAND = "LoginCommand";
 
   /**
    * Default constructor
@@ -20,14 +22,17 @@ public class LoginManager extends Manager {
    * Load the corresponding instructor/student screen based on the user's input
    * 
    * @param user The name of the user
-   * @param password The password for the user
-   * @return Whether or not the login attempt is successful
    */
+
   public boolean Login(String user, String password) {
-    String[] args = { "3", user, password };
+    String[] args = {COMMAND, user, password };
     if (interpreter.executeAction(args)) {
-      ShowInstructorMainScreen(user);
-      return true;
+		if (user.matches("[0-9]+")) {
+			showStudentMainScreen(user);
+		} else {
+			ShowInstructorMainScreen(user);
+		}
+		return true;
     }
     return false;
   }
@@ -62,4 +67,15 @@ public class LoginManager extends Manager {
     // show the main screen
     instructorMainScreenManager.showScreen(this, user);
   }
+
+  /**
+   * Set the window to show the student main screen
+   * 
+   * @param user
+   */
+  private void showStudentMainScreen(String user) {
+    studentMainScreenManager = new StudentMainScreenManager(scene);
+    studentMainScreenManager.showScreen(this, user);
+  }
+
 }
