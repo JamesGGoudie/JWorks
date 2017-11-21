@@ -24,14 +24,22 @@ public class Main {
         Student sUser = new Student("aaron", "a.rodgers@packers.club", "collar", 12);
         DatabaseStoreAPI insert = new DatabaseStoreAPI();
         DatabaseExtractAPI select = new DatabaseExtractAPI();
+        ps1.setMaxAttempts(5);
+        ps1.setCreatorID(15);
         try{
+            int problemNum = insert.actOnDatabase(p1);
+            int problemSetNum = insert.actOnDatabase(ps1);
             //System.out.println(insert.actOnDatabase(p1));
             //System.out.println(insert.actOnDatabase(p2));
             //System.out.println(insert.actOnDatabase(ps1));
             //System.out.println(insert.actOnDatabase(sUser));
-            Problem sp = select.actOnDatabase(1, new SingleAnswerProblem("", ""));
+            Problem sp = select.actOnDatabase(problemNum, new SingleAnswerProblem("", ""));
             System.out.println("id: "+sp.getId()+"q: "+sp.getProblem()+"a: "+sp.getAnswer());
+            ProblemSet psR = select.actOnDatabase(problemSetNum, ps1);
+            System.out.println("id: " + psR.getId() + " creatorID: " + psR.getCreatorID() + " MaxAttempts: " + psR.getMaxAttempts() + " StartTime: " + psR.getStartTime().getTime() + " EndTime: " + psR.getEndTime().getTime());
+            System.out.println("questionID1: " + psR.getQuestions().get(0).getId());
         } catch (Exception e){
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
         String[] out = {"1", "2", "3"};

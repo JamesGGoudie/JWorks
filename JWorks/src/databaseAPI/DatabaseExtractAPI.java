@@ -38,9 +38,10 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         rsmd = results.getMetaData();
         String[] resultRow = new String[rsmd.getColumnCount()];
         while(results.next()){
-            for (int col = 1; col <= rsmd.getColumnCount(); col++){
+            for (int col = 0; col < rsmd.getColumnCount(); col++){
                 // check what's being inserted
-                resultRow[col] = results.getString(col);
+                resultRow[col] = results.getString(col + 1);
+                System.out.println(col);
             }
         }
         searchProblem = populateProblem(resultRow);
@@ -149,7 +150,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      */
     public List<Problem> actOnDatabase(List<Problem> allProblems) throws DatabaseSelectException,
             SQLException {
-        GUIOutputGenerator outTo = new GUIOutputGenerator();
+        this.actOnDatabase();
         ResultSet problemsRaw = DatabaseSelector.getAllProblems(this.connection);
         
         allProblems.clear();
@@ -168,6 +169,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                 String question = problemsRaw.getString(3);
                 String answer = problemsRaw.getString(4);
                 
+                int creatorID = DatabaseSelector.getProblemCreator(id, this.connection);
+                
                 // If we had more than one question type, this switch statement would be
                 // useful.
                 switch (questionType) {
@@ -176,13 +179,11 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                         SingleAnswerProblem problem = new SingleAnswerProblem(question,
                             answer);
                         problem.setId(id);
+                        problem.setCreatorID(creatorID);
                         
                         // This is just in case in a future build we need to send the problems
                         // together to the output generator.
                         allProblems.add(problem);
-                        
-                        // Pass the problem to the GUI output generator.
-                        outTo.output(problem);
                         break;
                     default:
                         break;
@@ -210,7 +211,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      */
     public ProblemSet actOnDatabase(int problemSetKey, ProblemSet problemSet) throws
             DatabaseSelectException, SQLException {
-        GUIOutputGenerator outTo = new GUIOutputGenerator();
+      
+        this.actOnDatabase();
         ResultSet problemsRaw = DatabaseSelector.getProblemsInProblemSet(problemSetKey,
             this.connection);
         
@@ -247,6 +249,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                   String question = problemRaw.getString(3);
                   String answer = problemRaw.getString(4);
                   
+                  int creatorID = DatabaseSelector.getProblemCreator(id, this.connection);
+                  
                   Problem problem = null;
                   
                   // If we had more than one question type, this switch statement would be
@@ -257,6 +261,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                           problem = new SingleAnswerProblem(question,
                               answer);
                           problem.setId(id);
+                          problem.setCreatorID(creatorID);
                           break;
                       default:
                           break;
@@ -278,14 +283,16 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             // stored as seconds in the database, but the Date object requires milliseconds.
             Date startTime = new Date(problemSetRaw.getInt(3) * 1000L);
             Date endTime = new Date(problemSetRaw.getInt(4) * 1000L);
+
+
+            int creatorID = DatabaseSelector.getProblemSetCreator(problemSetKey, this.connection);
             
             problemSet.setId(id);
             problemSet.setMaxAttempts(maxAttempts);
             problemSet.setStartTime(startTime);
             problemSet.setEndTime(endTime);
+            problemSet.setCreatorID(creatorID);
             
-            outTo.output(problemSet);
-
             // Close the result sets to allow for modification of the data.
             problemsRaw.close();
             problemSetRaw.close();
