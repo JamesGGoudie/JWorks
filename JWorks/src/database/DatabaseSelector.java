@@ -432,4 +432,167 @@ public class DatabaseSelector {
     
     return results;
   }
+
+  /**
+   * Returns a result set containing all of the tags associated with the given problem.
+   * @param problemID The unique ID of the problem.
+   * @param connection The connection to the database file.
+   * @return A result set containing one column, consisting of the problems tags as Strings.
+   * @throws DatabaseSelectException Thrown if the tags could not be retrieved.
+   */
+  protected static ResultSet getProblemTags(int problemID, Connection connection) throws
+      DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT TAG FROM PROBLEMTAGS WHERE PROBLEM = ?";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      
+      preparedStatement.setInt(1, problemID);
+      
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      String errorMessage = "Could not retrieve problem's tags from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    
+    return results;
+  }
+  
+  /**
+   * Returns all of the tags associate with the given problem set.
+   * @param problemSetID The unique ID of the problem set.
+   * @param connection The connection to the database file.
+   * @return A results set containing one column composed of the tags as Strings.
+   * @throws DatabaseSelectException Thrown if the tags could not be retrieved from the database.
+   */
+  protected static ResultSet getProblemSetTags(int problemSetID, Connection connection) throws
+      DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT TAG FROM PROBLEMSETTAGS WHERE PROBLEMSET = ?";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      
+      preparedStatement.setInt(1, problemSetID);
+      
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      String errorMessage = "Could not retrieve problem set's tags from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    
+    return results;
+  }
+
+  /**
+   * Returns the ID's of the problems with the given tag as a result set.
+   * @param tag The tag that we want to use to find problems.
+   * @param connection The connection to the database file.
+   * @return A result set containing one column of integers where the integers are the problem IDs.
+   * @throws DatabaseSelectException Thrown if the problems with the given tag could not be
+   *                                 retrieved from the database.
+   */
+  protected static ResultSet getProblemSWithTag(String tag, Connection connection) throws
+      DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT PROBLEM FROM PROBLEMTAGS WHERE TAG = ?";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      
+      preparedStatement.setString(1, tag);
+      
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      String errorMessage = "Could not retrieve the problem with the given tag.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
+
+  /**
+   * Returns the ID's of the problem sets with the given tag as a result set.
+   * @param tag The tag that we want to use to find problem sets.
+   * @param connection The connection to the database file.
+   * @return A result set containing one column of integers where the integers are the problem set
+   *         IDs.
+   * @throws DatabaseSelectException Thrown if the problem set's with the given tag could not be
+   *                                 retrieved from the database.
+   */
+  protected static ResultSet getProblemSetsWithTag(String tag, Connection connection) throws
+      DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT PROBLEMSET FROM PROBLEMSETTAGS WHERE TAG = ?";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      
+      preparedStatement.setString(1, tag);
+      
+      results = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      String errorMessage = "Could not retrieve the problem sets with the given tag.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
+  
+  /**
+   * Returns a result set containing all of the tags and the problems that they are associated
+   * with.
+   * @param connection The connection to the database file.
+   * @return A result set containing two columns: first, a problemID; second, a tag associated
+   *         with the problem.
+   * @throws DatabaseSelectException Thrown if the collection could not be retrieved.
+   */
+  protected static ResultSet getAllProblemTags(Connection connection)
+      throws DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT * FROM PROBLEMTAGS";
+    
+    try {
+      Statement statement = connection.createStatement();
+      results = statement.executeQuery(sql);
+    } catch (SQLException e) {
+      String errorMessage = "Failed to get the collection of problems and tags from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
+  
+  /**
+   * Returns a result set containing all of the tags and the problems sets that they are associated
+   * with.
+   * @param connection The connection to the database file.
+   * @return A result set containing two columns: first, a problemSetID; second, a tag associated
+   *         with the problem set.
+   * @throws DatabaseSelectException Thrown if the collection could not be retrieved.
+   */
+  protected static ResultSet getAllProblemSetTags(Connection connection)
+      throws DatabaseSelectException {
+    
+    ResultSet results = null;
+    String sql = "SELECT * FROM PROBLEMSETTAGS";
+    
+    try {
+      Statement statement = connection.createStatement();
+      results = statement.executeQuery(sql);
+    } catch (SQLException e) {
+      String errorMessage = "Failed to get the collection of problems sets and tags.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
 }
