@@ -433,7 +433,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      * @return A ProblemSetAttempt object that contains all of the information 
      */
     public ProblemSetAttempt actOnDatabase(ProblemSetAttempt problemSetAttempt) {
-      
+        this.actOnDatabase();
         int studentNumber = problemSetAttempt.getStudent().getStudentNumber();
         int problemSet = problemSetAttempt.getProblemSet().getId();
         int attemptNumber = problemSetAttempt.getId();
