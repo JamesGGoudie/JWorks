@@ -42,6 +42,7 @@ public class Main {
             System.out.println(insert.actOnDatabase(p1));
             System.out.println(insert.actOnDatabase(p2));
             System.out.println(insert.actOnDatabase(ps1));
+            System.out.println(insert.actOnDatabase(ps1));
             System.out.println(insert.actOnDatabase(sUser));
             System.out.println(insert.actOnDatabase(iUser));
             System.out.println();
@@ -56,6 +57,14 @@ public class Main {
             printUser(si);
             System.out.println();
             printUser(ss);
+            
+            ArrayList<ProblemSet> derp = new ArrayList<ProblemSet>();
+            
+            List<ProblemSet> allProblemSets = select.actOnDatabase(derp);
+            
+            for (ProblemSet problemSet : allProblemSets) {
+              printpSet(problemSet);
+            }
         }
         catch (Exception e){
             e.printStackTrace();

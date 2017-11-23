@@ -390,7 +390,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             
             while (problemSetResults.next()) {
                 ProblemSet problemSet = new SimpleProblemSet();
-                allProblemSets.add(this.actOnDatabase(problemSetResults.getInt(0), problemSet));
+                allProblemSets.add(this.actOnDatabase(problemSetResults.getInt(1), problemSet));
             }
         } catch (DatabaseSelectException | SQLException e) {
             allProblemSets.clear();
