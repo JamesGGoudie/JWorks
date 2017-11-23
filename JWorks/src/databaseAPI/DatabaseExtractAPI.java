@@ -43,6 +43,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         }
         
         searchProblem = populateProblem(resultRow);
+        searchProblem.setCreatorID(DatabaseSelector.getProblemCreator(pKey, this.connection));
         return searchProblem;
     }
 
@@ -176,7 +177,9 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                         SingleAnswerProblem problem = new SingleAnswerProblem(question,
                             answer);
                         problem.setId(id);
-                        
+
+                        problem.setCreatorID(DatabaseSelector.getProblemCreator(id,
+                            this.connection));
                         // This is just in case in a future build we need to send the problems
                         // together to the output generator.
                         allProblems.add(problem);
@@ -259,6 +262,9 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                           problem = new SingleAnswerProblem(question,
                               answer);
                           problem.setId(id);
+
+                          problem.setCreatorID(DatabaseSelector.getProblemCreator(id,
+                              this.connection));
                           break;
                       default:
                           break;
@@ -285,6 +291,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             problemSet.setMaxAttempts(maxAttempts);
             problemSet.setStartTime(startTime);
             problemSet.setEndTime(endTime);
+            
+            problemSet.setCreatorID(DatabaseSelector.getProblemSetCreator(problemSetKey, this.connection));
             
             outTo.output(problemSet);
 
