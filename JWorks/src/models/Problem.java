@@ -1,5 +1,8 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -10,6 +13,8 @@ public abstract class Problem extends DatabaseObject {
     // Properties
     protected final SimpleStringProperty problemProperty = new SimpleStringProperty("");
     protected final SimpleStringProperty answerProperty = new SimpleStringProperty("");
+    
+    protected List<String> tags = new ArrayList<String>();
     protected int creatorID;
 
     /**
@@ -37,5 +42,21 @@ public abstract class Problem extends DatabaseObject {
 
     public void setCreatorID(int creatorID) {
         this.creatorID = creatorID;
+    }
+    
+    public void addTags(List<String> newTags) {
+      for (String tag : newTags) {
+        if (!(this.tags.contains(tag))) {
+          this.tags.add(tag);
+        }
+      }
+    }
+    
+    public List<String> getTags() {
+      return this.tags;
+    }
+    
+    public void removeTags(List<String> tagsToRemove) {
+      this.tags.removeAll(tagsToRemove);
     }
 }
