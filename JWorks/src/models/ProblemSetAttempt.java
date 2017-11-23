@@ -1,6 +1,6 @@
 package models;
 
-import java.io.Serializable;
+import java.io.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,5 +85,45 @@ public class ProblemSetAttempt extends DatabaseObject implements Serializable {
 
     public List<String> getAnswers() {
         return answers;
+    }
+
+    /**
+     * Serializes this problem set and returns a string representation.
+     * @return the string representation of the serialized object. Empty string if failed.
+     */
+    public String serialize() {
+        String result;
+        try {
+            ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+            ObjectOutputStream outputStream = new ObjectOutputStream(byteOut);
+            outputStream.writeObject(this);
+            result = byteOut.toString();
+        } catch (IOException e){
+            result = "";
+        }
+
+        return result;
+    }
+
+    /**
+     * Deserializes the given problem set attempt object.
+     * @param serial the string representation of the problem set attempt to convert to an object
+     * @return the deserialized problem set attempt object
+     */
+    public static ProblemSetAttempt deserialize(String serial) {
+        ProblemSetAttempt attempt;
+        // Deserialize string argument to get problem set attempt
+        try {
+            byte[] byteArray = serial.getBytes();
+            ByteArrayInputStream byteInput = new ByteArrayInputStream(byteArray);
+            ObjectInputStream in = new ObjectInputStream(byteInput);
+            attempt = (ProblemSetAttempt) in.readObject();
+            in.close();
+            byteInput.close();
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+
+        return attempt;
     }
 }

@@ -44,7 +44,10 @@ public class CompleteProblemSetScreenManager extends Manager {
                 + score
                 + "%.");
 
+        // Serialize the attempt and submit to command
+        // interpreter.executeAction(new String[] {"addProblemSetAttemptCommand", attempt.serialize()});
         returnToMainScreen();
+
     }
 
     public void returnToMainScreen() {

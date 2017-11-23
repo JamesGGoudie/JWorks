@@ -33,20 +33,9 @@ public class AddProblemSetAttemptCommand extends Command {
     public boolean execute(String[] args) {
         // Init properties
         AddProblemSetAttemptAction action = new AddProblemSetAttemptAction();
-        ProblemSetAttempt attempt;
-
-        // Deserialize string argument to get problem set attempt
-        try {
-            byte[] byteArray = args[0].getBytes();
-            ByteArrayInputStream byteInput = new ByteArrayInputStream(byteArray);
-            ObjectInputStream in = new ObjectInputStream(byteInput);
-            attempt = (ProblemSetAttempt) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            return false;
-        }
 
         // Send to action
-        Object result = action.execute(attempt, databaseAPI);
+        Object result = action.execute(ProblemSetAttempt.deserialize(args[0]), databaseAPI);
         return (result == null);
     }
 }
