@@ -36,14 +36,13 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         results = DatabaseSelector.getSingleProblem(pKey, connection);
         rsmd = results.getMetaData();
         String[] resultRow = new String[rsmd.getColumnCount()];
-        while(results.next()){
-            for (int col = 0; col < rsmd.getColumnCount(); col++){
-                // check what's being inserted
-                resultRow[col] = results.getString(col + 1);
-                System.out.println(col);
-            }
+        for (int col = 1; col <= rsmd.getColumnCount(); col++){
+            // check what's being inserted
+            resultRow[col - 1] = results.getString(col);
         }
+        
         searchProblem = populateProblem(resultRow);
+        searchProblem.setCreatorID(DatabaseSelector.getProblemCreator(pKey, this.connection));
         return searchProblem;
     }
 
@@ -97,7 +96,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     }
 
     private Instructor populateInstructor(Instructor emptyInstructor, String[] instructorArray){
-        emptyInstructor.setInstructorID(Integer.getInteger(instructorArray[0]));
+        Integer instructorID = new Integer(instructorArray[0]);
+        emptyInstructor.setInstructorID(instructorID);
         emptyInstructor.setName(instructorArray[1]);
         emptyInstructor.setEmailAddress(instructorArray[2]);
         emptyInstructor.setPassword(instructorArray[3]);
@@ -179,7 +179,6 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                             answer);
                         problem.setId(id);
                         problem.setCreatorID(creatorID);
-                        
                         // This is just in case in a future build we need to send the problems
                         // together to the output generator.
                         allProblems.add(problem);
@@ -251,7 +250,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                   int creatorID = DatabaseSelector.getProblemCreator(id, this.connection);
                   
                   Problem problem = null;
-                  
+
+                  problemRaw.close();
                   // If we had more than one question type, this switch statement would be
                   // useful.
                   switch (questionType) {
