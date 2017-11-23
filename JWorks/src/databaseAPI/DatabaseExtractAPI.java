@@ -425,4 +425,31 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
       
       return problemSets;
     }
+
+    /**
+     * Gets the problem set attempt from the database.
+     * @param problemSetAttempt A problemSetAttempt which will be filled with the data from the
+     *                          database. Should come with the problem set ID and attempt number.
+     * @return A ProblemSetAttempt object that contains all of the information 
+     */
+    public ProblemSetAttempt actOnDatabase(ProblemSetAttempt problemSetAttempt) {
+      
+        int studentNumber = problemSetAttempt.getStudent().getStudentNumber();
+        int problemSet = problemSetAttempt.getProblemSet().getId();
+        int attemptNumber = problemSetAttempt.getId();
+        
+        try {
+            ResultSet previousAttemptData = DatabaseSelector.getStudentsResults(studentNumber,
+                    problemSet, attemptNumber, connection);
+            
+            while (previousAttemptData.next()) {
+                problemSetAttempt.setAnswer(previousAttemptData.getInt(1),
+                        previousAttemptData.getString(2));
+            }
+        } catch (DatabaseSelectException | SQLException e) {
+          
+        }
+        
+        return problemSetAttempt;
+    }
 }
