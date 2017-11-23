@@ -2,7 +2,6 @@ package databaseAPI;
 
 import database.DatabaseSelector;
 import exceptions.DatabaseSelectException;
-import io.GUIOutputGenerator;
 import models.*;
 
 import java.sql.Connection;
