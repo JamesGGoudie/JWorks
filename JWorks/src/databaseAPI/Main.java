@@ -1,5 +1,6 @@
 package databaseAPI;
 
+import java.io.File;
 import java.sql.Connection;
 import models.*;
 
@@ -12,6 +13,12 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        File db = new File("jworks.db");
+        db.delete();
+        
+        int creatorID = 2008;
+        int maxAttempts = 5;
+        
         Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
         DatabaseDriverAPI.initialize(connection);
 
@@ -24,25 +31,34 @@ public class Main {
         ps1.setEndTime(date);
         ps1.setStartTime(date);
         Student sUser = new Student("aaron", "a.rodgers@packers.club", "collar", 12);
-        Instructor iUser = new Instructor("mike", "m.mccarthy@packers.club", "jk", 2008);
+        Instructor iUser = new Instructor("mike", "m.mccarthy@packers.club", "jk", creatorID);
+        p1.setCreatorID(creatorID);
+        p2.setCreatorID(creatorID);
+        ps1.setCreatorID(creatorID);
+        ps1.setMaxAttempts(maxAttempts);
         DatabaseStoreAPI insert = new DatabaseStoreAPI();
         DatabaseExtractAPI select = new DatabaseExtractAPI();
         try{
-            //System.out.println(insert.actOnDatabase(p1));
-            //System.out.println(insert.actOnDatabase(p2));
-            //System.out.println(insert.actOnDatabase(ps1));
-            //System.out.println(insert.actOnDatabase(sUser));
-            //System.out.println(insert.actOnDatabase(iUser));
-            Problem sp = select.actOnDatabase(1, new SingleAnswerProblem());
-            ProblemSet sps = select.actOnDatabase(1, new SimpleProblemSet());
+            System.out.println(insert.actOnDatabase(p1));
+            System.out.println(insert.actOnDatabase(p2));
+            System.out.println(insert.actOnDatabase(ps1));
+            System.out.println(insert.actOnDatabase(sUser));
+            System.out.println(insert.actOnDatabase(iUser));
+            System.out.println();
+            Problem sp = select.actOnDatabase(p1.getId(), new SingleAnswerProblem());
+            ProblemSet sps = select.actOnDatabase(ps1.getId(), new SimpleProblemSet());
             Instructor si = select.actOnDatabase(2008, new Instructor());
             Student ss = select.actOnDatabase(12, new Student());
             printProblem(sp);
+            System.out.println();
             printpSet(sps);
+            System.out.println();
             printUser(si);
+            System.out.println();
             printUser(ss);
         }
         catch (Exception e){
+            e.printStackTrace();
             System.out.println("FAIL!!!");
         }
         String[] out = {"1", "2", "3"};
