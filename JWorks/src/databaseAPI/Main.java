@@ -42,6 +42,7 @@ public class Main {
             System.out.println(insert.actOnDatabase(p1));
             System.out.println(insert.actOnDatabase(p2));
             System.out.println(insert.actOnDatabase(ps1));
+            ps1.addProblem(p2);
             System.out.println(insert.actOnDatabase(ps1));
             System.out.println(insert.actOnDatabase(sUser));
             System.out.println(insert.actOnDatabase(iUser));
@@ -51,13 +52,9 @@ public class Main {
             Instructor si = select.actOnDatabase(2008, new Instructor());
             Student ss = select.actOnDatabase(12, new Student());
             printProblem(sp);
-            System.out.println();
             printpSet(sps);
-            System.out.println();
             printUser(si);
-            System.out.println();
             printUser(ss);
-            
             ArrayList<ProblemSet> derp = new ArrayList<ProblemSet>();
             
             List<ProblemSet> allProblemSets = select.actOnDatabase(derp);
@@ -85,6 +82,7 @@ public class Main {
         System.out.println("question: "+p.getProblem());
         System.out.println("answer: "+p.getAnswer());
         System.out.println("created by: "+p.getCreatorID());
+        System.out.println();
     }
 
     static void printpSet(ProblemSet ps){
@@ -93,6 +91,7 @@ public class Main {
         System.out.println("submit by: "+ps.getEndTime());
         System.out.println("max attempts: "+ps.getMaxAttempts());
         System.out.println("created by: "+ps.getCreatorID());
+        System.out.println();
         List<Problem> pList = ps.getQuestions();
         for (Problem p: pList
              ) {printProblem(p);
@@ -106,6 +105,7 @@ public class Main {
         System.out.println("name: "+u.getName());
         System.out.println("email: "+u.getEmailAddress());
         System.out.println("password: "+u.getPassword());
+        System.out.println();
     }
 
 }
