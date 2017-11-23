@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * Class to keep track of user answers for a particular problem set
  */
-public class ProblemSetAttempt extends DatabaseObject {
+public class ProblemSetAttempt extends DatabaseObject implements Serializable {
     // Properties
     private ProblemSet problemSet;
     private Student student;
