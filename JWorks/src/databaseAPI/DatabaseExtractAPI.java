@@ -346,4 +346,58 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         
         return tags;
     }
+
+    /**
+     * Returns a list of all of the problems with the given tag.
+     * @param problems A list of problems that will be cleared and filled with all of the problems
+     *                 in the database that contain the given tag.
+     * @param tag The tag that we want to use to find problems.
+     * @return A list of problems with the given tag. An empty list could imply that an error
+     *         occurred.
+     */
+    public List<Problem> actOnDatabase(List<Problem> problems, String tag) {
+        this.actOnDatabase();
+        problems.clear();
+        
+        try {
+            ResultSet results = DatabaseSelector.getProblemsWithTag(tag, this.connection);
+            
+            while (results.next()) {
+                Problem newProblem = new SingleAnswerProblem();
+                
+                problems.add(this.actOnDatabase(results.getInt(1), newProblem));
+            }
+        } catch (DatabaseSelectException | SQLException e) {
+            problems.clear();
+        }
+      
+      return problems;
+    }
+    
+    /**
+     * Returns a list of all of the problem sets with the given tag.
+     * @param tag The tag that we want to use to sort problem sets.
+     * @param problemSets A list of problem sets that will be cleared and filled with all of the
+     *                    problem sets in that database that contain the given tag.
+     * @return A list of problem sets with the given tag. An empty list could imply that an error
+     *         occurred.
+     */
+    public List<ProblemSet> actOnDatabase(String tag, List<ProblemSet> problemSets) {
+      this.actOnDatabase();
+      problemSets.clear();
+      
+      try {
+          ResultSet results = DatabaseSelector.getProblemSetsWithTag(tag, this.connection);
+          
+          while (results.next()) {
+              ProblemSet newProblemSet = new SimpleProblemSet();
+              
+              problemSets.add(this.actOnDatabase(results.getInt(1), newProblemSet));
+          }
+      } catch (DatabaseSelectException | SQLException e) {
+          problemSets.clear();
+      }
+      
+      return problemSets;
+    }
 }
