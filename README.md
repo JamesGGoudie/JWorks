@@ -15,6 +15,10 @@
     UserStories:        Contains the requirements that reflect each type of users described in 
                         Personas.
 
+	JWorksTestingPlan:  The verification and validation plan for testing the product.
+
+	CodeReview:         The code review strategy, recommendations, and link to the debriefing video.
+
     Where # denotes the sprint number. Sprints where no changes are made are omitted.
                         
 ## SprintBacklog:
