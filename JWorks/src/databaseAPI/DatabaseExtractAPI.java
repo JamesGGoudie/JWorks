@@ -375,6 +375,31 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     }
     
     /**
+     * Gets all of the problem sets from the database.
+     * @param allProblemSets A list that will be cleared and filled with all of the problem sets in
+     *                       the database. An empty list could indicate an error occurred.
+     * @return A list containing all of the problem sets in the database.
+     */
+    public List<ProblemSet> actOnDatabase(ArrayList<ProblemSet> allProblemSets) {
+        this.actOnDatabase();
+      
+        allProblemSets.clear();
+        
+        try {
+            ResultSet problemSetResults = DatabaseSelector.getAllProblemSets(this.connection);
+            
+            while (problemSetResults.next()) {
+                ProblemSet problemSet = new SimpleProblemSet();
+                allProblemSets.add(this.actOnDatabase(problemSetResults.getInt(0), problemSet));
+            }
+        } catch (DatabaseSelectException | SQLException e) {
+            allProblemSets.clear();
+        }
+      
+        return allProblemSets;
+    }
+    
+    /**
      * Returns a list of all of the problem sets with the given tag.
      * @param tag The tag that we want to use to sort problem sets.
      * @param problemSets A list of problem sets that will be cleared and filled with all of the
