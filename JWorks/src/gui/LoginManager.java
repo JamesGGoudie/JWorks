@@ -29,8 +29,12 @@ public class LoginManager extends Manager {
     String[] args = {COMMAND, user, password };
     if (interpreter.executeAction(args)) {
         // Auth is successful, store user appropriately
-        User sessionUser = (User) interpreter.getOutputGenerator().getLastResult();
-        interpreter.setCurrentUser(sessionUser);
+        try {
+          User sessionUser = (User) interpreter.getOutputGenerator().getLastResult();
+          interpreter.setCurrentUser(sessionUser);
+        } catch (ClassCastException e) {
+          // do nothing
+        }
 
 		if (user.matches("[0-9]+")) {
 			showStudentMainScreen(user);
