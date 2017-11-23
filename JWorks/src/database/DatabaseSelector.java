@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import exceptions.DatabaseSelectException;
 
@@ -547,23 +549,32 @@ public class DatabaseSelector {
   }
   
   /**
-   * Returns a result set containing all of the tags and the problems that they are associated
-   * with.
+   * Gets all of the unique tags associated to problems in the database.
    * @param connection The connection to the database file.
-   * @return A result set containing two columns: first, a problemID; second, a tag associated
-   *         with the problem.
-   * @throws DatabaseSelectException Thrown if the collection could not be retrieved.
+   * @return A list of strings containing all of the tags used to identify problems in the
+   *         database.
+   * @throws DatabaseSelectException Thrown if the full list of tags associated with problems could
+   *                                 not be retrieved from the database.
    */
-  protected static ResultSet getAllProblemTags(Connection connection)
+  protected static List<String> getAllProblemTags(Connection connection)
       throws DatabaseSelectException {
     
-    ResultSet results = null;
-    String sql = "SELECT * FROM PROBLEMTAGS";
+    ResultSet allTags = null;
+    String sql = "SELECT TAG FROM PROBLEMTAGS";
+    
+    List<String> results = new ArrayList<String>();
     
     try {
       Statement statement = connection.createStatement();
-      results = statement.executeQuery(sql);
+      allTags = statement.executeQuery(sql);
+      
+      while (allTags.next()) {
+        if (!(results.contains(allTags.getString(1)))) {
+          results.add(allTags.getString(1));
+        }
+      }
     } catch (SQLException e) {
+      results.clear();
       String errorMessage = "Failed to get the collection of problems and tags from the database.";
       throw new DatabaseSelectException(errorMessage);
     }
@@ -572,22 +583,30 @@ public class DatabaseSelector {
   }
   
   /**
-   * Returns a result set containing all of the tags and the problems sets that they are associated
-   * with.
+   * Gets all of the unique tags associated to problem sets in the database.
    * @param connection The connection to the database file.
-   * @return A result set containing two columns: first, a problemSetID; second, a tag associated
-   *         with the problem set.
-   * @throws DatabaseSelectException Thrown if the collection could not be retrieved.
+   * @return A list of strings containing all of the tags used to identify problem sets in the
+   *         database.
+   * @throws DatabaseSelectException Thrown if the full list of tags associated with problem sets
+   *                                 could not be retrieved from the database.
    */
-  protected static ResultSet getAllProblemSetTags(Connection connection)
+  protected static List<String> getAllProblemSetTags(Connection connection)
       throws DatabaseSelectException {
     
-    ResultSet results = null;
-    String sql = "SELECT * FROM PROBLEMSETTAGS";
+    ResultSet allTags = null;
+    String sql = "SELECT TAG FROM PROBLEMSETTAGS";
+    
+    List<String> results = new ArrayList<String>();
     
     try {
       Statement statement = connection.createStatement();
-      results = statement.executeQuery(sql);
+      allTags = statement.executeQuery(sql);
+      
+      while (allTags.next()) {
+        if (!(results.contains(allTags.getString(1)))) {
+          results.add(allTags.getString(1));
+        }
+      }
     } catch (SQLException e) {
       String errorMessage = "Failed to get the collection of problems sets and tags.";
       throw new DatabaseSelectException(errorMessage);
