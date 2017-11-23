@@ -37,12 +37,11 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         results = DatabaseSelector.getSingleProblem(pKey, connection);
         rsmd = results.getMetaData();
         String[] resultRow = new String[rsmd.getColumnCount()];
-        while(results.next()){
-            for (int col = 1; col <= rsmd.getColumnCount(); col++){
-                // check what's being inserted
-                resultRow[col] = results.getString(col);
-            }
+        for (int col = 1; col <= rsmd.getColumnCount(); col++){
+            // check what's being inserted
+            resultRow[col - 1] = results.getString(col);
         }
+        
         searchProblem = populateProblem(resultRow);
         return searchProblem;
     }
@@ -97,7 +96,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     }
 
     private Instructor populateInstructor(Instructor emptyInstructor, String[] instructorArray){
-        emptyInstructor.setInstructorID(Integer.getInteger(instructorArray[0]));
+        Integer instructorID = new Integer(instructorArray[0]);
+        emptyInstructor.setInstructorID(instructorID);
         emptyInstructor.setName(instructorArray[1]);
         emptyInstructor.setEmailAddress(instructorArray[2]);
         emptyInstructor.setPassword(instructorArray[3]);
@@ -210,6 +210,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      */
     public ProblemSet actOnDatabase(int problemSetKey, ProblemSet problemSet) throws
             DatabaseSelectException, SQLException {
+        this.actOnDatabase();
         GUIOutputGenerator outTo = new GUIOutputGenerator();
         ResultSet problemsRaw = DatabaseSelector.getProblemsInProblemSet(problemSetKey,
             this.connection);
@@ -248,7 +249,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                   String answer = problemRaw.getString(4);
                   
                   Problem problem = null;
-                  
+
+                  problemRaw.close();
                   // If we had more than one question type, this switch statement would be
                   // useful.
                   switch (questionType) {
