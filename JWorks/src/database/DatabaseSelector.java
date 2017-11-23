@@ -440,7 +440,7 @@ public class DatabaseSelector {
    * @return A result set containing one column, consisting of the problems tags as Strings.
    * @throws DatabaseSelectException Thrown if the tags could not be retrieved.
    */
-  protected static ResultSet getProblemTags(int problemID, Connection connection) throws
+  protected static ResultSet getProblemsTags(int problemID, Connection connection) throws
       DatabaseSelectException {
     
     ResultSet results = null;
@@ -497,7 +497,7 @@ public class DatabaseSelector {
    * @throws DatabaseSelectException Thrown if the problems with the given tag could not be
    *                                 retrieved from the database.
    */
-  protected static ResultSet getProblemSWithTag(String tag, Connection connection) throws
+  protected static ResultSet getProblemsWithTag(String tag, Connection connection) throws
       DatabaseSelectException {
     
     ResultSet results = null;
