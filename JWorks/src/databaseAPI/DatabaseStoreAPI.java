@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.text.html.HTML.Tag;
-
 public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
     private Connection connection;
     /**
