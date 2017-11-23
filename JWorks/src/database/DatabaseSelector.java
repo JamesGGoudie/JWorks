@@ -142,6 +142,30 @@ public class DatabaseSelector {
   }
   
   /**
+   * Returns all of the problem sets in the database as a resultSet.
+   * @param connection The connection to the database file.
+   * @return A ResultSet of all of the problem sets in the database with columns ID, maxAttempts,
+   *         startTime, and endTime.
+   * @throws DatabaseSelectException Thrown if the problem sets could not be retrieved.
+   */
+  protected static ResultSet getAllProblemSets(Connection connection)
+      throws DatabaseSelectException {
+    
+    String sql = "SELECT * FROM PROBLEMSETS";
+    ResultSet results = null;
+    
+    try {
+      Statement statement = connection.createStatement();
+      results = statement.executeQuery(sql);
+    } catch (SQLException e) {
+      String errorMessage = "Failed to get all of the problem sets from the database";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
+  
+  /**
    * Retrieves data on the problems associated with a given problem set.
    * @param problemSetKey The unique ID of the problem set.
    * @param connection The connection to the database file.
