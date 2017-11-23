@@ -400,4 +400,46 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
       
       return problemSets;
     }
+
+    /**
+     * Gets all of the tags used by problems in the database.
+     * @param tags A list of strings that will be cleared and filled with all of the tags presently
+     *             used to identify problems.
+     * @param problem An arbitrary problem used to identify what type of function to call.
+     * @return A list of strings containing all of the problem tags. An empty list may indicate
+     *         that an error occurred.
+     */
+    public List<String> actOnDatabase(List<String> tags, Problem problem) {
+        this.actOnDatabase();
+        tags.clear();
+        
+        try {
+            tags = DatabaseSelector.getAllProblemTags(this.connection);
+        } catch (DatabaseSelectException e) {
+            tags.clear();
+        }
+        
+        return tags;
+    }
+    
+    /**
+     * Gets all of the tags used by problem sets in the database.
+     * @param tags A list of strings that will be cleared and filled with all of the tags presently
+     *             used to identify problem sets.
+     * @param problem An arbitrary problem set used to identify what type of function to call.
+     * @return A list of strings containing all of the problem set tags. An empty list may indicate
+     *         that an error occurred.
+     */
+    public List<String> actOnDatabase(List<String> tags, ProblemSet problemSet) {
+        this.actOnDatabase();
+        tags.clear();
+        
+        try {
+            tags = DatabaseSelector.getAllProblemSetTags(this.connection);
+        } catch (DatabaseSelectException e) {
+            tags.clear();
+        }
+        
+        return tags;
+    }
 }
