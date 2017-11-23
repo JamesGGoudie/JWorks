@@ -46,10 +46,4 @@ public interface OutputGen {
 	 * @return the last Object that was sent to this OutputGenerator
 	 */
 	Object getLastResult();
-
-	/**
-	 * Outputs a general object to the stream.
-	 * @param obj the object to output
-	 */
-	void outputPayload(Object obj);
 }

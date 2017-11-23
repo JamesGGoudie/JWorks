@@ -80,14 +80,4 @@ public class OutputGenerator implements OutputGen{
 	public Object getLastResult() {
 		return lastOutput;
 	}
-
-	/**
-	 * Outputs a general object to the stream.
-	 *
-	 * @param obj the object to output
-	 */
-	@Override
-	public void outputPayload(Object obj) {
-		lastOutput = obj;
-	}
 }
