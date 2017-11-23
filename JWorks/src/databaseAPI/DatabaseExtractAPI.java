@@ -43,6 +43,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         
         searchProblem = populateProblem(resultRow);
         searchProblem.setCreatorID(DatabaseSelector.getProblemCreator(pKey, this.connection));
+        searchProblem.addTags(this.getProblemTags(pKey));
         return searchProblem;
     }
 
@@ -179,6 +180,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                             answer);
                         problem.setId(id);
                         problem.setCreatorID(creatorID);
+                        problem.addTags(this.getProblemTags(id));
                         // This is just in case in a future build we need to send the problems
                         // together to the output generator.
                         allProblems.add(problem);
@@ -261,6 +263,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                               answer);
                           problem.setId(id);
                           problem.setCreatorID(creatorID);
+                          problem.addTags(this.getProblemTags(id));
                           break;
                       default:
                           break;
@@ -291,6 +294,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             problemSet.setStartTime(startTime);
             problemSet.setEndTime(endTime);
             problemSet.setCreatorID(creatorID);
+            problemSet.addTags(this.getProblemSetTags(id));
             
             // Close the result sets to allow for modification of the data.
             problemsRaw.close();
@@ -298,5 +302,48 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         }
         
         return problemSet;
+    }
+    
+    /**
+     * Retrieves all of the tags associated with the given problem from the database.
+     * @param problemKey The unique ID of the problem.
+     * @return A list of strings, each of which is a tag associated with the given problem.
+     */
+    private List<String> getProblemTags(int problemKey) {
+        this.actOnDatabase();
+        List<String> tags = new ArrayList<String>();
+      
+        try {
+            ResultSet results = DatabaseSelector.getProblemTags(problemKey, this.connection);
+            
+            while (results.next()) {
+                tags.add(results.getString(1));
+            }
+        } catch (DatabaseSelectException | SQLException e) {
+            tags.clear();
+        }
+      
+        return tags;
+    }
+    
+    /**
+     * Retrieves all of the tags associated with the given problem set from the database.
+     * @param problemSetKey The unique ID of the problem set.
+     * @return A list of strings, each of which is a tag associated with the given problem set.
+     */
+    private List<String> getProblemSetTags(int problemSetKey) {
+        List<String> tags = new ArrayList<String>();
+      
+        try {
+            ResultSet results = DatabaseSelector.getProblemSetTags(problemSetKey, this.connection);
+            
+            while (results.next()) {
+                tags.add(results.getString(1));
+            }
+        } catch (DatabaseSelectException | SQLException e) {
+            tags.clear();
+        }
+        
+        return tags;
     }
 }
