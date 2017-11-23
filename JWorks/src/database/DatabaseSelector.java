@@ -291,7 +291,7 @@ public class DatabaseSelector {
       throws DatabaseSelectException {
   
     int result = -1;
-    String sql = "SELECT INSTRUCTOR FROM INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE"
+    String sql = "SELECT INSTRUCTOR FROM INSTRUCTORS_PROBLEMSETS_RELATIONSHIP WHERE "
         + "PROBLEMSET = ?";
     
     try {
