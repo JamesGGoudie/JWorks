@@ -6,6 +6,11 @@ import models.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.text.html.HTML.Tag;
 
 public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
     private Connection connection;
@@ -87,5 +92,75 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
     @Override
     public void actOnDatabase() {
         connection = DatabaseDriverAPI.connectOrCreateDataBase();
+    }
+    
+    /**
+     * Given a list of tags, adds each tag to the given problem and stores this in the database and
+     * the given problem object.
+     * @param newTags The tags to be associated with the problem.
+     * @param problem The problem object to have the tags appended to. Must have it's ID.
+     * @return True if all of the tags were added, false otherwise.
+     */
+    public boolean actOnDatabase(List<String> newTags, Problem problem) {
+        this.actOnDatabase();
+        boolean result = true;
+        String currentTag;
+        Iterator<String> iterator = newTags.iterator();
+        int problemID = problem.getId();
+        
+        
+        try {
+            while (result & (currentTag = iterator.next()) != null) {
+                // Only add the tag if the problem does not already have the tag.
+                if (!(problem.getTags().contains(currentTag))) {
+                    result = DatabaseInserter.insertProblemTag(problemID, currentTag, connection);
+
+                    // Only add the tag to the object if the tag was added to the database.
+                    if (result) {
+                        List<String> tag = new ArrayList<String>();
+                        problem.addTags(tag);
+                    }
+                }
+                
+            }
+        } catch (DatabaseInsertException e) {
+            result = false;
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Given a list of tags, adds each tag to the given problem set and stores this in the database
+     * and the given problem set object.
+     * @param newTags The tags to be associated with the given problem set.
+     * @param problemSet The problem set object have the tags appended to. Must have it's ID.
+     * @return True if all of the tags were added, false otherwise.
+     */
+    public boolean actOnDatabase(List<String> newTags, ProblemSet problemSet) {
+      boolean result = true;
+      String currentTag;
+      Iterator<String> iterator = newTags.iterator();
+      int problemSetID = problemSet.getId();
+      
+      try {
+          while (result & (currentTag = iterator.next()) != null) {
+              // Only add the tag if the problem set does not already have the tag.
+              if (!(problemSet.getTags().contains(currentTag))) {
+                  result = DatabaseInserter.insertProblemSetTag(problemSetID, currentTag,
+                      connection);
+
+                  // Only add the tag to the object if the tag was added to the database.
+                  if (result) {
+                      List<String> tag = new ArrayList<String>();
+                      problemSet.addTags(tag);
+                  }
+              }
+          }
+      } catch (DatabaseInsertException e) {
+          result = false;
+      }
+      
+      return result;
     }
 }
