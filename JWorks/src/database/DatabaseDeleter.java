@@ -119,7 +119,7 @@ public class DatabaseDeleter {
    */
   protected static boolean deleteProblemTag(int problemKey, String tag, Connection connection) {
     boolean result = false;
-    String sql = "DELETE FROM PROBLEMTAGS WHERE ID = ?, TAG = ?";
+    String sql = "DELETE FROM PROBLEMTAGS WHERE (PROBLEM,TAG) = (?,?)";
     
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -149,7 +149,7 @@ public class DatabaseDeleter {
       Connection connection) {
     
     boolean result = false;
-    String sql = "DELETE FROM PROBLEMSETTAGS WHERE PROBLEMSET = ?, TAG = ?";
+    String sql = "DELETE FROM PROBLEMSETTAGS WHERE (PROBLEMSET,TAG) = (?,?)";
     
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
