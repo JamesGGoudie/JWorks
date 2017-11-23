@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import exceptions.ConnectionFailedException;
 
@@ -15,9 +16,12 @@ public class DatabaseDriver {
   protected static Connection connectOrCreateDatabase() {
     Connection connection = null;
     
+    Properties properties = new Properties();
+    properties.setProperty("PRAGMA foreign_keys", "ON");
+    
     try {
       Class.forName("org.sqlite.JDBC");
-      connection = DriverManager.getConnection("jdbc:sqlite:jworks.db");
+      connection = DriverManager.getConnection("jdbc:sqlite:jworks.db", properties);
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
       System.out.println("The required SQLite class could not be found.");
@@ -65,20 +69,62 @@ public class DatabaseDriver {
       sql = "CREATE TABLE IF NOT EXISTS PROBLEMSETS "
           + "(ID INTEGER PRIMARY KEY NOT NULL,"
           + "MAXATTEMPTS INTEGER NOT NULL,"
-          + "PROBLEMS TEXT NOT NULL,"
           + "STARTTIME INTEGER NOT NULL,"
           + "ENDTIME INTEGER NOT NULL)";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS PROBLEMSETS_PROBLEMS_RELATIONSHIP "
+          + "(PROBLEMSET INTEGER NOT NULL,"
+          + "PROBLEM INTEGER NOT NULL,"
+          + "FOREIGN KEY (PROBLEMSET) REFERENCES PROBLEMSETS(ID),"
+          + "FOREIGN KEY (PROBLEM) REFERENCES PROBLEMS(ID))";
       statement.executeUpdate(sql);
       
       sql = "CREATE TABLE IF NOT EXISTS STUDENTS "
           + "(STUDENTNUMBER INTEGER PRIMARY KEY NOT NULL,"
           + "NAME TEXT NOT NULL,"
-          + "EMAIL TEXT NOT NULL)";
+          + "EMAIL TEXT NOT NULL,"
+          + "PASSWORD TEXT NOT NULL)";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS INSTRUCTORS "
+          + "(ID INTEGER PRIMARY KEY NOT NULL,"
+          + "NAME TEXT NOT NULL,"
+          + "EMAIL TEXT NOT NULL,"
+          + "PASSWORD TEXT NOT NULL)";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS INSTRUCTORS_PROBLEMS_RELATIONSHIP "
+          + "(INSTRUCTOR INTEGER NOT NULL,"
+          + "PROBLEM INTEGER PRIMARY KEY NOT NULL,"
+          + "FOREIGN KEY (INSTRUCTOR) REFERENCES INSTRUCTORS(ID),"
+          + "FOREIGN KEY (PROBLEM) REFERENCES PROBLEMS(ID))";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS INSTRUCTORS_PROBLEMSETS_RELATIONSHIP "
+          + "(INSTRUCTOR INTEGER NOT NULL,"
+          + "PROBLEMSET INTEGER PRIMARY KEY NOT NULL,"
+          + "FOREIGN KEY (INSTRUCTOR) REFERENCES INSTRUCTORS(ID),"
+          + "FOREIGN KEY (PROBLEMSET) REFERENCES PROBLEMSETS(ID))";
       statement.executeUpdate(sql);
       
       sql = "CREATE TABLE IF NOT EXISTS ATTEMPTSREMAINING "
-          + "(STUDENTNUMBER INTEGER PRIMARY KEY NOT NULL,"
-          + "FOREIGN KEY(STUDENTNUMBER) REFERENCES STUDENTS(STUDENTNUMBER))";
+          + "(STUDENTNUMBER INTEGER NOT NULL,"
+          + "PROBLEMSET INTEGER NOT NULL,"
+          + "ATTEMPTSREMAINING INTEGER NOT NULL,"
+          + "FOREIGN KEY(STUDENTNUMBER) REFERENCES STUDENTS(STUDENTNUMBER)"
+          + "FOREIGN KEY(PROBLEMSET) REFERENCES PROBLEMSETS(ID))";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS PREVIOUSATTEMPTS "
+          + "(STUDENTNUMBER INTEGER NOT NULL,"
+          + "PROBLEMSET INTEGER NOT NULL,"
+          + "ATTEMPTNUMBER INTEGER NOT NULL,"
+          + "PROBLEM INTEGER NOT NULL,"
+          + "STUDENTANSWER TEXT NOT NULL,"
+          + "FOREIGN KEY(STUDENTNUMBER) REFERENCES STUDENTS(STUDENTNUMBER)"
+          + "FOREIGN KEY(PROBLEMSET) REFERENCES PROBLEMSETS(ID)"
+          + "FOREIGN KEY(PROBLEM) REFERENCES PROBLEMS(ID))";
       statement.executeUpdate(sql);
       
       statement.close();

@@ -15,6 +15,10 @@
     UserStories:        Contains the requirements that reflect each type of users described in 
                         Personas.
 
+	JWorksTestingPlan:  The verification and validation plan for testing the product.
+
+	CodeReview:         The code review strategy, recommendations, and link to the debriefing video.
+
     Where # denotes the sprint number. Sprints where no changes are made are omitted.
                         
 ## SprintBacklog:
@@ -42,30 +46,70 @@
     application. This application is a still in progress and in its early stages.
     
 ### Build Instructions: 
-Add JAR_Files/sqlite-jdbc-3.18.0.jar as an external dependency to the project.
 
-#### Running the Command Line Version:
-1. Compile and run the project using JWorks/src/driver/JWorks.java as the main class. 
+#### Prerequisite:
+Oracle JDK 8 must be installed, OpenJDK is not supported.
+* Oracle JDK 8 installer can be found [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
+* [How to install Oracle JDK 8 in Linux?](https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jdk.html)
+* [How to install Oracle JDK 8 in OS X?](https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html)
+* [How to install Oracle JDK 8 in Windows?](https://docs.oracle.com/javase/8/docs/technotes/guides/install/windows_jdk_install.html)
 
+#### Setup
+Clone this repository from Github.
+* Type the following git command in the command line:
+```
+git clone https://github.com/CSCC01F17/L01_02
+```
+* Alternatively, you can clone this repository using [GitHub Desktop](https://desktop.github.com/), but currently this project can only be compiled using command line interface.
+
+#### Compile and Run
+Open a terminal/command prompt/PowerShell, navigate to the src directory under the JWorks directory.
+
+* For Linux/Mac users.
+    * To compile and run the command line version, type:
+	```
+	javac driver/JWorks.java
+	java -cp ".:../../JAR_Files/sqlite-jdbc-3.18.0.jar" driver/JWorks
+	```
+	* To compile and run the GUI version, type:
+	```
+	javac gui/JWorksGUI.java
+	java -cp ".:../../JAR_Files/sqlite-jdbc-3.18.0.jar" gui/JWorksGUI
+	```
+* For Windows users.
+	* To compile and run the command line version, type:
+	```
+	javac driver\JWorks.java
+	java -cp ".;..\..\JAR_Files\sqlite-jdbc-3.18.0.jar" driver\JWorks
+	```
+	* To compile and run the GUI version, type:
+	```
+	javac gui\JWorksGUI.java
+	java -cp ".;..\..\JAR_Files\sqlite-jdbc-3.18.0.jar" gui\JWorksGUI
+	```	
+
+#### Using the Command Line Version:
+
+**Note that the command line version is no longer maintained.**
 In the command line version, the following commands can be typed into the command line:
 
 To add a new question:
 
 ```
-1 "Question" answer
+AddSimpleProblemCommand "Question" answer
 ```
 
-Where Question is a string wrapped by double quotes, and answer is a string without a space.
+Where Question is a string wrapped by double quotes, and answer is a string without any space.
 
-To view all saved questions:
 
-```
-2
-```
+#### Using the GUI Version:
+To login as an instructor, enter any non-empty username that does not consist of solely digits, along with a non-empty password and press the Login button.
+On the main screen, a user click the appropriate navigation buttons to:
 
-#### Running the GUI Version:
-1. Compile and run the project using JWorks/src/gui/JWorksGUI.java as the main class.
+- Add a new question
+- View all saved questions
+- Create a new student account
+- Logout
 
-To login, enter any non-empty username and press the Login button.
-Currently, a user can create a new question, return to the home page, or log out.
+A student logs in with their student number and password as created by an instructor. Currently, no student functionality is implemented.
 

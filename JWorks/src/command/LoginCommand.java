@@ -33,9 +33,13 @@ public class LoginCommand extends Command {
         Object result = action.execute(user, password, this.databaseAPI);
         
         // Parse result
-        if (result instanceof User) {
-        	outputStream.outputPayload(result);
+        if (result instanceof Student) {
+        	Student student = (Student) result;
+        	outputStream.outputPayload(student);
         	return true;
+        } else if (result.equals(Boolean.TRUE)) {
+            // Instructor case
+            return true;
         }
         
         // Only reached if authentication fails

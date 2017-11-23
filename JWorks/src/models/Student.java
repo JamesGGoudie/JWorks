@@ -6,6 +6,10 @@ package models;
 public class Student extends User {
     protected int studentNumber;
 
+    public Student(){
+        super();
+    }
+
     public Student(String name, String emailAddress, String password, int studentNumber) {
         super(name, emailAddress, password);
         this.studentNumber = studentNumber;

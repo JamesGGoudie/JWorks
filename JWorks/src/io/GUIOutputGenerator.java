@@ -70,6 +70,16 @@ public class GUIOutputGenerator implements OutputGen {
         return lastResult;
     }
 
+    /**
+     * Outputs a general object to the stream.
+     *
+     * @param obj the object to output
+     */
+    @Override
+    public void outputPayload(Object obj) {
+        lastResult = obj;
+    }
+
     private void showInfoAlert(String description) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(description);

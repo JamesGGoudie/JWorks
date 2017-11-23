@@ -9,7 +9,12 @@ public class User extends DatabaseObject {
     protected String password;
     protected String name;
 
+    public User() {
+
+    }
+
     public User(String name, String emailAddress, String password) {
+        this();
         this.emailAddress = emailAddress;
         this.password = password;
         this.name = name;

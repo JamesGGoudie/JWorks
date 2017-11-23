@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class DatabaseObject {
     protected final SimpleIntegerProperty idProperty = new SimpleIntegerProperty(-1);
 
+
     protected DatabaseObject() {}
 
     /**

@@ -29,8 +29,7 @@ public class DatabaseUpdater {
       
       result = true;
     } catch (SQLException e) {
-      System.out.println("A problem occurred while attempting to modify a problems question.");
-      e.printStackTrace();
+      
     }
     
     return result;
@@ -58,8 +57,7 @@ public class DatabaseUpdater {
       
       result = true;
     } catch (SQLException e) {
-      System.out.println("A problem occurred while attempting to modify a problems answer.");
-      e.printStackTrace();
+      
     }
     
     return result;
@@ -87,8 +85,7 @@ public class DatabaseUpdater {
       
       result = true;
     } catch (SQLException e) {
-      System.out.println("A problem occurred while attempting to change a students name.");
-      e.printStackTrace();
+      
     }
     
     return result;
@@ -117,8 +114,7 @@ public class DatabaseUpdater {
       
       result = true;
     } catch (SQLException e) {
-      System.out.println("A problem occurred while attempting to change a students email.");
-      e.printStackTrace();
+      
     }
     
     return result;
@@ -147,8 +143,7 @@ public class DatabaseUpdater {
       
       result = true;
     } catch (SQLException e) {
-      System.out.println("A problem occurred while updating the max amount of attempts.");
-      e.printStackTrace();
+      
     }
     
     return result;
@@ -184,8 +179,7 @@ public class DatabaseUpdater {
       
       result = true;
     } catch (SQLException e) {
-      System.out.println("A problem occurred while updating the problems in the set.");
-      e.printStackTrace();
+      
     }
     
     return result;
@@ -203,11 +197,8 @@ public class DatabaseUpdater {
   protected static boolean updateAttemptsRemaining(int problemSetKey, int studentNumber,
       int attemptsRemaining, Connection connection) {
     
-    String columnName = "PROBLEMSET" + problemSetKey;
-    
-    String sql = "UPDATE ATTEMPTSREMAINING SET "
-        + columnName
-        + " = ? WHERE STUDENTNUMBER = ?;";
+    String sql = "UPDATE ATTEMPTSREMAINING SET ATTEMPTSREMAINING = ? WHERE (STUDENTNUMBER, "
+        + "PROBLEMSET) = (?,?)";
     
     boolean result = false;
     
@@ -215,6 +206,7 @@ public class DatabaseUpdater {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, attemptsRemaining);
       preparedStatement.setInt(2, studentNumber);
+      preparedStatement.setInt(3, problemSetKey);
       
       preparedStatement.executeUpdate();
       
@@ -222,7 +214,6 @@ public class DatabaseUpdater {
       
       result = true;
     } catch (SQLException e) {
-      System.out.println("A problem occurred while updating the problems in the set.");
       e.printStackTrace();
     }
     
@@ -252,8 +243,7 @@ public class DatabaseUpdater {
     
     result = true;
   } catch (SQLException e) {
-    System.out.println("A problem occurred while updating the release time.");
-    e.printStackTrace();
+    
   }
    
    return result;
@@ -282,8 +272,7 @@ public class DatabaseUpdater {
     
     result = true;
   } catch (SQLException e) {
-    System.out.println("A problem occurred while updating the due date.");
-    e.printStackTrace();
+    
   }
    
    return result;
