@@ -3,6 +3,7 @@ package command;
 import action.AddProblemSetAction;
 import databaseAPI.DatabaseAPI;
 import io.OutputGen;
+import models.ProblemStub;
 import models.SimpleProblemSet;
 
 import java.text.ParseException;
@@ -51,13 +52,16 @@ public class AddSimpleProblemSetCommand extends Command {
 
         // Parse problem ID arguments
         for (int i = 3; i < args.length; i++) {
-            // TODO: Add problems via id
-            // problemSet.addProblem()
+            // Create question stubs -- only the question ids are needed for the problem sets
+            problemSet.addProblem(new ProblemStub(Integer.parseInt(args[i])));
         }
 
         AddProblemSetAction action = new AddProblemSetAction();
-        // action.execute(problemSet, databaseAPI);
-        outputStream.output("Problem set created");
-        return true;
+        Object result = action.execute(problemSet, databaseAPI);
+        if (result != null) {
+            outputStream.output("Problem set created");
+        }
+
+        return result != null;
     }
 }
