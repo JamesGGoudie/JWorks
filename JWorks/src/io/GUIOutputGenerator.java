@@ -61,13 +61,15 @@ public class GUIOutputGenerator implements OutputGen {
     }
 
     /**
-     * Returns the last Object that was sent to this OutputGenerator.
+     * Returns the last Object that was sent to this OutputGenerator and removes it from reference
      *
      * @return the last Object that was sent to this OutputGenerator
      */
     @Override
     public Object getLastResult() {
-        return lastResult;
+        Object temp = lastResult;
+        lastResult = null;
+        return temp;
     }
 
     private void showInfoAlert(String description) {

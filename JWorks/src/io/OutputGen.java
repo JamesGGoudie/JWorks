@@ -42,7 +42,7 @@ public interface OutputGen {
 	void outputPayload(Object obj);
 
 	/**
-	 * Returns the last Object that was sent to this OutputGenerator.
+	 * Returns the last Object that was sent to this OutputGenerator and removes it from reference.
 	 * @return the last Object that was sent to this OutputGenerator
 	 */
 	Object getLastResult();

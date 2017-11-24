@@ -72,12 +72,14 @@ public class OutputGenerator implements OutputGen{
 	}
 
 	/**
-	 * Returns the last Object that was sent to this OutputGenerator.
+	 * Returns the last Object that was sent to this OutputGenerator and removes the reference.
 	 *
 	 * @return the last Object that was sent to this OutputGenerator
 	 */
 	@Override
 	public Object getLastResult() {
-		return lastOutput;
+		Object temp = lastOutput;
+		lastOutput = null;
+		return temp;
 	}
 }
