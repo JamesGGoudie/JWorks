@@ -108,8 +108,8 @@ public class ViewProblemSetScreenController extends Controller {
                 ProblemSet activeProblemSet = problemSetTable.getSelectionModel().getSelectedItem();
                 // Change to new page if selected
                 if (activeProblemSet != null) {
-                    ViewProblemSetProblemsManager manager = new ViewProblemSetProblemsManager(activeProblemSet);
-                    manager.showScreen(innerScreen);
+                    ViewProblemSetProblemsManager viewManager = new ViewProblemSetProblemsManager(activeProblemSet);
+                    viewManager.showScreen(innerScreen);
                 }
             }
         });
@@ -117,7 +117,13 @@ public class ViewProblemSetScreenController extends Controller {
         attemptProblemsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // TODO: link to attempt problem screen
+                // Get active problem set
+                ProblemSet activeProblemSet = problemSetTable.getSelectionModel().getSelectedItem();
+                // Change to new page if selected
+                if (activeProblemSet != null) {
+                    CompleteProblemSetScreenManager viewManager = new CompleteProblemSetScreenManager();
+                    viewManager.showScreen(innerScreen, activeProblemSet);
+                }
             }
         });
 
