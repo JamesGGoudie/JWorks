@@ -165,12 +165,6 @@ public class AddProblemSetScreenController extends Controller {
         problemSet.setEndTime(endDate);
         problemSet.setMaxAttempts(maxAttempts);
 
-        List<Problem> problems = new ArrayList<>(problemList);
-
-        for (Problem p : problems) {
-            problemSet.addProblem(p);
-        }
-
         manager.addProblemSet(problemSet);
         clearFields();
     }
