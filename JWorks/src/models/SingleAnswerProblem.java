@@ -2,6 +2,10 @@ package models;
 
 public class SingleAnswerProblem extends Problem {
 
+    public SingleAnswerProblem(){
+        super();
+    }
+
     public SingleAnswerProblem(String question, String answer) {
         super();
         problemProperty.set(question);

@@ -83,28 +83,9 @@ public class ViewProblemSetScreenManager extends Manager {
      * @return a list of all the problem sets
      */
     private List<ProblemSet> getAllProblemSets() {
-        // TODO: Replace dummy data
-        Problem p1 = new SingleAnswerProblem("Given 2+2=x; what is x-1?", "3");
-        p1.setId(1);
-        Problem p2 = new SingleAnswerProblem("What is?", "42");
-        p2.setId(2);
-        Problem p3 = new SingleAnswerProblem("This is mock data", "just so you know");
-        p3.setId(3);
+        interpreter.executeAction(new String[] {"ViewAllProblemSetsCommand"});
+        return (List<ProblemSet>) interpreter.getOutputGenerator().getLastResult();
 
-        SimpleProblemSet ps1 = new SimpleProblemSet();
-        SimpleProblemSet ps2 = new SimpleProblemSet();
-        SimpleProblemSet ps3 = new SimpleProblemSet();
-
-        ps1.addProblem(p1);
-        ps1.addProblem(p2);
-        ps1.addProblem(p3);
-
-        ps2.addProblem(p1);
-        ps2.addProblem(p2);
-
-        ps3.addProblem(p3);
-
-        return Arrays.asList(ps1, ps2, ps3);
     }
 
     /**

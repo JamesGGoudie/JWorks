@@ -3,6 +3,7 @@ package action;
 import databaseAPI.DatabaseExtractAPI;
 import models.ProblemSet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewAllProblemSetsAction extends Action {
@@ -19,7 +20,8 @@ public class ViewAllProblemSetsAction extends Action {
         DatabaseExtractAPI api = (DatabaseExtractAPI) params[0];
         
         // Call database
-        List<ProblemSet> problemSets = null; // = api.
+        ArrayList<ProblemSet> problemSets = new ArrayList<>();
+        api.actOnDatabase(problemSets);
         return problemSets;
     }
 }

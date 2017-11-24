@@ -1,6 +1,7 @@
 package models;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,8 @@ public abstract class ProblemSet extends DatabaseObject {
     protected Date startTime;
     protected Date endTime;
     protected int creatorID;
+    
+    protected List<String> tags = new ArrayList<String>();
 
 
     protected ProblemSet() {
@@ -62,5 +65,21 @@ public abstract class ProblemSet extends DatabaseObject {
 
     public void setCreatorID(int creatorID) {
         this.creatorID = creatorID;
+    }
+    
+    public void addTags(List<String> newTags) {
+      for (String tag : newTags) {
+        if (!(this.tags.contains(tag))) {
+          this.tags.add(tag);
+        }
+      }
+    }
+    
+    public List<String> getTags() {
+      return this.tags;
+    }
+    
+    public void removeTags(List<String> tagsToRemove) {
+      this.tags.removeAll(tagsToRemove);
     }
 }

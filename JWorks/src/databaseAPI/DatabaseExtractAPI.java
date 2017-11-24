@@ -2,7 +2,6 @@ package databaseAPI;
 
 import database.DatabaseSelector;
 import exceptions.DatabaseSelectException;
-import io.GUIOutputGenerator;
 import models.*;
 
 import java.sql.Connection;
@@ -37,13 +36,14 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         results = DatabaseSelector.getSingleProblem(pKey, connection);
         rsmd = results.getMetaData();
         String[] resultRow = new String[rsmd.getColumnCount()];
-        while(results.next()){
-            for (int col = 1; col <= rsmd.getColumnCount(); col++){
-                // check what's being inserted
-                resultRow[col] = results.getString(col);
-            }
+        for (int col = 1; col <= rsmd.getColumnCount(); col++){
+            // check what's being inserted
+            resultRow[col - 1] = results.getString(col);
         }
+        
         searchProblem = populateProblem(resultRow);
+        searchProblem.setCreatorID(DatabaseSelector.getProblemCreator(pKey, this.connection));
+        searchProblem.addTags(this.getProblemTags(pKey));
         return searchProblem;
     }
 
@@ -97,7 +97,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     }
 
     private Instructor populateInstructor(Instructor emptyInstructor, String[] instructorArray){
-        emptyInstructor.setInstructorID(Integer.getInteger(instructorArray[0]));
+        Integer instructorID = new Integer(instructorArray[0]);
+        emptyInstructor.setInstructorID(instructorID);
         emptyInstructor.setName(instructorArray[1]);
         emptyInstructor.setEmailAddress(instructorArray[2]);
         emptyInstructor.setPassword(instructorArray[3]);
@@ -149,7 +150,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      */
     public List<Problem> actOnDatabase(List<Problem> allProblems) throws DatabaseSelectException,
             SQLException {
-        GUIOutputGenerator outTo = new GUIOutputGenerator();
+        this.actOnDatabase();
         ResultSet problemsRaw = DatabaseSelector.getAllProblems(this.connection);
         
         allProblems.clear();
@@ -168,6 +169,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                 String question = problemsRaw.getString(3);
                 String answer = problemsRaw.getString(4);
                 
+                int creatorID = DatabaseSelector.getProblemCreator(id, this.connection);
+                
                 // If we had more than one question type, this switch statement would be
                 // useful.
                 switch (questionType) {
@@ -176,13 +179,11 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                         SingleAnswerProblem problem = new SingleAnswerProblem(question,
                             answer);
                         problem.setId(id);
-                        
+                        problem.setCreatorID(creatorID);
+                        problem.addTags(this.getProblemTags(id));
                         // This is just in case in a future build we need to send the problems
                         // together to the output generator.
                         allProblems.add(problem);
-                        
-                        // Pass the problem to the GUI output generator.
-                        outTo.output(problem);
                         break;
                     default:
                         break;
@@ -210,7 +211,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      */
     public ProblemSet actOnDatabase(int problemSetKey, ProblemSet problemSet) throws
             DatabaseSelectException, SQLException {
-        GUIOutputGenerator outTo = new GUIOutputGenerator();
+      
+        this.actOnDatabase();
         ResultSet problemsRaw = DatabaseSelector.getProblemsInProblemSet(problemSetKey,
             this.connection);
         
@@ -247,8 +249,11 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                   String question = problemRaw.getString(3);
                   String answer = problemRaw.getString(4);
                   
-                  Problem problem = null;
+                  int creatorID = DatabaseSelector.getProblemCreator(id, this.connection);
                   
+                  Problem problem = null;
+
+                  problemRaw.close();
                   // If we had more than one question type, this switch statement would be
                   // useful.
                   switch (questionType) {
@@ -257,6 +262,8 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                           problem = new SingleAnswerProblem(question,
                               answer);
                           problem.setId(id);
+                          problem.setCreatorID(creatorID);
+                          problem.addTags(this.getProblemTags(id));
                           break;
                       default:
                           break;
@@ -278,19 +285,171 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             // stored as seconds in the database, but the Date object requires milliseconds.
             Date startTime = new Date(problemSetRaw.getInt(3) * 1000L);
             Date endTime = new Date(problemSetRaw.getInt(4) * 1000L);
+
+
+            int creatorID = DatabaseSelector.getProblemSetCreator(problemSetKey, this.connection);
             
             problemSet.setId(id);
             problemSet.setMaxAttempts(maxAttempts);
             problemSet.setStartTime(startTime);
             problemSet.setEndTime(endTime);
+            problemSet.setCreatorID(creatorID);
+            problemSet.addTags(this.getProblemSetTags(id));
             
-            outTo.output(problemSet);
-
             // Close the result sets to allow for modification of the data.
             problemsRaw.close();
             problemSetRaw.close();
         }
         
         return problemSet;
+    }
+    
+    /**
+     * Retrieves all of the tags associated with the given problem from the database.
+     * @param problemKey The unique ID of the problem.
+     * @return A list of strings, each of which is a tag associated with the given problem.
+     */
+    private List<String> getProblemTags(int problemKey) {
+        this.actOnDatabase();
+        List<String> tags = new ArrayList<String>();
+      
+        try {
+            ResultSet results = DatabaseSelector.getProblemTags(problemKey, this.connection);
+            
+            while (results.next()) {
+                tags.add(results.getString(1));
+            }
+        } catch (DatabaseSelectException | SQLException e) {
+            tags.clear();
+        }
+      
+        return tags;
+    }
+    
+    /**
+     * Retrieves all of the tags associated with the given problem set from the database.
+     * @param problemSetKey The unique ID of the problem set.
+     * @return A list of strings, each of which is a tag associated with the given problem set.
+     */
+    private List<String> getProblemSetTags(int problemSetKey) {
+        List<String> tags = new ArrayList<String>();
+      
+        try {
+            ResultSet results = DatabaseSelector.getProblemSetTags(problemSetKey, this.connection);
+            
+            while (results.next()) {
+                tags.add(results.getString(1));
+            }
+        } catch (DatabaseSelectException | SQLException e) {
+            tags.clear();
+        }
+        
+        return tags;
+    }
+
+    /**
+     * Returns a list of all of the problems with the given tag.
+     * @param problems A list of problems that will be cleared and filled with all of the problems
+     *                 in the database that contain the given tag.
+     * @param tag The tag that we want to use to find problems.
+     * @return A list of problems with the given tag. An empty list could imply that an error
+     *         occurred.
+     */
+    public List<Problem> actOnDatabase(List<Problem> problems, String tag) {
+        this.actOnDatabase();
+        problems.clear();
+        
+        try {
+            ResultSet results = DatabaseSelector.getProblemsWithTag(tag, this.connection);
+            
+            while (results.next()) {
+                Problem newProblem = new SingleAnswerProblem();
+                
+                problems.add(this.actOnDatabase(results.getInt(1), newProblem));
+            }
+        } catch (DatabaseSelectException | SQLException e) {
+            problems.clear();
+        }
+      
+      return problems;
+    }
+    
+    /**
+     * Gets all of the problem sets from the database.
+     * @param allProblemSets A list that will be cleared and filled with all of the problem sets in
+     *                       the database. An empty list could indicate an error occurred.
+     * @return A list containing all of the problem sets in the database.
+     */
+    public List<ProblemSet> actOnDatabase(ArrayList<ProblemSet> allProblemSets) {
+        this.actOnDatabase();
+      
+        allProblemSets.clear();
+        
+        try {
+            ResultSet problemSetResults = DatabaseSelector.getAllProblemSets(this.connection);
+            
+            while (problemSetResults.next()) {
+                ProblemSet problemSet = new SimpleProblemSet();
+                allProblemSets.add(this.actOnDatabase(problemSetResults.getInt(1), problemSet));
+            }
+        } catch (DatabaseSelectException | SQLException e) {
+            allProblemSets.clear();
+        }
+      
+        return allProblemSets;
+    }
+    
+    /**
+     * Returns a list of all of the problem sets with the given tag.
+     * @param tag The tag that we want to use to sort problem sets.
+     * @param problemSets A list of problem sets that will be cleared and filled with all of the
+     *                    problem sets in that database that contain the given tag.
+     * @return A list of problem sets with the given tag. An empty list could imply that an error
+     *         occurred.
+     */
+    public List<ProblemSet> actOnDatabase(String tag, List<ProblemSet> problemSets) {
+      this.actOnDatabase();
+      problemSets.clear();
+      
+      try {
+          ResultSet results = DatabaseSelector.getProblemSetsWithTag(tag, this.connection);
+          
+          while (results.next()) {
+              ProblemSet newProblemSet = new SimpleProblemSet();
+              
+              problemSets.add(this.actOnDatabase(results.getInt(1), newProblemSet));
+          }
+      } catch (DatabaseSelectException | SQLException e) {
+          problemSets.clear();
+      }
+      
+      return problemSets;
+    }
+
+    /**
+     * Gets the problem set attempt from the database.
+     * @param problemSetAttempt A problemSetAttempt which will be filled with the data from the
+     *                          database. Should come with the problem set ID and attempt number.
+     * @return A ProblemSetAttempt object that contains all of the information 
+     */
+    public ProblemSetAttempt actOnDatabase(ProblemSetAttempt problemSetAttempt) {
+        this.actOnDatabase();
+        int studentNumber = problemSetAttempt.getStudent().getStudentNumber();
+        int problemSet = problemSetAttempt.getProblemSet().getId();
+        int attemptNumber = problemSetAttempt.getId();
+        
+        try {
+            ResultSet previousAttemptData = DatabaseSelector.getStudentsResults(studentNumber,
+                    problemSet, attemptNumber, connection);
+            
+            while (previousAttemptData.next()) {
+                problemSetAttempt.setAnswer(previousAttemptData.getInt(1),
+                        previousAttemptData.getString(2));
+            }
+        } catch (DatabaseSelectException | SQLException e) {
+          
+        }
+        
+        return problemSetAttempt;
     }
 }

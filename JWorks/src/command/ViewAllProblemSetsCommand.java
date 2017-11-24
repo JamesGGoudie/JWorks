@@ -38,7 +38,7 @@ public class ViewAllProblemSetsCommand extends Command {
             return false;
         }
 
-        // outputStream.outputPayload(problemSets);
+        outputStream.outputPayload(problemSets);
 
         return true;
     }

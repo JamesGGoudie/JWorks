@@ -127,6 +127,18 @@ public class DatabaseDriver {
           + "FOREIGN KEY(PROBLEM) REFERENCES PROBLEMS(ID))";
       statement.executeUpdate(sql);
       
+      sql = "CREATE TABLE IF NOT EXISTS PROBLEMTAGS "
+          + "(PROBLEM INTEGER NOT NULL,"
+          + "TAG TEXT NOT NULL,"
+          + "FOREIGN KEY(PROBLEM) REFERENCES PROBLEMS(ID))";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS PROBLEMSETTAGS "
+          + "(PROBLEMSET INTEGER NOT NULL,"
+          + "TAG TEXT NOT NULL,"
+          + "FOREIGN KEY(PROBLEMSET) REFERENCES PROBLEMSETS(ID))";
+      statement.executeUpdate(sql);
+      
       statement.close();
       result = true;
       
