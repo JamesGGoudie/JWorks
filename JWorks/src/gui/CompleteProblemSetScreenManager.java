@@ -13,15 +13,14 @@ public class CompleteProblemSetScreenManager extends Manager {
      * Load a screen to attempt a problem set.
      *
      * @param innerPane The pane that new contents are loading into
-     * @param student   The currently logged in Student
      * @param problemSet The problem set the student is attempting
      */
-    public void showScreen(Pane innerPane, Student student, ProblemSet problemSet, StudentInnerScreenManager homeScreenManager) {
+    public void showScreen(Pane innerPane, ProblemSet problemSet) {
         loader = loadNewPane(loader, innerPane, "CompleteProblemSetScreen.fxml");
         CompleteProblemSetScreenController controller =
                 loader.getController();
-        controller.start(this, problemSet, student);
-        this.homeScreenManager = homeScreenManager;
+        controller.start(this, problemSet, (Student) interpreter.getCurrentUser());
+        this.homeScreenManager = new StudentInnerScreenManager();
         this.innerPane = innerPane;
     }
 
