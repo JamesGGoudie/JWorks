@@ -37,4 +37,9 @@ public class StudentInnerScreenManager extends Manager{
     CompleteProblemSetScreenManager manager = new CompleteProblemSetScreenManager();
     manager.showScreen(innerPane, getCurrentStudent(), problemSet, this);
   }
+
+  public void viewProblemSets(Pane innerPane) {
+    ViewProblemSetScreenManager manager = new ViewProblemSetScreenManager();
+    manager.showScreen(innerPane);
+  }
 }

@@ -30,6 +30,7 @@ public class Interpreter {
   private LoginCommand login;
   private AddStudentCommand addStudent;
   private AddProblemSetAttemptCommand addProblemSetAttempt;
+  private ViewAllProblemSetsCommand viewAllProblemSets;
 
   private Command commandObject;
   private String[] parameters;
@@ -80,9 +81,11 @@ public class Interpreter {
     login = new LoginCommand(databaseExtract, outputGenerator);
     addStudent = new AddStudentCommand(databaseStore, outputGenerator);
     addProblemSetAttempt = new AddProblemSetAttemptCommand(databaseStore, outputGenerator);
+    viewAllProblemSets = new ViewAllProblemSetsCommand(databaseExtract, outputGenerator);
 
     // add the commands into an array
-    Command[] commands = {addSimpleProblem, viewProblem, login, addStudent, addSimpleProblemSet, addProblemSetAttempt};
+    Command[] commands = {addSimpleProblem, viewProblem, login, addStudent, addSimpleProblemSet, addProblemSetAttempt,
+                          viewAllProblemSets};
 
     // add the commands to the hashtable
     

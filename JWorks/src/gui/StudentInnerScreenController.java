@@ -10,9 +10,11 @@ import models.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentInnerScreenController extends Controller{
+public class StudentInnerScreenController extends Controller {
   @FXML
   private Button doProblemSetButton;
+  @FXML
+  private Button viewProblemSetsButton;
   @FXML
   private Pane innerScreen;
 
@@ -39,6 +41,13 @@ public class StudentInnerScreenController extends Controller{
         studentInnerScreenManager.attemptProblemSet(innerScreen, problemSet);
       }
     });
-  }
 
+    viewProblemSetsButton.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        studentInnerScreenManager.viewProblemSets(innerScreen);
+      }
+    });
+
+  }
 }

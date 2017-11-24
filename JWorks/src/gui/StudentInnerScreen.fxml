@@ -7,5 +7,6 @@
 <Pane fx:id="innerScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StudentInnerScreenController">
    <children>
       <Button fx:id="doProblemSetButton" layoutX="307.0" layoutY="233.0" mnemonicParsing="false" text="Do a fake problem set" />
+      <Button fx:id="viewProblemSetsButton" layoutX="319.0" layoutY="541.0" mnemonicParsing="false" text="View Problem Sets" />
    </children>
 </Pane>
