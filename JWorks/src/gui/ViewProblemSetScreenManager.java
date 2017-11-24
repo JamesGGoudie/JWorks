@@ -75,7 +75,7 @@ public class ViewProblemSetScreenManager extends Manager {
      * @return whether or not the currently logged in user is a student
      */
     public boolean isUserStudent() {
-        return true;
+        return (interpreter.getCurrentUser() instanceof Student);
     }
 
     /**

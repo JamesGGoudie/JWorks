@@ -104,7 +104,13 @@ public class ViewProblemSetScreenController extends Controller {
         viewProblemsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // TODO: link to view problems
+                // Get active problem set
+                ProblemSet activeProblemSet = problemSetTable.getSelectionModel().getSelectedItem();
+                // Change to new page if selected
+                if (activeProblemSet != null) {
+                    ViewProblemSetProblemsManager manager = new ViewProblemSetProblemsManager(activeProblemSet);
+                    manager.showScreen(innerScreen);
+                }
             }
         });
 

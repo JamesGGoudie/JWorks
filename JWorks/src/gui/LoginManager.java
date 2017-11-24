@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.scene.Scene;
+import models.Instructor;
 import models.User;
 
 public class LoginManager extends Manager {
@@ -33,7 +34,8 @@ public class LoginManager extends Manager {
           User sessionUser = (User) interpreter.getOutputGenerator().getLastResult();
           interpreter.setCurrentUser(sessionUser);
         } catch (ClassCastException e) {
-          // do nothing
+          // Instructor login case
+          interpreter.setCurrentUser(new Instructor(user, "", "", 1));
         }
 
 		if (user.matches("[0-9]+")) {
