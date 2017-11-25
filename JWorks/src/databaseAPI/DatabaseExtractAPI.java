@@ -458,28 +458,24 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
      * @return A list containing all of the problem set attempts in the database. An empty list
      *         indicates that an error may have occurred.
      */
-    public List<ProblemSetAttempt> getAllAttempts() {
+    public List<ProblemSetAttempt> getAllAttempts() throws SQLException, DatabaseSelectException {
         this.actOnDatabase();
         List<ProblemSetAttempt> allAttempts = new ArrayList<>();
-        
-        try {
-            ResultSet allAttemptData = DatabaseSelector.getAllAttemptIdentifiers(this.connection);
-            
-            while(allAttemptData.next()) {
-                int studentNumber = allAttemptData.getInt(1);
-                int problemSetID = allAttemptData.getInt(2);
-                Date attemptTime = new Date(allAttemptData.getInt(3) * 1000);
-                    
-                Student student = this.actOnDatabase(studentNumber, new Student());
-                ProblemSet problemSet = this.actOnDatabase(problemSetID, new SimpleProblemSet());
-                
-                ProblemSetAttempt newAttempt = new ProblemSetAttempt(student, problemSet,
-                        attemptTime);
-                
-                allAttempts.add(this.actOnDatabase(newAttempt));
-            }
-        } catch (DatabaseSelectException | SQLException e) {
-            e.printStackTrace();
+
+        ResultSet allAttemptData = DatabaseSelector.getAllAttemptIdentifiers(this.connection);
+
+        while(allAttemptData.next()) {
+            int studentNumber = allAttemptData.getInt(1);
+            int problemSetID = allAttemptData.getInt(2);
+            Date attemptTime = new Date(allAttemptData.getInt(3) * 1000);
+
+            Student student = this.actOnDatabase(studentNumber, new Student());
+            ProblemSet problemSet = this.actOnDatabase(problemSetID, new SimpleProblemSet());
+
+            ProblemSetAttempt newAttempt = new ProblemSetAttempt(student, problemSet,
+                    attemptTime);
+
+            allAttempts.add(this.actOnDatabase(newAttempt));
         }
         
         return allAttempts;
