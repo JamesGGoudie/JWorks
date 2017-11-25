@@ -462,16 +462,17 @@ public class DatabaseSelector {
   }
   
   /**
-   * Returns all of the data in the database relating to attempts as a result set.
+   * Returns all of the data that could be used to identify a problem set attempt.
    * @param connection The connection to the database file.
    * @return A result set containing all of the information relating to attempts. The columns are
-   *         studentNumber, problemSetID, attemptTime, problemID, and studentsAnswer, respectively.
+   *         studentNumber, problemSetID, attemptTime, respectively.
    * @throws DatabaseSelectException Thrown if the attempt data could not be retrieved from the
    *                                 database.
    */
-  protected static ResultSet getAllAttempts(Connection connection) throws DatabaseSelectException {
+  protected static ResultSet getAllAttemptIdentifiers(Connection connection)
+      throws DatabaseSelectException {
     ResultSet results = null;
-    String sql = "SELECT * FROM PREVIOUSATTEMPTS";
+    String sql = "SELECT STUDENTNUMBER, PROBLEMSET, TIME FROM PREVIOUSATTEMPTS";
     
     try {
       Statement statement = connection.createStatement();
