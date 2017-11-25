@@ -4,6 +4,7 @@ import action.LoginAction;
 import databaseAPI.DatabaseAPI;
 import io.OutputGen;
 import models.Student;
+import models.User;
 
 public class LoginCommand extends Command {
 

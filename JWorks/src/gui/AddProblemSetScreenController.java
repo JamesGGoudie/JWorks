@@ -25,9 +25,6 @@ public class AddProblemSetScreenController extends Controller {
     private TableColumn<Problem, Integer> problemListColumn;
 
     @FXML
-    private TextField problemSetNameField;
-
-    @FXML
     private DatePicker releaseDateField;
 
     @FXML
@@ -90,8 +87,7 @@ public class AddProblemSetScreenController extends Controller {
             @Override
             public void handle(ActionEvent event) {
                 // Refuse if any fields are empty
-                if (problemSetNameField.getText().length() == 0
-                        || maxAttemptsField.getText().length() == 0
+                if (maxAttemptsField.getText().length() == 0
                         || releaseDateField.getValue() == null
                         || dueDateField.getValue() == null) {
                     errorLabel.setText("Please ensure all fields are filled in.");
@@ -137,7 +133,6 @@ public class AddProblemSetScreenController extends Controller {
         errorLabel.setText("");
 
         // Check for valid options
-        String problemSetName = problemSetNameField.getText();
         String maxAttemptsText = maxAttemptsField.getText();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate;
@@ -170,12 +165,6 @@ public class AddProblemSetScreenController extends Controller {
         problemSet.setEndTime(endDate);
         problemSet.setMaxAttempts(maxAttempts);
 
-        List<Problem> problems = new ArrayList<>(problemList);
-
-        for (Problem p : problems) {
-            problemSet.addProblem(p);
-        }
-
         manager.addProblemSet(problemSet);
         clearFields();
     }
@@ -186,7 +175,6 @@ public class AddProblemSetScreenController extends Controller {
     private void clearFields() {
         problemList.clear();
         updateTableList();
-        problemSetNameField.clear();
         maxAttemptsField.clear();
         releaseDateField.setValue(null);
         dueDateField.setValue(null);

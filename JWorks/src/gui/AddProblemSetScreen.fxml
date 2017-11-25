@@ -26,8 +26,6 @@
                         <TableColumn fx:id="problemListColumn" editable="false" prefWidth="219.0" sortable="false" text="Problem ID" />
                     </columns>
                 </TableView>
-                <TextField fx:id="problemSetNameField" layoutX="22.0" layoutY="250.0" prefHeight="31.0" prefWidth="220.0" />
-                <Label layoutX="23.0" layoutY="229.0" text="Problem Set Name" />
                 <DatePicker fx:id="releaseDateField" layoutX="22.0" layoutY="313.0" prefHeight="31.0" prefWidth="220.0" />
                 <Label layoutX="22.0" layoutY="292.0" text="Release Date" />
                 <DatePicker fx:id="dueDateField" layoutX="22.0" layoutY="377.0" prefHeight="31.0" prefWidth="220.0" />

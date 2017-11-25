@@ -5,38 +5,50 @@ import javafx.scene.layout.Pane;
 public class InstructorInnerScreenManager extends Manager {
   private InstructorInnerScreenController controller;
   private CreateNewQuestionScreenManager createNewQuestionScreenManager =
-      new CreateNewQuestionScreenManager();
+          new CreateNewQuestionScreenManager();
   private CreateNewStudentAccountManager createNewStudentAccountManager =
-      new CreateNewStudentAccountManager();
+          new CreateNewStudentAccountManager();
   private ViewAllProblemsManager viewAllProblemsManager =
-      new ViewAllProblemsManager();
+          new ViewAllProblemsManager();
   private AddProblemSetScreenManager addProblemSetScreenManager =
-      new AddProblemSetScreenManager();
+          new AddProblemSetScreenManager();
+  private ViewProblemSetScreenManager viewProblemSetScreenManager =
+          new ViewProblemSetScreenManager();
 
   /**
    * Go to the create new question screen
-   * 
+   *
    * @param innerPane The pane that needs updates
    */
   public void createNewQuestion(Pane innerPane) {
     showCreateNewQuestionScreen(innerPane);
   }
 
+  public void viewAllProblems(Pane innerPane) {
+    showViewAllProblemsScreen(innerPane);
+  }
+
+  public void addProblemSet(Pane innerPane) {
+    showAddProblemSetScreen(innerPane);
+  }
+
+  public void viewProblemSets(Pane innerPane) {
+    showViewProblemSetsScreen(innerPane);
+  }
+
   /**
    * Go to the create new student account screen
-   * 
+   *
    * @param innerPane
    */
   public void createNewStudentAccount(Pane innerPane) {
     showCreateNewStudentAccountScreen(innerPane);
   }
 
-  public void viewAllProblems(Pane innerPane) {
-    showViewAllProblemsScreen(innerPane);
-  }
+
   /**
    * Load and display the inner screen for instructor
-   * 
+   *
    * @param innerPane
    */
   public void showScreen(Pane innerPane) {
@@ -49,13 +61,13 @@ public class InstructorInnerScreenManager extends Manager {
 
   /**
    * Load and display the create new question screen
-   * 
+   *
    * @param innerPane The pane that needs updates
    */
   private void showCreateNewQuestionScreen(Pane innerPane) {
     createNewQuestionScreenManager.showScreen(innerPane);
   }
-  
+
   private void showCreateNewStudentAccountScreen(Pane innerPane) {
     createNewStudentAccountManager.showScreen(innerPane);
   }
@@ -66,5 +78,9 @@ public class InstructorInnerScreenManager extends Manager {
 
   private void showAddProblemSetScreen(Pane innerPane) {
     addProblemSetScreenManager.showScreen(innerPane);
+  }
+
+  private void showViewProblemSetsScreen(Pane innerPane) {
+    viewProblemSetScreenManager.showScreen(innerPane);
   }
 }

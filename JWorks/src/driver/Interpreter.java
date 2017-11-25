@@ -12,6 +12,7 @@ import io.GUIOutputGenerator;
 import io.OutputGen;
 import io.OutputGen.OutputMode;
 import io.OutputGenerator;
+import models.User;
 
 /**
  * Interprets the user input and execute the execute the action
@@ -28,6 +29,8 @@ public class Interpreter {
   private AddSimpleProblemSetCommand addSimpleProblemSet;
   private LoginCommand login;
   private AddStudentCommand addStudent;
+  private AddProblemSetAttemptCommand addProblemSetAttempt;
+  private ViewAllProblemSetsCommand viewAllProblemSets;
 
   private Command commandObject;
   private String[] parameters;
@@ -38,6 +41,7 @@ public class Interpreter {
   private Connection connection;
 
   private OutputGen outputGenerator;
+  private User sessionUser;
 
 
 
@@ -76,9 +80,12 @@ public class Interpreter {
     addSimpleProblemSet = new AddSimpleProblemSetCommand(databaseStore, outputGenerator);
     login = new LoginCommand(databaseExtract, outputGenerator);
     addStudent = new AddStudentCommand(databaseStore, outputGenerator);
+    addProblemSetAttempt = new AddProblemSetAttemptCommand(databaseStore, outputGenerator);
+    viewAllProblemSets = new ViewAllProblemSetsCommand(databaseExtract, outputGenerator);
 
     // add the commands into an array
-    Command[] commands = {addSimpleProblem, viewProblem, login, addStudent, addSimpleProblemSet};
+    Command[] commands = {addSimpleProblem, viewProblem, login, addStudent, addSimpleProblemSet, addProblemSetAttempt,
+                          viewAllProblemSets};
 
     // add the commands to the hashtable
     
@@ -126,5 +133,21 @@ public class Interpreter {
 
   public OutputGen getOutputGenerator() {
     return outputGenerator;
+  }
+
+  /**
+   * Gets the current logged in user. Null if no user is logged in.
+   * @return the logged in user. Null if no user is logged in.
+   */
+  public User getCurrentUser() {
+    return sessionUser;
+  }
+
+  /**
+   * Sets the current logged in user.
+   * @param sessionUser the user to set the session to
+   */
+  public void setCurrentUser(User sessionUser) {
+    this.sessionUser = sessionUser;
   }
 }
