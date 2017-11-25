@@ -31,7 +31,7 @@ public abstract class ViewProblemsManager extends Manager {
         List<Problem> filteredProblems = new ArrayList<>();
 
         for (Problem problem : unfilteredProblems) {
-            if (problem.hasSearchTags(tags)) {
+            if (problem.matchesSearchString(tags)) {
                 filteredProblems.add(problem);
             }
         }

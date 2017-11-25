@@ -13,8 +13,8 @@
             <TableColumn fx:id="answerColumn" minWidth="0.0" prefWidth="167.0" resizable="false" text="Answer" />
         </columns>
       </TableView>
-      <TextField fx:id="filterField" layoutX="14.0" layoutY="20.0" promptText="Filter by tags" />
-      <Button fx:id="filterButton" layoutX="210.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="63.0" text="Filter" />
+      <TextField fx:id="filterField" layoutX="14.0" layoutY="20.0" promptText="Search" />
+      <Button fx:id="filterButton" layoutX="210.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="63.0" text="Search" />
       <Button fx:id="clearButton" layoutX="275.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="63.0" text="Clear" />
    </children>
 </Pane>
