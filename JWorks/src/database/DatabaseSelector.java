@@ -451,8 +451,36 @@ public class DatabaseSelector {
       preparedStatement.setLong(3, time);
       
       results = preparedStatement.executeQuery();
+      
+      preparedStatement.close();
     } catch (SQLException e) {
-      String errorMessage = "Could not retrieve student's results from the database.";
+      String errorMessage = "Could not retrieve student's attempt from the database.";
+      throw new DatabaseSelectException(errorMessage);
+    }
+    
+    return results;
+  }
+  
+  /**
+   * Returns all of the data in the database relating to attempts as a result set.
+   * @param connection The connection to the database file.
+   * @return A result set containing all of the information relating to attempts. The columns are
+   *         studentNumber, problemSetID, attemptTime, problemID, and studentsAnswer, respectively.
+   * @throws DatabaseSelectException Thrown if the attempt data could not be retrieved from the
+   *                                 database.
+   */
+  public static ResultSet getAllAttempts(Connection connection) throws DatabaseSelectException {
+    ResultSet results = null;
+    String sql = "SELECT * FROM PREVIOUSATTEMPTS";
+    
+    try {
+      Statement statement = connection.createStatement();
+      
+      results = statement.executeQuery(sql);
+      
+      statement.close();
+    } catch (SQLException e) {
+      String errorMessage = "Could not retrieve all atempts from the database.";
       throw new DatabaseSelectException(errorMessage);
     }
     
@@ -638,6 +666,5 @@ public class DatabaseSelector {
     
     return results;
   }
-
 
 }
