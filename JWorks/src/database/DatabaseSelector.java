@@ -451,8 +451,6 @@ public class DatabaseSelector {
       preparedStatement.setLong(3, time);
       
       results = preparedStatement.executeQuery();
-      
-      preparedStatement.close();
     } catch (SQLException e) {
       String errorMessage = "Could not retrieve student's attempt from the database.";
       throw new DatabaseSelectException(errorMessage);
@@ -472,14 +470,14 @@ public class DatabaseSelector {
   protected static ResultSet getAllAttemptIdentifiers(Connection connection)
       throws DatabaseSelectException {
     ResultSet results = null;
-    String sql = "SELECT STUDENTNUMBER, PROBLEMSET, TIME FROM PREVIOUSATTEMPTS";
+    String sql = "SELECT DISTINCT STUDENTNUMBER, PROBLEMSET, TIME FROM PREVIOUSATTEMPTS";
     
     try {
       Statement statement = connection.createStatement();
       
       results = statement.executeQuery(sql);
       
-      statement.close();
+
     } catch (SQLException e) {
       String errorMessage = "Could not retrieve all atempts from the database.";
       throw new DatabaseSelectException(errorMessage);
