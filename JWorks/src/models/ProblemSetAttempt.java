@@ -127,4 +127,18 @@ public class ProblemSetAttempt extends DatabaseObject {
                 .create();
         return gson.fromJson(serial, ProblemSetAttempt.class);
     }
+
+    public void setAnswerByProblemId(int problemId, String answer) {
+        setAnswer(findProblemIndex(problemId), answer);
+    }
+
+    private int findProblemIndex(int problemId) {
+        for (int i = 0; i < problemSet.getQuestions().size(); i++) {
+            if (problemSet.getQuestions().get(i).getId() == problemId) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 }

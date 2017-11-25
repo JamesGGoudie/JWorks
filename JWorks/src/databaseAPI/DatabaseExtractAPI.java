@@ -443,9 +443,12 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                     problemSet, attemptTime, connection);
             
             while (previousAttemptData.next()) {
-                problemSetAttempt.setAnswer(previousAttemptData.getInt(1),
+                problemSetAttempt.setAnswerByProblemId(previousAttemptData.getInt(1),
                         previousAttemptData.getString(2));
             }
+
+            previousAttemptData.getStatement().close();
+            previousAttemptData.close();
         } catch (DatabaseSelectException | SQLException e) {
             e.printStackTrace();
         }
@@ -467,7 +470,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         while(allAttemptData.next()) {
             int studentNumber = allAttemptData.getInt(1);
             int problemSetID = allAttemptData.getInt(2);
-            Date attemptTime = new Date(allAttemptData.getInt(3) * 1000);
+            Date attemptTime = new Date(allAttemptData.getLong(3) * 1000);
 
             Student student = this.actOnDatabase(studentNumber, new Student());
             ProblemSet problemSet = this.actOnDatabase(problemSetID, new SimpleProblemSet());
@@ -477,6 +480,9 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
 
             allAttempts.add(this.actOnDatabase(newAttempt));
         }
+
+        allAttemptData.getStatement().close();
+        allAttemptData.close();
         
         return allAttempts;
     }
