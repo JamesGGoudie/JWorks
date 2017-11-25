@@ -69,23 +69,23 @@ Open a terminal/command prompt/PowerShell, navigate to the src directory under t
     * To compile and run the command line version, type:
 	```
 	javac driver/JWorks.java
-	java -cp ".:../../JAR_Files/sqlite-jdbc-3.18.0.jar" driver/JWorks
+	java -cp ".:../../JAR_Files/*" driver/JWorks
 	```
 	* To compile and run the GUI version, type:
 	```
 	javac gui/JWorksGUI.java
-	java -cp ".:../../JAR_Files/sqlite-jdbc-3.18.0.jar" gui/JWorksGUI
+	java -cp ".:../../JAR_Files/*" gui/JWorksGUI
 	```
 * For Windows users.
 	* To compile and run the command line version, type:
 	```
 	javac driver\JWorks.java
-	java -cp ".;..\..\JAR_Files\sqlite-jdbc-3.18.0.jar" driver\JWorks
+	java -cp ".;..\..\JAR_Files\*" driver\JWorks
 	```
 	* To compile and run the GUI version, type:
 	```
 	javac gui\JWorksGUI.java
-	java -cp ".;..\..\JAR_Files\sqlite-jdbc-3.18.0.jar" gui\JWorksGUI
+	java -cp ".;..\..\JAR_Files\*" gui\JWorksGUI
 	```	
 
 #### Using the Command Line Version:
@@ -107,7 +107,7 @@ To login as an instructor, enter any non-empty username that does not consist of
 On the main screen, a user click the appropriate navigation buttons to:
 
 - Add a new question
-- View all saved questions
+- View all saved questionse
 - Create a new student account
 - Add a new problem set
 - View all problem sets

@@ -95,7 +95,7 @@ public class ViewProblemSetScreenController extends Controller {
                 if (score == -1) {
                     return new ReadOnlyObjectWrapper<>("N/A");
                 } else {
-                    return new ReadOnlyObjectWrapper<>(String.valueOf(score));
+                    return new ReadOnlyObjectWrapper<>(String.valueOf(score) + "%");
                 }
             }
         });

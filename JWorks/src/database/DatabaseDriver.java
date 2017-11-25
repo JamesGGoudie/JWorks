@@ -9,12 +9,16 @@ import java.util.Properties;
 import exceptions.ConnectionFailedException;
 
 public class DatabaseDriver {
+
+  protected static Connection connection = null;
   /**
    * If the database exists, will connect to it. Otherwise, will create the database.
    * @return The connection to the SQLite database.
    */
   protected static Connection connectOrCreateDatabase() {
-    Connection connection = null;
+    if (connection != null) {
+      return connection;
+    }
     
     Properties properties = new Properties();
     properties.setProperty("PRAGMA foreign_keys", "ON");

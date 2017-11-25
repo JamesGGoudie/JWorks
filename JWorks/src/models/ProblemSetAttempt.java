@@ -1,5 +1,8 @@
 package models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.*;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -9,7 +12,7 @@ import java.util.List;
 /**
  * Class to keep track of user answers for a particular problem set
  */
-public class ProblemSetAttempt extends DatabaseObject implements Serializable {
+public class ProblemSetAttempt extends DatabaseObject {
     // Properties
     private ProblemSet problemSet;
     private Student student;
@@ -105,17 +108,11 @@ public class ProblemSetAttempt extends DatabaseObject implements Serializable {
      * @return the string representation of the serialized object. Empty string if failed.
      */
     public String serialize() {
-        String result;
-        try {
-            ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-            ObjectOutputStream outputStream = new ObjectOutputStream(byteOut);
-            outputStream.writeObject(this);
-            result = byteOut.toString();
-        } catch (IOException e){
-            result = "";
-        }
-
-        return result;
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(ProblemSet.class, new AbstractModelAdapter<ProblemSet>())
+                .registerTypeAdapter(Problem.class, new AbstractModelAdapter<Problem>())
+                .create();
+        return gson.toJson(this);
     }
 
     /**
@@ -124,19 +121,24 @@ public class ProblemSetAttempt extends DatabaseObject implements Serializable {
      * @return the deserialized problem set attempt object
      */
     public static ProblemSetAttempt deserialize(String serial) {
-        ProblemSetAttempt attempt;
-        // Deserialize string argument to get problem set attempt
-        try {
-            byte[] byteArray = serial.getBytes();
-            ByteArrayInputStream byteInput = new ByteArrayInputStream(byteArray);
-            ObjectInputStream in = new ObjectInputStream(byteInput);
-            attempt = (ProblemSetAttempt) in.readObject();
-            in.close();
-            byteInput.close();
-        } catch (IOException | ClassNotFoundException e) {
-            return null;
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(ProblemSet.class, new AbstractModelAdapter<ProblemSet>())
+                .registerTypeAdapter(Problem.class, new AbstractModelAdapter<Problem>())
+                .create();
+        return gson.fromJson(serial, ProblemSetAttempt.class);
+    }
+
+    public void setAnswerByProblemId(int problemId, String answer) {
+        setAnswer(findProblemIndex(problemId), answer);
+    }
+
+    private int findProblemIndex(int problemId) {
+        for (int i = 0; i < problemSet.getQuestions().size(); i++) {
+            if (problemSet.getQuestions().get(i).getId() == problemId) {
+                return i;
+            }
         }
 
-        return attempt;
+        return -1;
     }
 }

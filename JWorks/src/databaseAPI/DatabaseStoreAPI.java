@@ -169,7 +169,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
      *                          the student's answers.
      * @return True if the problem set attempt was added to the database, false otherwise.
      */
-    public boolean actOnDatabase(ProblemSetAttempt problemSetAttempt) {
+    public boolean actOnDatabase(ProblemSetAttempt problemSetAttempt) throws DatabaseInsertException {
         this.actOnDatabase();
         boolean result = false;
         
@@ -181,18 +181,14 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         
         int[] problems = new int[problemCount];
         String[] answers = new String[problemCount];
-        
-        try {
-            for (int i = 0; i < problemCount; i++) {
-                problems[i] = problemSetAttempt.getProblemSet().getQuestions().get(i).getId();
-                answers[i] = problemSetAttempt.getAnswers().get(i);
-            }
-          
-            result = DatabaseInserter.insertStudentsAttempt(studentNumber, problemSetKey,
-                    attemptTime, problems, answers, this.connection);
-        } catch (DatabaseInsertException e) {
-            e.printStackTrace();
+
+        for (int i = 0; i < problemCount; i++) {
+            problems[i] = problemSetAttempt.getProblemSet().getQuestions().get(i).getId();
+            answers[i] = problemSetAttempt.getAnswers().get(i);
         }
+
+        result = DatabaseInserter.insertStudentsAttempt(studentNumber, problemSetKey,
+                attemptTime, problems, answers, this.connection);
         
         return result;
     }
