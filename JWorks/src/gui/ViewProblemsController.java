@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -40,7 +42,7 @@ public class ViewProblemsController extends Controller {
      */
     public void start(ViewProblemsManager manager) {
         this.manager = manager;
-        questionTable.getItems().setAll(getProblems());
+        questionTable.getItems().setAll(manager.getProblems());
     }
 
     @Override
@@ -49,13 +51,21 @@ public class ViewProblemsController extends Controller {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         questionColumn.setCellValueFactory(new PropertyValueFactory<>("problem"));
         answerColumn.setCellValueFactory(new PropertyValueFactory<>("answer"));
-    }
 
-    /**
-     * Calls the Manager to get all Problems.
-     * @return a list of all Problems
-     */
-    private List<Problem> getProblems() {
-        return manager.getProblems();
+        // Setup tag filters
+        clearButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                filterField.clear();
+                questionTable.getItems().setAll(manager.getProblems());
+            }
+        });
+
+        filterButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                questionTable.getItems().setAll(manager.getProblems(filterField.getText()));
+            }
+        });
     }
 }
