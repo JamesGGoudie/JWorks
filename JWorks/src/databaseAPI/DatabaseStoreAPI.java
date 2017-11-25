@@ -170,13 +170,21 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         int attemptNumber = problemSetAttempt.getId();
         int problemSetKey = problemSetAttempt.getProblemSet().getId();
         
-        int[] problems = new int[problemSetAttempt.getProblemSet().getQuestions().size()];
-        String[] answers = new String[problemSetAttempt.getProblemSet().getQuestions().size()];
+        int problemCount = problemSetAttempt.getProblemSet().getQuestions().size();
+        
+        int[] problems = new int[problemCount];
+        String[] answers = new String[problemCount];
         
         try {
-          result = DatabaseInserter.insertStudentsAttempt(studentNumber, attemptNumber, problemSetKey, problems, answers, this.connection);
+            for (int i = 0; i < problemCount; i++) {
+                problems[i] = problemSetAttempt.getProblemSet().getQuestions().get(i).getId();
+                answers[i] = problemSetAttempt.getAnswers().get(i);
+            }
+          
+            result = DatabaseInserter.insertStudentsAttempt(studentNumber, attemptNumber,
+                    problemSetKey, problems, answers, this.connection);
         } catch (DatabaseInsertException e) {
-          e.printStackTrace();
+            e.printStackTrace();
         }
         
         return result;
