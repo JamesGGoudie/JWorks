@@ -3,6 +3,9 @@ package command;
 import action.ViewAllAttemptsAction;
 import databaseAPI.DatabaseAPI;
 import io.OutputGen;
+import models.ProblemSetAttempt;
+
+import java.util.List;
 
 public class ViewAllAttemptsCommand extends Command {
     /**
@@ -24,6 +27,8 @@ public class ViewAllAttemptsCommand extends Command {
     @Override
     public boolean execute(String[] args) {
         ViewAllAttemptsAction action = new ViewAllAttemptsAction();
-        return (action.execute() == null);
+        List<ProblemSetAttempt> attemptList = (List<ProblemSetAttempt>) action.execute();
+        outputStream.outputPayload(attemptList);
+        return (attemptList == null);
     }
 }
