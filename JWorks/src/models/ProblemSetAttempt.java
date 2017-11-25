@@ -28,6 +28,19 @@ public class ProblemSetAttempt extends DatabaseObject {
 
         this.answers = new ArrayList<>(problemSet.getQuestions().size());
     }
+    
+    /**
+     * Creates a new ProblemSetAttempt object, given a student, problem set, and attempt time. This
+     * constructor assumes that the attempt was made some time ago, and we need to reinstantiate
+     * the attempt object.
+     * @param student The student who completed the problem set.
+     * @param problemSet The problem set which was completed.
+     * @param attemptTime The time the problem set was attempted.
+     */
+    public ProblemSetAttempt(Student student, ProblemSet problemSet, Date attemptTime) {
+        this(student, problemSet);
+        this.timeAttempted = attemptTime;
+    }
 
     /**
      * Stores the answer that the user enters for the given problem index. Strips excess leading/trailing spaces.
