@@ -109,9 +109,13 @@ On the main screen, a user click the appropriate navigation buttons to:
 - Add a new question
 - View all saved questions
 - Create a new student account
+- Add a new problem set
+- View all problem sets
 - Logout
 
-A student logs in with their student number and password as created by an instructor. Currently, no student functionality is implemented.
+A student logs in with their student number and password as created by an instructor.
+
+A student can view all available problem sets, and attempt them by selecting them and pressing "Attempt Problems"
 
 ## JWorks/test:              
     
