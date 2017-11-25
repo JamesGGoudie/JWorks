@@ -59,4 +59,31 @@ public abstract class Problem extends DatabaseObject {
     public void removeTags(List<String> tagsToRemove) {
       this.tags.removeAll(tagsToRemove);
     }
+
+    /**
+     * Returns whether or not the tag string requested matches this problem.
+     * @param tagString a space separated list of tags
+     * @return True iff all of the tags in the string are present (even partially) in the problem
+     */
+    public boolean hasSearchTags(String tagString) {
+        // Split args into individual tags
+        String[] tags = tagString.split(" ");
+
+        // Iterate for partial tags
+        for (int i = 0; i < tags.length; i++) {
+            boolean matchedTag = false;
+            for (String t : getTags()) {
+                if (t.toLowerCase().contains(tags[i].toLowerCase())) {
+                    matchedTag = true;
+                    break;
+                }
+            }
+
+            if (!matchedTag) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
