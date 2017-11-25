@@ -34,9 +34,9 @@ public class ViewProblemSetScreenManager extends Manager {
         for (ProblemSet ps : problemSets) {
             // Users can only see problem sets within range
             if (isUserStudent()) {
-                //if (now.after(ps.getStartTime()) && now.before(ps.getEndTime())) {
+                if (now.after(ps.getStartTime()) && now.before(ps.getEndTime())) {
                     filteredProblemSets.add(ps);
-                //}
+                }
             } else {
                 // instructors can see every ps
                 filteredProblemSets.add(ps);
