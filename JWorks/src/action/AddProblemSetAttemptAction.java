@@ -1,6 +1,7 @@
 package action;
 
 import databaseAPI.DatabaseStoreAPI;
+import exceptions.DatabaseInsertException;
 import models.Problem;
 import models.ProblemSetAttempt;
 
@@ -20,6 +21,11 @@ public class AddProblemSetAttemptAction extends Action {
         DatabaseStoreAPI api = (DatabaseStoreAPI) params[1];
 
         // Call database api to store
+        try {
+            api.actOnDatabase(attempt);
+        } catch (DatabaseInsertException e) {
+            return false;
+        }
         return true;
     }
 }
