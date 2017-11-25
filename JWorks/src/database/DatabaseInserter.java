@@ -220,8 +220,8 @@ public class DatabaseInserter {
   /**
    * Keeps a record of a students attempt for a problem set including the problem set key
    * @param studentNumber The unique ID of the student.
-   * @param attemptNumber The students current attempt for the problem set.
    * @param problemSetKey The unique ID of the problem set.
+   * @param time The time when the attempt took place in seconds from the epoch.
    * @param problems The unique IDs of the problems in the problem set.
    * @param answers The student's answers to the problems. This list should correspond directly
    *                with the problems list by index.
@@ -231,12 +231,12 @@ public class DatabaseInserter {
    * @throws DatabaseInsertException Thrown if the students attempt could not be stored in the
    *                                 database.
    */
-  protected static boolean insertStudentsAttempt(int studentNumber, int attemptNumber,
-      int problemSetKey, int[] problems, String [] answers, Connection connection)
+  protected static boolean insertStudentsAttempt(int studentNumber, int problemSetKey, long time,
+      int[] problems, String [] answers, Connection connection)
       throws DatabaseInsertException {
     
     boolean result = false;
-    String sql = "INSERT INTO PREVIOUSATTEMPTS(STUDENTNUMBER, PROBLEMSET, ATTEMPTNUMBER, PROBLEM, "
+    String sql = "INSERT INTO PREVIOUSATTEMPTS(STUDENTNUMBER, PROBLEMSET, TIME, PROBLEM, "
         + "STUDENTANSWER) VALUES(?,?,?,?,?)";
     
     PreparedStatement preparedStatement = null;
@@ -246,7 +246,7 @@ public class DatabaseInserter {
       // These values shouldn't change across the different problems.
       preparedStatement.setInt(1, studentNumber);
       preparedStatement.setInt(2, problemSetKey);
-      preparedStatement.setInt(3, attemptNumber);
+      preparedStatement.setLong(3, time);
       
       for (int i = 0; i < problems.length; i++) {
         preparedStatement.setInt(4, problems[i]);

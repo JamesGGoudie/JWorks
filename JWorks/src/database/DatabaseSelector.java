@@ -431,24 +431,24 @@ public class DatabaseSelector {
    * Returns a result set containing the answers submitted by the student for a problem set.
    * @param studentNumber The unique ID of the student.
    * @param problemSet The unique ID of the problem set.
-   * @param attemptNumber The attempt number that we want to access.
+   * @param time The time that the attempt was made in seconds from the epoch.
    * @param connection The connection to the database file.
    * @return A result set containing a problem ID correlating to a student's answer.
    * @throws DatabaseSelectException Thrown if the previous attempt could not be retrieved.
    */
-  protected static ResultSet getStudentsResults(int studentNumber, int problemSet,
-      int attemptNumber, Connection connection) throws DatabaseSelectException {
+  protected static ResultSet getStudentsAttempt(int studentNumber, int problemSet,
+      long time, Connection connection) throws DatabaseSelectException {
     
     ResultSet results = null;
     String sql = "SELECT PROBLEM, STUDENTANSWER FROM PREVIOUSATTEMPTS WHERE (STUDENTNUMBER,"
-        + "PROBLEMSET, ATTEMPTNUMBER) = (?,?,?)";
+        + "PROBLEMSET, TIME) = (?,?,?)";
     
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       
       preparedStatement.setInt(1, studentNumber);
       preparedStatement.setInt(2, problemSet);
-      preparedStatement.setInt(3, attemptNumber);
+      preparedStatement.setLong(3, time);
       
       results = preparedStatement.executeQuery();
     } catch (SQLException e) {
@@ -638,4 +638,6 @@ public class DatabaseSelector {
     
     return results;
   }
+
+
 }

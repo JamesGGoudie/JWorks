@@ -439,7 +439,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         int attemptNumber = problemSetAttempt.getId();
         
         try {
-            ResultSet previousAttemptData = DatabaseSelector.getStudentsResults(studentNumber,
+            ResultSet previousAttemptData = DatabaseSelector.getStudentsAttempt(studentNumber,
                     problemSet, attemptNumber, connection);
             
             while (previousAttemptData.next()) {
