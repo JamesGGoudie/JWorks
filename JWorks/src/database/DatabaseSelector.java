@@ -469,7 +469,7 @@ public class DatabaseSelector {
    * @throws DatabaseSelectException Thrown if the attempt data could not be retrieved from the
    *                                 database.
    */
-  public static ResultSet getAllAttempts(Connection connection) throws DatabaseSelectException {
+  protected static ResultSet getAllAttempts(Connection connection) throws DatabaseSelectException {
     ResultSet results = null;
     String sql = "SELECT * FROM PREVIOUSATTEMPTS";
     
