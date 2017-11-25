@@ -27,7 +27,7 @@ public class ViewAllAttemptsCommand extends Command {
     @Override
     public boolean execute(String[] args) {
         ViewAllAttemptsAction action = new ViewAllAttemptsAction();
-        List<ProblemSetAttempt> attemptList = (List<ProblemSetAttempt>) action.execute();
+        List<ProblemSetAttempt> attemptList = (List<ProblemSetAttempt>) action.execute(databaseAPI);
         outputStream.outputPayload(attemptList);
         return (attemptList == null);
     }

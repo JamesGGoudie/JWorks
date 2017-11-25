@@ -26,7 +26,6 @@ public class ViewProblemSetScreenManager extends Manager {
      * @return the list of all problem sets that are visible to the logged in user
      */
     public List<ProblemSet> getVisibleProblemSets() {
-        // TODO: Replace dummy data
         List<ProblemSet> problemSets = getAllProblemSets();
         List<ProblemSet> filteredProblemSets = new ArrayList<>();
         Date now = Date.from(Instant.now());
@@ -52,7 +51,6 @@ public class ViewProblemSetScreenManager extends Manager {
      * @return the best score of the user on the given Problem Set. -1 if it was not attempted.
      */
     public int getBestScore(ProblemSet problemSet) {
-        /* Actual implementation
         List<ProblemSetAttempt> attempts = getStudentAttempts();
         int max = -1;
 
@@ -64,10 +62,11 @@ public class ViewProblemSetScreenManager extends Manager {
             }
         }
 
-        return max;
-        */
+        if (max == -1) {
+            return -1;
+        }
 
-        return 100;
+        return (100 * max / problemSet.getQuestions().size());
     }
 
     /**
@@ -89,12 +88,27 @@ public class ViewProblemSetScreenManager extends Manager {
     }
 
     /**
-     * Retrieves a list of all problem set attempts of the current student.
-     * @return a list of all problem set attempts of the current student.
+     * Retrieves a list of all problem set attempts of the current student. Returns all attempts if user is instructor.
+     * @return a list of all problem set attempts of the current student. All attempts if the user is an instructor.
      */
     private List<ProblemSetAttempt> getStudentAttempts() {
-        // TODO: Replace dummy data
-        return Collections.EMPTY_LIST;
+        interpreter.executeAction(new String[] {"ViewAllAttemptsCommand"});
+        List<ProblemSetAttempt> attempts = (List<ProblemSetAttempt>) interpreter.getOutputGenerator().getLastResult();
+
+        if (!isUserStudent()) {
+            return attempts;
+        }
+
+        // Filter by current student
+        List<ProblemSetAttempt> filteredAttempts = new ArrayList<>();
+
+        for (ProblemSetAttempt attempt : attempts) {
+            if (attempt.getStudent().equals(interpreter.getCurrentUser())) {
+                filteredAttempts.add(attempt);
+            }
+        }
+
+        return filteredAttempts;
     }
 
 }
