@@ -436,11 +436,11 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         this.actOnDatabase();
         int studentNumber = problemSetAttempt.getStudent().getStudentNumber();
         int problemSet = problemSetAttempt.getProblemSet().getId();
-        int attemptNumber = problemSetAttempt.getId();
+        long attemptTime = (problemSetAttempt.getTimeAttempted().getTime()) / 1000L;
         
         try {
             ResultSet previousAttemptData = DatabaseSelector.getStudentsAttempt(studentNumber,
-                    problemSet, attemptNumber, connection);
+                    problemSet, attemptTime, connection);
             
             while (previousAttemptData.next()) {
                 problemSetAttempt.setAnswer(previousAttemptData.getInt(1),

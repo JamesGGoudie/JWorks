@@ -162,13 +162,20 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
       return result;
     }
 
+    /**
+     * Inserts a problem set attempt into the database.
+     * @param problemSetAttempt The attempt containing all of the information needed to store into
+     *                          the database including the student, problem set, attempt time, and
+     *                          the student's answers.
+     * @return True if the problem set attempt was added to the database, false otherwise.
+     */
     public boolean actOnDatabase(ProblemSetAttempt problemSetAttempt) {
         this.actOnDatabase();
         boolean result = false;
         
         int studentNumber = problemSetAttempt.getStudent().getStudentNumber();
-        int attemptNumber = problemSetAttempt.getId();
         int problemSetKey = problemSetAttempt.getProblemSet().getId();
+        long attemptTime = (problemSetAttempt.getTimeAttempted().getTime()) / 1000L;
         
         int problemCount = problemSetAttempt.getProblemSet().getQuestions().size();
         
@@ -181,8 +188,8 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
                 answers[i] = problemSetAttempt.getAnswers().get(i);
             }
           
-            result = DatabaseInserter.insertStudentsAttempt(studentNumber, attemptNumber,
-                    problemSetKey, problems, answers, this.connection);
+            result = DatabaseInserter.insertStudentsAttempt(studentNumber, problemSetKey,
+                    attemptTime, problems, answers, this.connection);
         } catch (DatabaseInsertException e) {
             e.printStackTrace();
         }
