@@ -27,9 +27,8 @@ public class AddQuestionAction extends Action {
         DatabaseStoreAPI api = (DatabaseStoreAPI) params[1];
         try {
             api.actOnDatabase(problem);
-        } catch (DatabaseInsertException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+            api.actOnDatabase(problem.getTags(), problem);
+        } catch (DatabaseInsertException | SQLException e) {
             e.printStackTrace();
         }
 
