@@ -5,11 +5,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 import models.Problem;
 
@@ -58,6 +57,11 @@ public class ViewProblemsController extends Controller {
         questionColumn.setCellValueFactory(new PropertyValueFactory<>("problem"));
         answerColumn.setCellValueFactory(new PropertyValueFactory<>("answer"));
 
+        // Wrap text
+        wrapColumnCells(questionColumn);
+        wrapColumnCells(answerColumn);
+        wrapColumnCells(tagsColumn);
+
         tagsColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Problem, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Problem, String> param) {
@@ -85,6 +89,20 @@ public class ViewProblemsController extends Controller {
             @Override
             public void handle(ActionEvent event) {
                 questionTable.getItems().setAll(manager.getProblems(filterField.getText()));
+            }
+        });
+    }
+
+    private void wrapColumnCells(TableColumn<Problem, String> column) {
+        column.setCellFactory(new Callback<TableColumn<Problem, String>, TableCell<Problem, String>>() {
+            @Override
+            public TableCell<Problem, String> call(TableColumn<Problem, String> param) {
+                TableCell<Problem, String> cell = new TableCell<>();
+                Text value = new Text();
+                cell.setGraphic(value);
+                value.wrappingWidthProperty().bind(cell.widthProperty());
+                value.textProperty().bind(cell.itemProperty());
+                return cell;
             }
         });
     }
