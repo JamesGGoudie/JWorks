@@ -14,8 +14,8 @@
             <TableColumn fx:id="tagsColumn" prefWidth="168.0" text="Tags" />
         </columns>
       </TableView>
-      <TextField fx:id="filterField" layoutX="14.0" layoutY="20.0" promptText="Search" />
-      <Button fx:id="filterButton" layoutX="210.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="77.0" text="Search" />
+      <TextField fx:id="searchField" layoutX="14.0" layoutY="20.0" promptText="Search" />
+      <Button fx:id="searchButton" layoutX="210.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="77.0" text="Search" />
       <Button fx:id="clearButton" layoutX="290.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="63.0" text="Clear" />
    </children>
 </Pane>
