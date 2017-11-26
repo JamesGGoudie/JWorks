@@ -110,7 +110,7 @@ On the main screen, a user click the appropriate navigation buttons to:
 - View all saved questions (with the ability to search by tags)
 - Create a new student account
 - Add a new problem set (with tags, and the ability to bulk import from a file)
-- View all problem sets (with the ability to search by tags)
+- View all problem sets (with the ability to search by tags, and view statistics for each problem set)
 - Logout
 
 A student logs in with their student number and password as created by an instructor.
