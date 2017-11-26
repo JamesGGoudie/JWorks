@@ -2,7 +2,9 @@ package action;
 
 import static org.junit.Assert.*;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import databaseAPI.DatabaseAPI;
 import databaseAPI.DatabaseStoreAPI;
@@ -14,14 +16,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.mockito.Mockito.*;
+
 public class TestAddProblemSetAction {
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 
 	@Test
 	public void testAddProblemSet() {
 		Problem problem = new SingleAnswerProblem("212","5");
-		
-		String startT = "Nov 5, 2001 11:30 AM";
-		String endT = "Nov 6, 2001 11:30 PM";
+		// what is the correct date format
+		String startT = "2001 11 10";
+		String endT = "2001 11 21";
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat();
 		
@@ -44,30 +51,36 @@ public class TestAddProblemSetAction {
 		pSet.setMaxAttempts(2);
 		
 		AddProblemSetAction action = new AddProblemSetAction();
-		DatabaseAPI api = new DatabaseStoreAPI();
-	    Object actual = action.execute(pSet, api);
 		
+		DatabaseAPI api = mock(DatabaseStoreAPI.class);
+	    
+		Object actual = action.execute(pSet, api);
 	    Object expected = pSet;
 	    
 		assertEquals(expected, actual);
 	}
 	
+	// DatabaseInsertException 
 	@Test
 	public void testAddEmptyProblemSet() {
+		exception.expect(NullPointerException.class); // i dont think this is the kind of exceptions to catch
 		
+		Problem problem = new SingleAnswerProblem(null, null);
+		SimpleProblemSet pSet = new SimpleProblemSet();
 		
+		pSet.addProblem(problem);
+		pSet.setStartTime(null);
+		pSet.setEndTime(null);
+		pSet.setMaxAttempts(0);
 		
+		AddProblemSetAction action = new AddProblemSetAction();
 		
-		fail("Not yet implemented");
+		DatabaseAPI api = mock(DatabaseStoreAPI.class);
+		
+		Object actual = action.execute(pSet, api);
+	    Object expected = pSet;
+		
+	    assertEquals(expected, actual);
 	}
 	
-	@Test
-	public void testReturnException() {
-		
-		
-		
-		
-		fail("Not yet");
-	}
-
 }
