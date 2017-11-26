@@ -24,11 +24,12 @@ public class AddStudentCommand extends Command {
      *             Second argument is the user's email as a String.
      *             Third argument is the user's password as a String.
      *             Fourth argument is the user's student number as an integer.
+     *             If a fifth argument exists, suppress the output.
      * @return whether or not the command succeeded.
      */
     @Override
     public boolean execute(String[] args) {
-        if (args.length != 4) {
+        if (args.length != 4 && args.length != 5) {
             return false;
         }
 
@@ -45,12 +46,13 @@ public class AddStudentCommand extends Command {
         // Pass into action
         boolean result = (boolean) action.execute(s, databaseAPI);
 
-        if (!result) {
-            outputStream.output("Something went wrong! Does the student already exist?");
-        } else {
-            outputStream.output("Successfully added student!");
+        if (args.length != 5) {
+            if (!result) {
+                outputStream.output("Something went wrong! Does the student already exist?");
+            } else {
+                outputStream.output("Successfully added student!");
+            }
         }
-
         return result;
     }
 }
