@@ -1,5 +1,6 @@
 package databaseAPI;
 
+import java.io.File;
 import java.sql.Connection;
 import models.*;
 
@@ -12,6 +13,12 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        File db = new File("jworks.db");
+        db.delete();
+
+        int creatorID = 2008;
+        int maxAttempts = 5;
+
         Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
         DatabaseDriverAPI.initialize(connection);
 
@@ -24,31 +31,46 @@ public class Main {
         ps1.setEndTime(date);
         ps1.setStartTime(date);
         Student sUser = new Student("aaron", "a.rodgers@packers.club", "collar", 12);
-        Instructor iUser = new Instructor("mike", "m.mccarthy@packers.club", "jk", 2008);
+        Instructor iUser = new Instructor("mike", "m.mccarthy@packers.club", "jk", creatorID);
+        p1.setCreatorID(creatorID);
+        p2.setCreatorID(creatorID);
+        ps1.setCreatorID(creatorID);
+        ps1.setMaxAttempts(maxAttempts);
         DatabaseStoreAPI insert = new DatabaseStoreAPI();
         DatabaseExtractAPI select = new DatabaseExtractAPI();
         try{
-            //System.out.println(insert.actOnDatabase(p1));
-            //System.out.println(insert.actOnDatabase(p2));
-            //System.out.println(insert.actOnDatabase(ps1));
-            //System.out.println(insert.actOnDatabase(sUser));
-            //System.out.println(insert.actOnDatabase(iUser));
-            //Problem sp = select.actOnDatabase(1, new SingleAnswerProblem());
-            ProblemSet sps = select.actOnDatabase(1, new SimpleProblemSet());
-            //Instructor si = select.actOnDatabase(2008, new Instructor());
-            //Student ss = select.actOnDatabase(12, new Student());
-            //printProblem(sp);
+            System.out.println(insert.actOnDatabase(p1));
+            System.out.println(insert.actOnDatabase(p2));
+            System.out.println(insert.actOnDatabase(ps1));
+            ps1.addProblem(p2);
+            System.out.println(insert.actOnDatabase(ps1));
+            System.out.println(insert.actOnDatabase(sUser));
+            System.out.println(insert.actOnDatabase(iUser));
+            System.out.println();
+            Problem sp = select.actOnDatabase(p1.getId(), new SingleAnswerProblem());
+            ProblemSet sps = select.actOnDatabase(ps1.getId(), new SimpleProblemSet());
+            Instructor si = select.actOnDatabase(2008, new Instructor());
+            Student ss = select.actOnDatabase(12, new Student());
+            printProblem(sp);
             printpSet(sps);
-            //printUser(si);
-            //printUser(ss);
+            printUser(si);
+            printUser(ss);
+            ArrayList<ProblemSet> derp = new ArrayList<ProblemSet>();
+
+            List<ProblemSet> allProblemSets = select.actOnDatabase(derp);
+
+            for (ProblemSet problemSet : allProblemSets) {
+                printpSet(problemSet);
+            }
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+            System.out.println("FAIL!!!");
         }
         String[] out = {"1", "2", "3"};
         //select.actOnDatabase(1, out);
         //select.actOnDatabase(2, out);
-	    //select.actOnDatabase(3, out);
+        //select.actOnDatabase(3, out);
     }
 
     static void printDBObject(DatabaseObject obj){
@@ -60,6 +82,7 @@ public class Main {
         System.out.println("question: "+p.getProblem());
         System.out.println("answer: "+p.getAnswer());
         System.out.println("created by: "+p.getCreatorID());
+        System.out.println();
     }
 
     static void printpSet(ProblemSet ps){
@@ -68,10 +91,11 @@ public class Main {
         System.out.println("submit by: "+ps.getEndTime());
         System.out.println("max attempts: "+ps.getMaxAttempts());
         System.out.println("created by: "+ps.getCreatorID());
+        System.out.println();
         List<Problem> pList = ps.getQuestions();
         for (Problem p: pList
-             ) {printProblem(p);
-             System.out.println("");
+                ) {printProblem(p);
+            System.out.println("");
 
         }
     }
@@ -81,6 +105,7 @@ public class Main {
         System.out.println("name: "+u.getName());
         System.out.println("email: "+u.getEmailAddress());
         System.out.println("password: "+u.getPassword());
+        System.out.println();
     }
 
 }
