@@ -106,10 +106,10 @@ Where Question is a string wrapped by double quotes, and answer is a string with
 To login as an instructor, enter any non-empty username that does not consist of solely digits, along with a non-empty password and press the Login button.
 On the main screen, a user click the appropriate navigation buttons to:
 
-- Add a new question (with tags)
+- Add a new question (with tags, and the ability to bulk import from a file)
 - View all saved questions (with the ability to search by tags)
 - Create a new student account
-- Add a new problem set (with tags)
+- Add a new problem set (with tags, and the ability to bulk import from a file)
 - View all problem sets (with the ability to search by tags)
 - Logout
 

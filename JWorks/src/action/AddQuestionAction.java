@@ -29,7 +29,7 @@ public class AddQuestionAction extends Action {
             api.actOnDatabase(problem);
             api.actOnDatabase(problem.getTags(), problem);
         } catch (DatabaseInsertException | SQLException e) {
-            e.printStackTrace();
+            return null;
         }
 
         return problem;

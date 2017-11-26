@@ -3,9 +3,13 @@ package gui;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 public class CreateNewQuestionScreenController extends Controller {
 	@FXML
@@ -20,6 +24,8 @@ public class CreateNewQuestionScreenController extends Controller {
 	private Label questionError;
 	@FXML
 	private Label answerError;
+	@FXML
+	private Button importButton;
 
 	/**
 	 * Start the handling of actions on screen
@@ -54,6 +60,18 @@ public class CreateNewQuestionScreenController extends Controller {
 					answerError.setText("");
 					tagField.clear();
 				}
+			}
+		});
+
+		importButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Node sceneNode = (Node) event.getTarget();
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Open Students File");
+				File targetFile = fileChooser.showOpenDialog(sceneNode.getScene().getWindow());
+
+				createNewQuestionScreenManager.createBulkProblems(targetFile);
 			}
 		});
 

@@ -113,6 +113,10 @@ public class ViewProblemSetScreenManager extends Manager {
         interpreter.executeAction(new String[] {"ViewAllAttemptsCommand"});
         List<ProblemSetAttempt> attempts = (List<ProblemSetAttempt>) interpreter.getOutputGenerator().getLastResult();
 
+        if (attempts == null) {
+            return Collections.EMPTY_LIST;
+        }
+
         if (!isUserStudent()) {
             return attempts;
         }
