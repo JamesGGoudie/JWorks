@@ -39,9 +39,7 @@ public class AddSimpleProblemCommand extends Command {
 
         // Pass to appropriate action -- TODO: get instance of actions rather than creating new
         Action action =  new AddQuestionAction();
-        action.execute(problem, databaseAPI);
-
-        outputStream.output("Question successfully added.");
-        return true;
+        Object result = action.execute(problem, databaseAPI);
+        return (result != null);
     }
 }
