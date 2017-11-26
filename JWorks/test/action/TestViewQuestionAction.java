@@ -32,7 +32,8 @@ public class TestViewQuestionAction {
 		
 		addQuestion.execute(p,store);
 		// extract
-		DatabaseExtractAPI extract =  mock(DatabaseExtractAPI.class);
+		DatabaseExtractAPI extract =  new DatabaseExtractAPI();
+		
 		Action viewAll = new ViewQuestionAction();
 		
 		Object actual = viewAll.execute(extract);
@@ -43,10 +44,10 @@ public class TestViewQuestionAction {
 	
 	// expect to return a exception or msg to say no questions or something???
 	@Test
-	public void testGetWhenNoProblems(){
+	public void testGetWhenNoProblems() throws DatabaseSelectException{
 		exception.expect(DatabaseSelectException.class);
 		
-		DatabaseExtractAPI extract = mock(DatabaseExtractAPI.class);
+		DatabaseExtractAPI extract = new DatabaseExtractAPI();
 		Action viewAll = new ViewQuestionAction();
 		
 		viewAll.execute(extract);
