@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class AddProblemSetScreenController extends Controller {
     private TableColumn<Problem, Integer> problemListColumn;
 
     @FXML
-    private TextField problemSetNameField;
+    private TextField tagsField;
 
     @FXML
     private DatePicker releaseDateField;
@@ -90,8 +91,7 @@ public class AddProblemSetScreenController extends Controller {
             @Override
             public void handle(ActionEvent event) {
                 // Refuse if any fields are empty
-                if (problemSetNameField.getText().length() == 0
-                        || maxAttemptsField.getText().length() == 0
+                if (maxAttemptsField.getText().length() == 0
                         || releaseDateField.getValue() == null
                         || dueDateField.getValue() == null) {
                     errorLabel.setText("Please ensure all fields are filled in.");
@@ -137,7 +137,6 @@ public class AddProblemSetScreenController extends Controller {
         errorLabel.setText("");
 
         // Check for valid options
-        String problemSetName = problemSetNameField.getText();
         String maxAttemptsText = maxAttemptsField.getText();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate;
@@ -170,10 +169,11 @@ public class AddProblemSetScreenController extends Controller {
         problemSet.setEndTime(endDate);
         problemSet.setMaxAttempts(maxAttempts);
 
-        List<Problem> problems = new ArrayList<>(problemList);
+        // Add tags
+        String[] tags = tagsField.getText().split(" ");
 
-        for (Problem p : problems) {
-            problemSet.addProblem(p);
+        if (tags.length > 0 && !tags[0].isEmpty()) {
+            problemSet.addTags(Arrays.asList(tags));
         }
 
         manager.addProblemSet(problemSet);
@@ -186,8 +186,8 @@ public class AddProblemSetScreenController extends Controller {
     private void clearFields() {
         problemList.clear();
         updateTableList();
-        problemSetNameField.clear();
         maxAttemptsField.clear();
+        tagsField.clear();
         releaseDateField.setValue(null);
         dueDateField.setValue(null);
         errorLabel.setText("");

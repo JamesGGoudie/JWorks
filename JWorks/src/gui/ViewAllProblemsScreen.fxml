@@ -6,12 +6,16 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewProblemsController">
    <children>
-      <TableView fx:id="questionTable" layoutX="14.0" layoutY="14.0" prefHeight="663.0" prefWidth="755.0">
+      <TableView fx:id="questionTable" layoutX="14.0" layoutY="65.0" prefHeight="612.0" prefWidth="755.0">
         <columns>
-          <TableColumn fx:id="idColumn" prefWidth="75.0" resizable="false" text="ID" />
-          <TableColumn fx:id="questionColumn" prefWidth="512.0" text="Question" />
-            <TableColumn fx:id="answerColumn" minWidth="0.0" prefWidth="167.0" resizable="false" text="Answer" />
+          <TableColumn fx:id="idColumn" prefWidth="55.0" resizable="false" text="ID" />
+          <TableColumn fx:id="questionColumn" prefWidth="384.0" text="Question" />
+            <TableColumn fx:id="answerColumn" minWidth="0.0" prefWidth="147.0" resizable="false" text="Answer" />
+            <TableColumn fx:id="tagsColumn" prefWidth="168.0" text="Tags" />
         </columns>
       </TableView>
+      <TextField fx:id="searchField" layoutX="14.0" layoutY="20.0" promptText="Search" />
+      <Button fx:id="searchButton" layoutX="210.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="77.0" text="Search" />
+      <Button fx:id="clearButton" layoutX="290.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="63.0" text="Clear" />
    </children>
 </Pane>

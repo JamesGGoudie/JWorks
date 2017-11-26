@@ -220,8 +220,8 @@ public class DatabaseInserter {
   /**
    * Keeps a record of a students attempt for a problem set including the problem set key
    * @param studentNumber The unique ID of the student.
-   * @param attemptNumber The students current attempt for the problem set.
    * @param problemSetKey The unique ID of the problem set.
+   * @param time The time when the attempt took place in seconds from the epoch.
    * @param problems The unique IDs of the problems in the problem set.
    * @param answers The student's answers to the problems. This list should correspond directly
    *                with the problems list by index.
@@ -231,12 +231,12 @@ public class DatabaseInserter {
    * @throws DatabaseInsertException Thrown if the students attempt could not be stored in the
    *                                 database.
    */
-  protected static boolean insertStudentsAttempt(int studentNumber, int attemptNumber,
-      int problemSetKey, int[] problems, String [] answers, Connection connection)
+  protected static boolean insertStudentsAttempt(int studentNumber, int problemSetKey, long time,
+      int[] problems, String [] answers, Connection connection)
       throws DatabaseInsertException {
     
     boolean result = false;
-    String sql = "INSERT INTO PREVIOUSATTEMPTS(STUDENTNUMBER, PROBLEMSET, ATTEMPTNUMBER, PROBLEM, "
+    String sql = "INSERT INTO PREVIOUSATTEMPTS(STUDENTNUMBER, PROBLEMSET, TIME, PROBLEM, "
         + "STUDENTANSWER) VALUES(?,?,?,?,?)";
     
     PreparedStatement preparedStatement = null;
@@ -246,7 +246,7 @@ public class DatabaseInserter {
       // These values shouldn't change across the different problems.
       preparedStatement.setInt(1, studentNumber);
       preparedStatement.setInt(2, problemSetKey);
-      preparedStatement.setInt(3, attemptNumber);
+      preparedStatement.setLong(3, time);
       
       for (int i = 0; i < problems.length; i++) {
         preparedStatement.setInt(4, problems[i]);
@@ -259,8 +259,77 @@ public class DatabaseInserter {
       
       result = true;
     } catch (SQLException e) {
-      e.printStackTrace();
       String errorMessage = "Failed to insert the result of a students attempt.";
+      throw new DatabaseInsertException(errorMessage);
+    }
+    
+    return result;
+  }
+  
+  /**
+   * Associates the given tag with the given problem in the database.
+   * @param problemID The unique ID of the problem.
+   * @param tag The tag to be associated with the problem.
+   * @param connection The connection to the database file.
+   * @return True if the tag was associated with the problem; false indicates an error occurred.
+   * @throws DatabaseInsertException Thrown if the tag could not be added to the database.
+   */
+  protected static boolean insertProblemTag(int problemID, String tag, Connection connection)
+      throws DatabaseInsertException {
+   
+    boolean result = false;
+    String sql = "INSERT INTO PROBLEMTAGS(PROBLEM, TAG) VALUES (?,?)";
+    
+    PreparedStatement preparedStatement = null;
+    
+    try {
+      preparedStatement = connection.prepareStatement(sql);
+      
+      preparedStatement.setInt(1, problemID);
+      preparedStatement.setString(2, tag);
+      
+      preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
+      
+      result = true;
+    } catch (SQLException e) {
+      String errorMessage = "Failed to insert a problem tag into the database.";
+      throw new DatabaseInsertException(errorMessage);
+    }
+    
+    return result;
+  }
+  
+  /**
+   * Associates the given tag with the given problem set in the database.
+   * @param problemSetID The unique ID of the problem set.
+   * @param tag The tag to be associated with the problem set.
+   * @param connection The connection to the database file.
+   * @return True if the tag was associated with the problem set; false indicates an error occurred.
+   * @throws DatabaseInsertException Thrown if the tag could not be added to the database.
+   */
+  protected static boolean insertProblemSetTag(int problemSetID, String tag, Connection connection)
+      throws DatabaseInsertException {
+   
+    boolean result = false;
+    String sql = "INSERT INTO PROBLEMSETTAGS(PROBLEMSET, TAG) VALUES (?,?)";
+    
+    PreparedStatement preparedStatement = null;
+    
+    try {
+      preparedStatement = connection.prepareStatement(sql);
+      
+      preparedStatement.setInt(1, problemSetID);
+      preparedStatement.setString(2, tag);
+      
+      preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
+      
+      result = true;
+    } catch (SQLException e) {
+      String errorMessage = "Failed to insert a problem set tag into the database.";
       throw new DatabaseInsertException(errorMessage);
     }
     

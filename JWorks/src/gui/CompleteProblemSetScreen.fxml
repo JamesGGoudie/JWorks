@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CompleteProblemSetScreenController">
+   <bottom>
+      <AnchorPane prefHeight="197.0" prefWidth="780.0" BorderPane.alignment="CENTER">
+         <children>
+            <ProgressBar fx:id="progressBar" layoutX="25.0" layoutY="157.0" prefHeight="23.0" prefWidth="725.0" progress="0.0" />
+            <Button fx:id="nextQuestionButton" layoutX="634.0" layoutY="112.0" mnemonicParsing="false" text="Next Question" />
+            <Button fx:id="prevQuestionButton" layoutX="25.0" layoutY="112.0" mnemonicParsing="false" text="Previous Question" />
+            <Separator layoutX="5.0" layoutY="82.0" prefHeight="0.0" prefWidth="774.0" />
+            <Button fx:id="submitAnswersButton" layoutX="634.0" layoutY="112.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="118.0" text="Submit" visible="false" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <AnchorPane prefHeight="538.0" prefWidth="780.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="51.0" layoutY="36.0" text="Question:">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="51.0" layoutY="251.0" text="Your Answer:">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="problemText" alignment="TOP_LEFT" layoutX="51.0" layoutY="98.0" prefHeight="143.0" prefWidth="501.0" text="Question here" wrapText="true">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="problemAnswer" layoutX="51.0" layoutY="312.0" prefHeight="31.0" prefWidth="592.0" promptText="Enter your answer">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <AnchorPane prefHeight="53.0" prefWidth="780.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="problemSetName" layoutX="55.0" layoutY="4.0" prefHeight="21.0" prefWidth="671.0" text="Problem Set Name">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

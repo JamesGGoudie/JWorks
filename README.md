@@ -69,23 +69,23 @@ Open a terminal/command prompt/PowerShell, navigate to the src directory under t
     * To compile and run the command line version, type:
 	```
 	javac driver/JWorks.java
-	java -cp ".:../../JAR_Files/sqlite-jdbc-3.18.0.jar" driver/JWorks
+	java -cp ".:../../JAR_Files/*" driver/JWorks
 	```
 	* To compile and run the GUI version, type:
 	```
 	javac gui/JWorksGUI.java
-	java -cp ".:../../JAR_Files/sqlite-jdbc-3.18.0.jar" gui/JWorksGUI
+	java -cp ".:../../JAR_Files/*" gui/JWorksGUI
 	```
 * For Windows users.
 	* To compile and run the command line version, type:
 	```
 	javac driver\JWorks.java
-	java -cp ".;..\..\JAR_Files\sqlite-jdbc-3.18.0.jar" driver\JWorks
+	java -cp ".;..\..\JAR_Files\*" driver\JWorks
 	```
 	* To compile and run the GUI version, type:
 	```
 	javac gui\JWorksGUI.java
-	java -cp ".;..\..\JAR_Files\sqlite-jdbc-3.18.0.jar" gui\JWorksGUI
+	java -cp ".;..\..\JAR_Files\*" gui\JWorksGUI
 	```	
 
 #### Using the Command Line Version:
@@ -106,10 +106,19 @@ Where Question is a string wrapped by double quotes, and answer is a string with
 To login as an instructor, enter any non-empty username that does not consist of solely digits, along with a non-empty password and press the Login button.
 On the main screen, a user click the appropriate navigation buttons to:
 
-- Add a new question
-- View all saved questions
+- Add a new question (with tags, and the ability to bulk import from a file)
+- View all saved questions (with the ability to search by tags)
 - Create a new student account
+- Add a new problem set (with tags, and the ability to bulk import from a file)
+- View all problem sets (with the ability to search by tags)
 - Logout
 
-A student logs in with their student number and password as created by an instructor. Currently, no student functionality is implemented.
+A student logs in with their student number and password as created by an instructor.
 
+A student can view all available problem sets, and attempt them by selecting them and pressing "Attempt Problems". They can search the list of available problem sets by the number or the tags.
+
+## JWorks/test:              
+    
+    A work in progress collection of jUnit test cases for the jWorks application. Note that do to
+    function visibility, the jUnit file for directly testing the database classes,databaseTester,
+    is present in the JWorks/src/database package.

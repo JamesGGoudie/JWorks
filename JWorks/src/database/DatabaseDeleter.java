@@ -109,4 +109,62 @@ public class DatabaseDeleter {
     
     return result;
   }
+  
+  /**
+   * Removes a problem's tag from the database.
+   * @param problemKey The unique ID of the problem.
+   * @param tag The tag to disassociate with the problem.
+   * @param connection The connection to the database file.
+   * @return True if the tag was deleted, false otherwise.
+   */
+  protected static boolean deleteProblemTag(int problemKey, String tag, Connection connection) {
+    boolean result = false;
+    String sql = "DELETE FROM PROBLEMTAGS WHERE (PROBLEM,TAG) = (?,?)";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemKey);
+      preparedStatement.setString(2, tag);
+      preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
+      
+      result = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      System.out.println("A problem occurred while attempting to delete a problem's tag.");
+    }
+    
+    return result;
+  }
+  
+  /**
+   * Removes a problem set's tag from the database.
+   * @param problemSetKey The unique ID of the
+   * @param tag The tag to disassociate with the problem set. 
+   * @param connection The connection to the database file.
+   * @return True if the tag was remove, false otherwise.
+   */
+  protected static boolean deleteProblemSetTag(int problemSetKey, String tag,
+      Connection connection) {
+    
+    boolean result = false;
+    String sql = "DELETE FROM PROBLEMSETTAGS WHERE (PROBLEMSET,TAG) = (?,?)";
+    
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, problemSetKey);
+      preparedStatement.setString(2, tag);
+      preparedStatement.executeUpdate();
+      
+      preparedStatement.close();
+      
+      result = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      System.out.println("A problem occurred while attempting to delete a problem set's tag.");
+    }
+    
+    return result;
+  }
 }

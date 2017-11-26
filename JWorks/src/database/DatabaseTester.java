@@ -48,10 +48,15 @@ public class DatabaseTester {
    */
   @AfterClass
   public static void revert() {
-    File oldDB = new File("jworks_backup.db");
-    File dest = new File("jworks.db");
-    dest.delete();
-    oldDB.renameTo(dest);
+    try {
+      connection.close();
+      File oldDB = new File("jworks_backup.db");
+      File dest = new File("jworks.db");
+      dest.delete();
+      oldDB.renameTo(dest);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
   
   /**
@@ -492,7 +497,7 @@ public class DatabaseTester {
     
     String[] studentAnswers = {studentAnswerOne, studentAnswerTwo, studentAnswerThree};
     
-    int attemptNumber = 1;
+    long attemptTime = 1000;
     
     try {
       boolean instructorExists = DatabaseInserter.insertInstructor(instructorID, nameInstructor,
@@ -532,12 +537,12 @@ public class DatabaseTester {
       // Make sure that the student was inserted into the database.
       assertTrue(studentExists);
       
-      boolean insertedAttempts = DatabaseInserter.insertStudentsAttempt(studentNumber, attemptNumber, problemSetKey, problemIDs, studentAnswers, connection);
+      boolean insertedAttempts = DatabaseInserter.insertStudentsAttempt(studentNumber, problemSetKey, attemptTime, problemIDs, studentAnswers, connection);
       
       // Make sure that the attempt was inserted.
       assertTrue(insertedAttempts);
       
-      ResultSet results = DatabaseSelector.getStudentsResults(studentNumber, problemSetKey, attemptNumber, connection);
+      ResultSet results = DatabaseSelector.getStudentsAttempt(studentNumber, problemSetKey, attemptTime, connection);
       
       // Make sure that the student results retrieved matches what was inserted.
       results.next();

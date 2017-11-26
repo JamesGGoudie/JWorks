@@ -1,6 +1,8 @@
 package gui;
 
 import javafx.scene.Scene;
+import models.Instructor;
+import models.User;
 
 public class LoginManager extends Manager {
   private Scene scene;
@@ -27,6 +29,15 @@ public class LoginManager extends Manager {
   public boolean Login(String user, String password) {
     String[] args = {COMMAND, user, password };
     if (interpreter.executeAction(args)) {
+        // Auth is successful, store user appropriately
+        try {
+          User sessionUser = (User) interpreter.getOutputGenerator().getLastResult();
+          interpreter.setCurrentUser(sessionUser);
+        } catch (ClassCastException e) {
+          // Instructor login case
+          interpreter.setCurrentUser(new Instructor(user, "", "", 1));
+        }
+
 		if (user.matches("[0-9]+")) {
 			showStudentMainScreen(user);
 		} else {

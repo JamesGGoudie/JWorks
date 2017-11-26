@@ -3,11 +3,14 @@ package command;
 import action.AddProblemSetAction;
 import databaseAPI.DatabaseAPI;
 import io.OutputGen;
+import models.ProblemStub;
 import models.SimpleProblemSet;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AddSimpleProblemSetCommand extends Command {
     public AddSimpleProblemSetCommand(DatabaseAPI api, OutputGen outputStream) {
@@ -22,7 +25,9 @@ public class AddSimpleProblemSetCommand extends Command {
      *             The second argument is the String version of the Date representing the end time of the problem set.
      *              The date is formatted using SimpleDateFormat.
      *             The third argument is the number of attempts the problem set has. -1 for unlimited.
-     *             The remaining arguments are problem IDs to add to the problem set.
+     *             The fourth argument is the number of problems to add to the problem set, denoted n.
+     *             The n next arguments are problem IDs to add to the problem set.
+     *             The remaining arguments are the problem set tags.
      * @return whether or not the Problem Set is created
      */
     @Override
@@ -43,6 +48,7 @@ public class AddSimpleProblemSetCommand extends Command {
         }
 
         int maxAttempts = Integer.parseInt(args[2]);
+        int numProblems = Integer.parseInt(args[3]);
 
         // Prepopulate Problem Set information
         problemSet.setStartTime(startDate);
@@ -50,14 +56,25 @@ public class AddSimpleProblemSetCommand extends Command {
         problemSet.setMaxAttempts(maxAttempts);
 
         // Parse problem ID arguments
-        for (int i = 3; i < args.length; i++) {
-            // TODO: Add problems via id
-            // problemSet.addProblem()
+        for (int i = 0; i < numProblems; i++) {
+            // Create question stubs -- only the question ids are needed for the problem sets
+            problemSet.addProblem(new ProblemStub(Integer.parseInt(args[i + 4])));
         }
 
+        // Parse tags
+        List<String> problemSetTags = new ArrayList<>();
+        for (int i = 4 + numProblems; i < args.length; i++) {
+            problemSetTags.add(args[i]);
+        }
+
+        problemSet.addTags(problemSetTags);
+
         AddProblemSetAction action = new AddProblemSetAction();
-        // action.execute(problemSet, databaseAPI);
-        outputStream.output("Problem set created");
-        return true;
+        Object result = action.execute(problemSet, databaseAPI);
+        if (result != null) {
+            outputStream.output("Problem set created");
+        }
+
+        return result != null;
     }
 }

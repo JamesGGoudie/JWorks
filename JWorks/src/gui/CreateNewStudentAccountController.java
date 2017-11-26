@@ -3,9 +3,13 @@ package gui;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 public class CreateNewStudentAccountController {
 	@FXML
@@ -22,6 +26,8 @@ public class CreateNewStudentAccountController {
 	private TextField confirmPassword;
 	@FXML
 	private Button submitButton;
+	@FXML
+	private Button importButton;
 	@FXML
 	private Label firstNameError;
 	@FXML
@@ -53,6 +59,18 @@ public class CreateNewStudentAccountController {
 					createNewStudentAccountManager.createStudentAccount(name, email, passwordInput, studentNumberInput);
 					resetFields();
 				}
+			}
+		});
+
+		importButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Node sceneNode = (Node) event.getTarget();
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Open Students File");
+				File targetFile = fileChooser.showOpenDialog(sceneNode.getScene().getWindow());
+
+				createNewStudentAccountManager.createBulkStudentAccounts(targetFile);
 			}
 		});
 	}
