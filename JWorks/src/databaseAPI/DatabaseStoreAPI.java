@@ -93,8 +93,7 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
     }
     
     /**
-     * Given a list of tags, adds each tag to the given problem and stores this in the database and
-     * the given problem object.
+     * Given a list of tags, stores the given tags for this problem in the database.
      * @param newTags The tags to be associated with the problem.
      * @param problem The problem object to have the tags appended to. Must have it's ID.
      * @return True if all of the tags were added, false otherwise.
@@ -108,18 +107,9 @@ public class DatabaseStoreAPI extends DatabaseInserter implements DatabaseAPI{
         
         
         try {
-            while (result & (currentTag = iterator.next()) != null) {
-                // Only add the tag if the problem does not already have the tag.
-                if (!(problem.getTags().contains(currentTag))) {
-                    result = DatabaseInserter.insertProblemTag(problemID, currentTag, connection);
-
-                    // Only add the tag to the object if the tag was added to the database.
-                    if (result) {
-                        List<String> tag = new ArrayList<String>();
-                        problem.addTags(tag);
-                    }
-                }
-                
+            while (iterator.hasNext()) {
+                currentTag = iterator.next();
+                result = DatabaseInserter.insertProblemTag(problemID, currentTag, connection);
             }
         } catch (DatabaseInsertException e) {
             result = false;
