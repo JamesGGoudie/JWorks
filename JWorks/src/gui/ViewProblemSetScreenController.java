@@ -15,7 +15,7 @@ import models.ProblemSet;
 
 import java.text.SimpleDateFormat;
 
-public class ViewProblemSetScreenController extends Controller {
+public class ViewProblemSetScreenController extends WrappableViewController<ProblemSet> {
     @FXML
     private TableView<ProblemSet> problemSetTable;
 
@@ -60,6 +60,10 @@ public class ViewProblemSetScreenController extends Controller {
     @Override
     public void initialize() {
         super.initialize();
+
+        // Wrap columns
+        wrapColumnCells(releaseDateColumn);
+        wrapColumnCells(dueDateColumn);
 
         // Direct property mapping
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -130,5 +134,21 @@ public class ViewProblemSetScreenController extends Controller {
         // Set the button state dependent on user permissions
         viewProblemsButton.setVisible(!manager.isUserStudent());
         attemptProblemsButton.setVisible(manager.isUserStudent());
+
+        // Setup tag filters
+        clearButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                searchField.clear();
+                problemSetTable.getItems().setAll(manager.getVisibleProblemSets());
+            }
+        });
+
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                problemSetTable.getItems().setAll(manager.getVisibleProblemSets(searchField.getText()));
+            }
+        });
     }
 }

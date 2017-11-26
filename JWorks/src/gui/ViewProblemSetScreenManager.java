@@ -46,6 +46,24 @@ public class ViewProblemSetScreenManager extends Manager {
     }
 
     /**
+     * Returns a filtered list of problem sets that match the given tag string.
+     * @param tagString a space separated list of search terms
+     * @return a filtered list of problem sets that match the tag string
+     */
+    public List<ProblemSet> getVisibleProblemSets(String tagString) {
+        List<ProblemSet> unfilteredProblemSets = getVisibleProblemSets();
+        List<ProblemSet> filteredProblemSets = new ArrayList<>();
+
+        for (ProblemSet problemSet : unfilteredProblemSets) {
+            if (problemSet.matchesSearchString(tagString)) {
+                filteredProblemSets.add(problemSet);
+            }
+        }
+
+        return filteredProblemSets;
+    }
+
+    /**
      * Retrieves the maximum score for the user on the given problem set. -1 if it was not attempted.
      * @param problemSet the problem set to get the user's best score for
      * @return the best score of the user on the given Problem Set. -1 if it was not attempted.

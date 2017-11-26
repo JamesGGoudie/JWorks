@@ -4,20 +4,22 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane fx:id="innerScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-fx:controller="gui.ViewProblemSetScreenController">
+<AnchorPane fx:id="innerScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewProblemSetScreenController">
    <children>
-      <TableView fx:id="problemSetTable" layoutX="14.0" layoutY="14.0" prefHeight="660.0" prefWidth="593.0">
+      <TableView fx:id="problemSetTable" layoutX="14.0" layoutY="60.0" prefHeight="614.0" prefWidth="754.0">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="47.0" text="ID" />
-          <TableColumn fx:id="numQuestionsColumn" prefWidth="111.0" text="# of Questions" />
-            <TableColumn fx:id="releaseDateColumn" minWidth="186.0" prefWidth="186.0" text="Release Date" />
+          <TableColumn fx:id="numQuestionsColumn" prefWidth="116.0" text="# of Questions" />
+            <TableColumn fx:id="releaseDateColumn" minWidth="181.0" prefWidth="181.0" text="Release Date" />
             <TableColumn fx:id="dueDateColumn" minWidth="146.0" prefWidth="146.0" text="Due Date" />
-            <TableColumn fx:id="bestAttemptColumn" minWidth="88.0" prefWidth="102.0" text="Best Attempt" />
+            <TableColumn fx:id="bestAttemptColumn" minWidth="88.0" prefWidth="112.0" text="Best Attempt" />
+            <TableColumn fx:id="tagsColumn" prefWidth="151.0" text="Tags" />
         </columns>
       </TableView>
-      <Button fx:id="viewProblemsButton" layoutX="628.0" layoutY="329.0" mnemonicParsing="false" text="View Questions" />
-      <Button fx:id="attemptProblemsButton" layoutX="619.0" layoutY="329.0" mnemonicParsing="false" text="Attempt Problems" />
+      <Button fx:id="viewProblemsButton" layoutX="628.0" layoutY="14.0" mnemonicParsing="false" text="View Questions" />
+      <Button fx:id="attemptProblemsButton" layoutX="619.0" layoutY="14.0" mnemonicParsing="false" text="Attempt Problems" />
+      <TextField fx:id="searchField" layoutX="14.0" layoutY="14.0" promptText="Search problem sets" />
+      <Button fx:id="searchButton" layoutX="217.0" layoutY="14.0" mnemonicParsing="false" text="Search" />
+      <Button fx:id="clearButton" layoutX="291.0" layoutY="14.0" mnemonicParsing="false" text="Clear" />
    </children>
 </AnchorPane>
