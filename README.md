@@ -103,7 +103,7 @@ Where Question is a string wrapped by double quotes, and answer is a string with
 
 
 #### Using the GUI Version:
-To login as an instructor, enter any non-empty username that does not consist of solely digits, along with a non-empty password and press the Login button.
+To login as an instructor, use the username "admin" and the password "admin", and press the Login button.
 On the main screen, a user click the appropriate navigation buttons to:
 
 - Add a new question (with tags, and the ability to bulk import from a file)
