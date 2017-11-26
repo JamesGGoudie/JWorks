@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -19,5 +20,16 @@
       <Label fx:id="answerError" layoutX="162.0" layoutY="363.0" text=" " textFill="RED" />
       <TextField fx:id="tagField" layoutX="162.0" layoutY="279.0" prefHeight="31.0" prefWidth="457.0" />
       <Label layoutX="162.0" layoutY="258.0" text="Enter a list of tags (separated by spaces) (optional)" />
+      <Pane layoutX="463.0" layoutY="476.0" prefHeight="200.0" prefWidth="284.0">
+         <children>
+            <Button fx:id="importButton" layoutX="95.0" layoutY="155.0" mnemonicParsing="false" text="Bulk Import" />
+            <Label layoutX="4.0" layoutY="40.0" prefHeight="42.0" prefWidth="273.0" text="Alternatively, upload a list of problems with one problem record on each line:" wrapText="true" />
+            <Label layoutX="7.0" layoutY="100.0" prefHeight="21.0" prefWidth="273.0" text="question|answer|tags separated by spaces">
+               <font>
+                  <Font name="System Italic" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </Pane>
