@@ -65,6 +65,7 @@ public class ViewProblemSetStatisticsScreenManager extends Manager {
         for (Student student : studentSet) {
             ViewProblemSetStatisticsRow row = new ViewProblemSetStatisticsRow(student, problemSet);
             row.addAttempts(filteredAttempts);
+            rows.add(row);
         }
 
         return rows;
