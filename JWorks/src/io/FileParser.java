@@ -6,7 +6,7 @@ import java.util.List;
 
 public class FileParser {
 
-    private static final char DELIMITER = '|';
+    private static final String DELIMITER = "\\|";
 
     /**
      * Generates a list of interpreter commands from the given file. Uses the default delimiter.
@@ -25,7 +25,7 @@ public class FileParser {
      * @param delimiter the delimiter to split each line of the file into tokens
      * @return a list of String arrays that are valid input into the interpreter
      */
-    public static List<String[]> generateArgStringFromFile(File file, String command, char delimiter) throws IOException {
+    public static List<String[]> generateArgStringFromFile(File file, String command, String delimiter) throws IOException {
         List<String[]> argsList = new ArrayList<>();
 
         // Setup input streams
@@ -36,7 +36,7 @@ public class FileParser {
         String currentLine;
 
         while((currentLine = bufferedReader.readLine()) != null) {
-            String[] rawArgs = currentLine.split(String.valueOf(delimiter));
+            String[] rawArgs = currentLine.split(delimiter);
             String[] args = new String[rawArgs.length + 1];
 
             // Add command argument and copy remaining
