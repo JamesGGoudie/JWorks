@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public abstract class ProblemSet extends DatabaseObject {
+public abstract class ProblemSet extends DatabaseObject implements Taggable {
 
     protected int maxAttempts;
     protected Date startTime;

@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 /**
  * Represents a base problem with a question and answer
  */
-public abstract class Problem extends DatabaseObject {
+public abstract class Problem extends DatabaseObject implements Taggable {
 
     // Properties
     protected final SimpleStringProperty problemProperty = new SimpleStringProperty("");
