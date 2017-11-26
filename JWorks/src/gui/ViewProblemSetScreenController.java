@@ -41,6 +41,9 @@ public class ViewProblemSetScreenController extends WrappableViewController<Prob
     private Button attemptProblemsButton;
 
     @FXML
+    private Button viewStatsButton;
+
+    @FXML
     private Pane innerScreen;
 
     private ViewProblemSetScreenManager manager = new ViewProblemSetScreenManager();
@@ -131,9 +134,22 @@ public class ViewProblemSetScreenController extends WrappableViewController<Prob
             }
         });
 
+        viewStatsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Navigate to statistics screen for the given problem set
+                ProblemSet activeProblemSet = problemSetTable.getSelectionModel().getSelectedItem();
+                if (activeProblemSet != null) {
+                    ViewProblemSetStatisticsScreenManager statsViewManager = new ViewProblemSetStatisticsScreenManager(activeProblemSet);
+                    statsViewManager.showScreen(innerScreen);
+                }
+            }
+        });
+
         // Set the button state dependent on user permissions
         viewProblemsButton.setVisible(!manager.isUserStudent());
         attemptProblemsButton.setVisible(manager.isUserStudent());
+        viewStatsButton.setVisible(!manager.isUserStudent());
 
         // Setup tag filters
         clearButton.setOnAction(new EventHandler<ActionEvent>() {

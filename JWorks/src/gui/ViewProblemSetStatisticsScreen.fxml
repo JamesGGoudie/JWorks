@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="gui.ViewProblemSetStatisticsScreenController">
+   <children>
+      <TableView fx:id="statisticsTable" layoutX="14.0" layoutY="121.0" prefHeight="555.0" prefWidth="755.0">
+        <columns>
+          <TableColumn fx:id="studentNumberColumn" prefWidth="220.0" text="Student Number" />
+            <TableColumn fx:id="problemSetColumn" prefWidth="206.0" text="Problem Set Number" />
+            <TableColumn fx:id="numAttemptsColumn" prefWidth="182.0" text="Number of Attempts" />
+          <TableColumn fx:id="bestScoreColumn" minWidth="0.0" prefWidth="146.0" text="Best Score" />
+        </columns>
+      </TableView>
+      <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" text="Statistics for Problem Set 1">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="429.0" layoutY="20.0" text="# Students Participated:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="409.0" layoutY="53.0" text="Average of Best Attempts:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="368.0" layoutY="87.0" text="Average Attempts per Student:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="participationLabel" layoutX="679.0" layoutY="23.0" text="Label" />
+      <Label fx:id="bestAttemptLabel" layoutX="679.0" layoutY="56.0" text="Label" />
+      <Label fx:id="numAttemptsLabel" layoutX="679.0" layoutY="90.0" text="Label" />
+   </children>
+</Pane>
