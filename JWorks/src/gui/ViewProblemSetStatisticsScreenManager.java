@@ -5,10 +5,7 @@ import models.ProblemSet;
 import models.ProblemSetAttempt;
 import models.Student;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class ViewProblemSetStatisticsScreenManager extends Manager {
 
@@ -47,7 +44,8 @@ public class ViewProblemSetStatisticsScreenManager extends Manager {
         }
 
         // Create set to keep track of students that participated
-        HashSet<Student> studentSet = new HashSet<>();
+        HashSet<Integer> studentSet = new HashSet<>();
+        HashMap<Integer, Student> studentNumToStudent = new HashMap<>();
 
         // Filter by problem set
         List<ProblemSetAttempt> filteredAttempts = new ArrayList<>();
@@ -55,15 +53,16 @@ public class ViewProblemSetStatisticsScreenManager extends Manager {
         for (ProblemSetAttempt attempt : attempts) {
             if (attempt.getProblemSet().equals(problemSet)) {
                 filteredAttempts.add(attempt);
-                studentSet.add(attempt.getStudent());
+                studentSet.add(attempt.getStudent().getStudentNumber());
+                studentNumToStudent.put(attempt.getStudent().getStudentNumber(), attempt.getStudent());
             }
         }
 
         // Create rows from the student set
         List<ViewProblemSetStatisticsRow> rows = new ArrayList<>();
 
-        for (Student student : studentSet) {
-            ViewProblemSetStatisticsRow row = new ViewProblemSetStatisticsRow(student, problemSet);
+        for (Integer studentNum : studentSet) {
+            ViewProblemSetStatisticsRow row = new ViewProblemSetStatisticsRow(studentNumToStudent.get(studentNum), problemSet);
             row.addAttempts(filteredAttempts);
             rows.add(row);
         }
