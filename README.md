@@ -106,16 +106,16 @@ Where Question is a string wrapped by double quotes, and answer is a string with
 To login as an instructor, enter any non-empty username that does not consist of solely digits, along with a non-empty password and press the Login button.
 On the main screen, a user click the appropriate navigation buttons to:
 
-- Add a new question
-- View all saved questionse
+- Add a new question (with tags)
+- View all saved questions (with the ability to search by tags)
 - Create a new student account
-- Add a new problem set
-- View all problem sets
+- Add a new problem set (with tags)
+- View all problem sets (with the ability to search by tags)
 - Logout
 
 A student logs in with their student number and password as created by an instructor.
 
-A student can view all available problem sets, and attempt them by selecting them and pressing "Attempt Problems"
+A student can view all available problem sets, and attempt them by selecting them and pressing "Attempt Problems". They can search the list of available problem sets by the number or the tags.
 
 ## JWorks/test:              
     
