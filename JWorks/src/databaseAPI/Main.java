@@ -15,10 +15,10 @@ public class Main {
     public static void main(String[] args) {
         File db = new File("jworks.db");
         db.delete();
-
+        
         int creatorID = 2008;
         int maxAttempts = 5;
-
+        
         Connection connection = DatabaseDriverAPI.connectOrCreateDataBase();
         DatabaseDriverAPI.initialize(connection);
 
@@ -56,11 +56,11 @@ public class Main {
             printUser(si);
             printUser(ss);
             ArrayList<ProblemSet> derp = new ArrayList<ProblemSet>();
-
+            
             List<ProblemSet> allProblemSets = select.actOnDatabase(derp);
-
+            
             for (ProblemSet problemSet : allProblemSets) {
-                printpSet(problemSet);
+              printpSet(problemSet);
             }
         }
         catch (Exception e){
@@ -70,7 +70,7 @@ public class Main {
         String[] out = {"1", "2", "3"};
         //select.actOnDatabase(1, out);
         //select.actOnDatabase(2, out);
-        //select.actOnDatabase(3, out);
+      //select.actOnDatabase(3, out);
     }
 
     static void printDBObject(DatabaseObject obj){

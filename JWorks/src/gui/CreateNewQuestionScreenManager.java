@@ -12,8 +12,8 @@ public class CreateNewQuestionScreenManager extends Manager {
 	 * @param inputValues
 	 *            The parameters for the action
 	 */
-	public void createNewQuestion(String question, String answer) {
-		inputValues = new String[] { COMMAND, question, answer };
+	public void createNewQuestion(String question, String answer, String tagString) {
+		inputValues = new String[] { COMMAND, question, answer, tagString };
 		// execute the action in interpreter
 		interpreter.executeAction(inputValues);
 	}

@@ -1,5 +1,9 @@
 package models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +31,23 @@ public class ProblemSetAttempt extends DatabaseObject {
         this.timeAttempted = Date.from(Instant.now());
 
         this.answers = new ArrayList<>(problemSet.getQuestions().size());
+        // Fill answers with blanks
+        for (int i = 0; i < problemSet.getQuestions().size(); i++) {
+            answers.add("");
+        }
+    }
+    
+    /**
+     * Creates a new ProblemSetAttempt object, given a student, problem set, and attempt time. This
+     * constructor assumes that the attempt was made some time ago, and we need to reinstantiate
+     * the attempt object.
+     * @param student The student who completed the problem set.
+     * @param problemSet The problem set which was completed.
+     * @param attemptTime The time the problem set was attempted.
+     */
+    public ProblemSetAttempt(Student student, ProblemSet problemSet, Date attemptTime) {
+        this(student, problemSet);
+        this.timeAttempted = attemptTime;
     }
 
     /**
@@ -80,5 +101,44 @@ public class ProblemSetAttempt extends DatabaseObject {
 
     public List<String> getAnswers() {
         return answers;
+    }
+
+    /**
+     * Serializes this problem set and returns a string representation.
+     * @return the string representation of the serialized object. Empty string if failed.
+     */
+    public String serialize() {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(ProblemSet.class, new AbstractModelAdapter<ProblemSet>())
+                .registerTypeAdapter(Problem.class, new AbstractModelAdapter<Problem>())
+                .create();
+        return gson.toJson(this);
+    }
+
+    /**
+     * Deserializes the given problem set attempt object.
+     * @param serial the string representation of the problem set attempt to convert to an object
+     * @return the deserialized problem set attempt object
+     */
+    public static ProblemSetAttempt deserialize(String serial) {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(ProblemSet.class, new AbstractModelAdapter<ProblemSet>())
+                .registerTypeAdapter(Problem.class, new AbstractModelAdapter<Problem>())
+                .create();
+        return gson.fromJson(serial, ProblemSetAttempt.class);
+    }
+
+    public void setAnswerByProblemId(int problemId, String answer) {
+        setAnswer(findProblemIndex(problemId), answer);
+    }
+
+    private int findProblemIndex(int problemId) {
+        for (int i = 0; i < problemSet.getQuestions().size(); i++) {
+            if (problemSet.getQuestions().get(i).getId() == problemId) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }

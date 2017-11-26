@@ -23,10 +23,9 @@ public class AddProblemSetAction extends Action {
 
         try {
             api.actOnDatabase(problemSet);
-        } catch (DatabaseInsertException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            api.actOnDatabase(problemSet.getTags(), problemSet);
+        } catch (DatabaseInsertException | SQLException e) {
+            return null;
         }
 
         return problemSet;

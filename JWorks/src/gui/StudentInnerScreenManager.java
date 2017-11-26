@@ -1,6 +1,8 @@
 package gui;
 
 import javafx.scene.layout.Pane;
+import models.ProblemSet;
+import models.Student;
 
 public class StudentInnerScreenManager extends Manager{
   private StudentInnerScreenController controller;
@@ -16,5 +18,10 @@ public class StudentInnerScreenManager extends Manager{
     // Load the controller and start the controller
     controller = loader.<StudentInnerScreenController>getController();
     controller.start(this);
+  }
+
+  public void viewProblemSets(Pane innerPane) {
+    ViewProblemSetScreenManager manager = new ViewProblemSetScreenManager();
+    manager.showScreen(innerPane);
   }
 }

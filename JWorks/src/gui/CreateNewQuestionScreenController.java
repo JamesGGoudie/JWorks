@@ -15,6 +15,8 @@ public class CreateNewQuestionScreenController extends Controller {
 	@FXML
 	private TextField answerInput;
 	@FXML
+	private TextField tagField;
+	@FXML
 	private Label questionError;
 	@FXML
 	private Label answerError;
@@ -42,13 +44,15 @@ public class CreateNewQuestionScreenController extends Controller {
 
 				} else {
 					// Create the new question
-					createNewQuestionScreenManager.createNewQuestion(questionInput.getText(), answerInput.getText());
+					createNewQuestionScreenManager.createNewQuestion(questionInput.getText(), answerInput.getText(),
+							tagField.getText());
 
 					// reset the all text fields
 					questionInput.setText("");
 					answerInput.setText("");
 					questionError.setText("");
 					answerError.setText("");
+					tagField.clear();
 				}
 			}
 		});

@@ -52,4 +52,48 @@ public class SimpleProblemSet extends ProblemSet {
     public void addProblem(Problem problem) {
         problems.add(problem);
     }
+
+    /**
+     * Equality comparison.
+     * @param other the other object to compare to
+     * @return true iff the problem sets are equal
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof ProblemSet)) {
+            return false;
+        }
+
+        ProblemSet otherPs = (ProblemSet) other;
+
+        // Must have same creator, dates, and attempts
+        final boolean sameCreator = this.creatorID == otherPs.creatorID;
+        final boolean sameAttempts = this.maxAttempts == otherPs.maxAttempts;
+        final boolean sameDates = this.startTime.equals(otherPs.startTime) &&
+                this.endTime.equals(otherPs.endTime);
+
+        if (!(sameCreator && sameAttempts && sameDates)) {
+            return false;
+        }
+
+        // Iterate through all problems and answers
+        List<Problem> otherProblems = otherPs.getQuestions();
+        List<Problem> theseProblems = this.getQuestions();
+
+        if (otherProblems.size() != theseProblems.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < theseProblems.size(); i++) {
+            Problem p1 = theseProblems.get(i);
+            Problem p2 = otherProblems.get(i);
+
+            if (!(p1.getProblem().equals(p2.getProblem()))
+                    && p1.getAnswer().equals(p2.getAnswer())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

@@ -9,12 +9,16 @@ import java.util.Properties;
 import exceptions.ConnectionFailedException;
 
 public class DatabaseDriver {
+
+  protected static Connection connection = null;
   /**
    * If the database exists, will connect to it. Otherwise, will create the database.
    * @return The connection to the SQLite database.
    */
   protected static Connection connectOrCreateDatabase() {
-    Connection connection = null;
+    if (connection != null) {
+      return connection;
+    }
     
     Properties properties = new Properties();
     properties.setProperty("PRAGMA foreign_keys", "ON");
@@ -119,12 +123,24 @@ public class DatabaseDriver {
       sql = "CREATE TABLE IF NOT EXISTS PREVIOUSATTEMPTS "
           + "(STUDENTNUMBER INTEGER NOT NULL,"
           + "PROBLEMSET INTEGER NOT NULL,"
-          + "ATTEMPTNUMBER INTEGER NOT NULL,"
+          + "TIME INTEGER NOT NULL,"
           + "PROBLEM INTEGER NOT NULL,"
           + "STUDENTANSWER TEXT NOT NULL,"
           + "FOREIGN KEY(STUDENTNUMBER) REFERENCES STUDENTS(STUDENTNUMBER)"
           + "FOREIGN KEY(PROBLEMSET) REFERENCES PROBLEMSETS(ID)"
           + "FOREIGN KEY(PROBLEM) REFERENCES PROBLEMS(ID))";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS PROBLEMTAGS "
+          + "(PROBLEM INTEGER NOT NULL,"
+          + "TAG TEXT NOT NULL,"
+          + "FOREIGN KEY(PROBLEM) REFERENCES PROBLEMS(ID))";
+      statement.executeUpdate(sql);
+      
+      sql = "CREATE TABLE IF NOT EXISTS PROBLEMSETTAGS "
+          + "(PROBLEMSET INTEGER NOT NULL,"
+          + "TAG TEXT NOT NULL,"
+          + "FOREIGN KEY(PROBLEMSET) REFERENCES PROBLEMSETS(ID))";
       statement.executeUpdate(sql);
       
       statement.close();
