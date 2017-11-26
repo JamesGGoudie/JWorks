@@ -8,9 +8,10 @@
    <children>
       <TableView fx:id="questionTable" layoutX="14.0" layoutY="65.0" prefHeight="612.0" prefWidth="755.0">
         <columns>
-          <TableColumn fx:id="idColumn" prefWidth="75.0" resizable="false" text="ID" />
-          <TableColumn fx:id="questionColumn" prefWidth="512.0" text="Question" />
-            <TableColumn fx:id="answerColumn" minWidth="0.0" prefWidth="167.0" resizable="false" text="Answer" />
+          <TableColumn fx:id="idColumn" prefWidth="55.0" resizable="false" text="ID" />
+          <TableColumn fx:id="questionColumn" prefWidth="384.0" text="Question" />
+            <TableColumn fx:id="answerColumn" minWidth="0.0" prefWidth="147.0" resizable="false" text="Answer" />
+            <TableColumn fx:id="tagsColumn" prefWidth="168.0" text="Tags" />
         </columns>
       </TableView>
       <TextField fx:id="filterField" layoutX="14.0" layoutY="20.0" promptText="Search" />
