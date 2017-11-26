@@ -23,6 +23,7 @@ public class AddProblemSetAction extends Action {
 
         try {
             api.actOnDatabase(problemSet);
+            api.actOnDatabase(problemSet.getTags(), problemSet);
         } catch (DatabaseInsertException | SQLException e) {
             return null;
         }
