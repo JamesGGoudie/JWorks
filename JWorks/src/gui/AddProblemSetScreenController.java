@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,9 @@ public class AddProblemSetScreenController extends Controller {
 
     @FXML
     private TableColumn<Problem, Integer> problemListColumn;
+
+    @FXML
+    private TextField tagsField;
 
     @FXML
     private DatePicker releaseDateField;
@@ -165,6 +169,13 @@ public class AddProblemSetScreenController extends Controller {
         problemSet.setEndTime(endDate);
         problemSet.setMaxAttempts(maxAttempts);
 
+        // Add tags
+        String[] tags = tagsField.getText().split(" ");
+
+        if (tags.length > 0 && !tags[0].isEmpty()) {
+            problemSet.addTags(Arrays.asList(tags));
+        }
+
         manager.addProblemSet(problemSet);
         clearFields();
     }
@@ -176,6 +187,7 @@ public class AddProblemSetScreenController extends Controller {
         problemList.clear();
         updateTableList();
         maxAttemptsField.clear();
+        tagsField.clear();
         releaseDateField.setValue(null);
         dueDateField.setValue(null);
         errorLabel.setText("");

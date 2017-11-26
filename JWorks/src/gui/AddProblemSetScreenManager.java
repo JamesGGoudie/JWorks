@@ -31,10 +31,13 @@ public class AddProblemSetScreenManager extends Manager {
         argList.add(dateFormat.format(problemSet.getStartTime()));
         argList.add(dateFormat.format(problemSet.getEndTime()));
         argList.add(String.valueOf(problemSet.getMaxAttempts()));
+        argList.add(String.valueOf(problemSet.getQuestions().size()));
 
         for (Problem p : problemSet.getQuestions()) {
             argList.add(String.valueOf(p.getId()));
         }
+
+        argList.addAll(problemSet.getTags());
 
         interpreter.executeAction(argList.toArray(new String[argList.size()]));
     }

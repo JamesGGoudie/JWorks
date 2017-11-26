@@ -35,6 +35,8 @@
                 <TextField fx:id="maxAttemptsField" layoutX="22.0" layoutY="436.0" prefHeight="31.0" prefWidth="220.0" />
                 <Label layoutX="22.0" layoutY="415.0" text="Maximum Attempts" />
             <Label layoutX="22.0" layoutY="476.0" prefHeight="119.0" prefWidth="220.0" text="Double click on Problems in the left view to add them to the Problem Set. Double click on the Problem in the right pane to remove it." wrapText="true" />
+            <TextField fx:id="tagsField" layoutX="22.0" layoutY="252.0" prefHeight="31.0" prefWidth="220.0" />
+            <Label layoutX="23.0" layoutY="231.0" text="Tags (space-separated) (optional)" />
             </children></AnchorPane>
     </items>
 </SplitPane>
