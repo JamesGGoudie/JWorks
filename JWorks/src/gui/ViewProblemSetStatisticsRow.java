@@ -28,7 +28,7 @@ public class ViewProblemSetStatisticsRow {
 
     /**
      * Returns the best score out of all the attempts stored in this row.
-     * @return the best score out of all the attempts stored in this row.
+     * @return the best score out of all the attempts stored in this row as a percentage
      */
     public int getBestScore() {
         int max = 0;
@@ -38,7 +38,7 @@ public class ViewProblemSetStatisticsRow {
             }
         }
 
-        return max;
+        return 100 * max / problemSet.getQuestions().size();
     }
 
     /**

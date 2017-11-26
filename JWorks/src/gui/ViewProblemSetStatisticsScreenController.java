@@ -17,7 +17,7 @@ public class ViewProblemSetStatisticsScreenController extends Controller {
     @FXML
     private TableColumn<ViewProblemSetStatisticsRow, Integer> numAttemptsColumn;
     @FXML
-    private TableColumn<ViewProblemSetStatisticsRow, Integer> bestScoreColumn;
+    private TableColumn<ViewProblemSetStatisticsRow, String> bestScoreColumn;
     @FXML
     private Label titleLabel;
     @FXML
@@ -38,8 +38,8 @@ public class ViewProblemSetStatisticsScreenController extends Controller {
         // Set static labels
         titleLabel.setText("Statistics for Problem Set " + String.valueOf(manager.getProblemSet().getId()));
         participationLabel.setText(String.valueOf(getNumberOfStudentsParticipated()));
-        bestAttemptLabel.setText(String.valueOf(getBestAttemptAverage()));
-        numAttemptsLabel.setText(String.valueOf(getAverageAttemptsPerStudent()));
+        bestAttemptLabel.setText(String.format("%1$,.2f%%", getBestAttemptAverage()));
+        numAttemptsLabel.setText(String.format("%1$,.2f", getAverageAttemptsPerStudent()));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ViewProblemSetStatisticsScreenController extends Controller {
         numAttemptsColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()
                 .getNumberOfAttempts()));
         bestScoreColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()
-                .getBestScore()));
+                .getBestScore() + "%"));
     }
 
     /**
