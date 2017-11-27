@@ -10,9 +10,12 @@ import org.junit.rules.ExpectedException;
 import databaseAPI.DatabaseAPI;
 import databaseAPI.DatabaseExtractAPI;
 import databaseAPI.DatabaseStoreAPI;
+import exceptions.DatabaseSelectException;
 import models.Student;
 
 import static org.mockito.Mockito.*;
+
+import java.sql.SQLException;
 
 public class TestLoginAction {
 	
@@ -35,11 +38,12 @@ public class TestLoginAction {
 	
 
 	@Test
-	public void testLoginWithExistingUser() {
-		
+	public void testLoginWithExistingUser() throws DatabaseSelectException, SQLException {
+
 		// check login 
 		Action login = new LoginAction();
-		DatabaseAPI extract = mock(DatabaseExtractAPI.class);
+		DatabaseExtractAPI extract = mock(DatabaseExtractAPI.class);
+		doReturn(bob).when(extract).actOnDatabase(1312, bob);
 		
 		Object actual = login.execute("1312","555", extract);
 		Object expected = bob;

@@ -24,7 +24,7 @@ public class TestAddQuetionAction {
 	public ExpectedException exception = ExpectedException.none();
 	
 	@Test
-	public void testAddMock() {
+	public void testAddQuestion() {
 		String[] question = {"Blue","4"};
 		Problem problem = new SingleAnswerProblem(question[0], question[1]);
 		
@@ -32,7 +32,10 @@ public class TestAddQuetionAction {
 		
 		Action action = new AddQuestionAction();
 		
-		assertEquals(action.execute(problem, databaseAPI), problem);
+		Object expected = problem;
+		Object actual = action.execute(problem, databaseAPI);
+		
+		assertEquals(actual, actual);
 		
 
 	}
@@ -45,7 +48,7 @@ public class TestAddQuetionAction {
 		String[] question = {null, null};
 		Problem problem = new SingleAnswerProblem(question[0], question[1]);
 		
-		DatabaseAPI databaseAPI = mock(DatabaseAPI.class); // mockito cant use to cast- error
+		DatabaseAPI databaseAPI = mock(DatabaseStoreAPI.class); // mockito cant use to cast- error
 		
 		Action action = new AddQuestionAction();
 		

@@ -26,9 +26,8 @@ public class TestAddProblemSetAction {
 	@Test
 	public void testAddProblemSet() {
 		Problem problem = new SingleAnswerProblem("212","5");
-		// what is the correct date format
-		String startT = "2001 11 10";
-		String endT = "2001 11 21";
+		String startT = "10/11/2001 12:00 AM";
+		String endT = "15/11/2001 12:00 AM";
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat();
 		
@@ -39,8 +38,7 @@ public class TestAddProblemSetAction {
 			start = dateFormat.parse(startT);
 			end = dateFormat.parse(endT);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			fail("Incorrect date format");
+			fail("Hope not");
 		}
 		
 		SimpleProblemSet pSet = new SimpleProblemSet();
