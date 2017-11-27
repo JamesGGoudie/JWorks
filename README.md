@@ -67,6 +67,8 @@ Oracle JDK 8 must be installed, OpenJDK is not supported.
 * [How to install Oracle JDK 8 in OS X?](https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html)
 * [How to install Oracle JDK 8 in Windows?](https://docs.oracle.com/javase/8/docs/technotes/guides/install/windows_jdk_install.html)
 
+To use the GUI version properly, a screen resolution of at least 780p is required.
+
 #### Setup
 Clone this repository from Github.
 * Type the following git command in the command line:
