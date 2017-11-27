@@ -39,11 +39,24 @@
     The various JAR files that we may need for the project.
 
     * sqlite-jdbc-3.18.0.jar: SQLite, an easy to use SQL-esque package for java.
+	* gson-2.8.2.jar: A json serialization library for java
+	* mockito-all-1.10.19.jar: A library for mocking objects for testing
 
 ## JWorks/src:              
     
     This is the Java application that the team is building, it contains the code for the entire 
-    application. This application is a still in progress and in its early stages.
+    application.
+
+### End-User Instructions:
+Oracle JRE 8 is required for the application to run.
+* Oracle JRE 8 installer can be found [here](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) 
+* [How to install Oracle JRE 8 in Linux?](https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jre.html)
+* [How to install Oracle JRE 8 in OS X?](https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jre.html)
+* [How to install Oracle JRE 8 in Windows?](https://docs.oracle.com/javase/8/docs/technotes/guides/install/windows_jre_install.html)
+
+1. Download the compiled JWorks.jar from the [downloads section of the latest release](https://github.com/CSCC01F17/L01_02/releases/latest).
+2. Double click the file to open JWorks.
+3. Log in using the default instructor credentials (username: admin password: admin).
     
 ### Build Instructions: 
 
@@ -103,14 +116,14 @@ Where Question is a string wrapped by double quotes, and answer is a string with
 
 
 #### Using the GUI Version:
-To login as an instructor, enter any non-empty username that does not consist of solely digits, along with a non-empty password and press the Login button.
+To login as an instructor, use the username "admin" and the password "admin", and press the Login button.
 On the main screen, a user click the appropriate navigation buttons to:
 
-- Add a new question (with tags)
+- Add a new question (with tags, and the ability to bulk import from a file)
 - View all saved questions (with the ability to search by tags)
 - Create a new student account
-- Add a new problem set (with tags)
-- View all problem sets (with the ability to search by tags)
+- Add a new problem set (with tags, and the ability to bulk import from a file)
+- View all problem sets (with the ability to search by tags, and view statistics for each problem set)
 - Logout
 
 A student logs in with their student number and password as created by an instructor.

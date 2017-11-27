@@ -22,6 +22,7 @@ public class JWorksGUI extends Application {
     this.stage = arg0;
     stage.setTitle("JWorks");
     stage.setScene(scene);
+    stage.setResizable(false);
     stage.show();
   }
 

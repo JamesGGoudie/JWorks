@@ -18,7 +18,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
     public void actOnDatabase(){
         connection = DatabaseDriverAPI.connectOrCreateDataBase();
     }
-    
+
     /**
      * assigns values to problem with the corresponding problem key
      * @param pKey primary key to identify the problem in database
@@ -139,7 +139,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
         emptyStudent.setPassword(studentArray[3]);
         return emptyStudent;
     }
-    
+
     /**
      * Gets all of the problems from the database and appends them to the given list. The list
      * given will first be cleared of any problems already present.
@@ -152,9 +152,9 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             SQLException {
         this.actOnDatabase();
         ResultSet problemsRaw = DatabaseSelector.getAllProblems(this.connection);
-        
+
         allProblems.clear();
-        
+
         // If the databaseSelector failed, then we do not want to continue.
         if (problemsRaw == null) {
             String errorMessage = "Got a null object instead of a resultSet when trying to get";
@@ -177,7 +177,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                     case (1):
                         // Instantiate the problem with data from the result set.
                         SingleAnswerProblem problem = new SingleAnswerProblem(question,
-                            answer);
+                                answer);
                         problem.setId(id);
                         problem.setCreatorID(creatorID);
                         problem.addTags(this.getProblemTags(id));
@@ -189,11 +189,11 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                         break;
                 }
             }
-            
+
             // Close the result set to allow for modification of the data.
             problemsRaw.close();
         }
-        
+
         return allProblems;
     }
 
@@ -214,10 +214,10 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
       
         this.actOnDatabase();
         ResultSet problemsRaw = DatabaseSelector.getProblemsInProblemSet(problemSetKey,
-            this.connection);
-        
+                this.connection);
+
         ResultSet problemSetRaw = DatabaseSelector.getProblemSet(problemSetKey, this.connection);
-        
+
         // If the databaseSelector failed, then we do not want to continue.
         if (problemsRaw == null) {
             String errorMessage = "Got a null object instead of a resultSet when trying to get";
@@ -229,20 +229,20 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             throw new DatabaseSelectException(errorMessage);
         } else {
             List<Problem> problems = new ArrayList<Problem>();
-            
+
             // For every problem in the problem set.
             while (problemsRaw.next()) {
                 // Get the ID of the problem from the result set.
                 int id = problemsRaw.getInt(1);
-                
+
                 // Get the data for the current problem from the database.
                 ResultSet problemRaw = DatabaseSelector.getSingleProblem(id, this.connection);
-                
+
                 // Make sure that the problem is not null.
                 if (problemRaw == null) {
-                  String errorMessage = "Got a null object instead of a resultSet when trying to";
-                  errorMessage += " get a problem from the database.";
-                  throw new DatabaseSelectException(errorMessage);
+                    String errorMessage = "Got a null object instead of a resultSet when trying to";
+                    errorMessage += " get a problem from the database.";
+                    throw new DatabaseSelectException(errorMessage);
                 } else {
                   
                   int questionType = problemRaw.getInt(2);
@@ -275,9 +275,9 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
                   }
                 }
             }
-            
+
             problemSet = new SimpleProblemSet(problems);
-            
+
             // Get the data from the result set.
             int id = problemSetRaw.getInt(1);
             int maxAttempts = problemSetRaw.getInt(2);
@@ -300,7 +300,7 @@ public class DatabaseExtractAPI extends DatabaseSelector implements DatabaseAPI{
             problemsRaw.close();
             problemSetRaw.close();
         }
-        
+
         return problemSet;
     }
     

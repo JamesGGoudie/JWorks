@@ -24,4 +24,19 @@ public class StudentInnerScreenManager extends Manager{
     ViewProblemSetScreenManager manager = new ViewProblemSetScreenManager();
     manager.showScreen(innerPane);
   }
+
+  public int getNumUncompletedAssignments() {
+    // Re-use existing code from problem set screen
+    ViewProblemSetScreenManager psScreenManager = new ViewProblemSetScreenManager();
+    int numUnattempted = 0;
+
+    // Parse through filtered list and count how many have a max score of -1
+    for (ProblemSet ps : psScreenManager.getVisibleProblemSets()) {
+      if (psScreenManager.getBestScore(ps) == -1) {
+        numUnattempted++;
+      }
+    }
+
+    return numUnattempted;
+  }
 }

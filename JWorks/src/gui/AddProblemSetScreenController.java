@@ -38,9 +38,6 @@ public class AddProblemSetScreenController extends Controller {
     private Button saveProblemSetButton;
 
     @FXML
-    private TextField maxAttemptsField;
-
-    @FXML
     private Label errorLabel;
 
     @FXML
@@ -91,8 +88,7 @@ public class AddProblemSetScreenController extends Controller {
             @Override
             public void handle(ActionEvent event) {
                 // Refuse if any fields are empty
-                if (maxAttemptsField.getText().length() == 0
-                        || releaseDateField.getValue() == null
+                if (releaseDateField.getValue() == null
                         || dueDateField.getValue() == null) {
                     errorLabel.setText("Please ensure all fields are filled in.");
                 } else if (problemList.isEmpty()) {
@@ -137,24 +133,17 @@ public class AddProblemSetScreenController extends Controller {
         errorLabel.setText("");
 
         // Check for valid options
-        String maxAttemptsText = maxAttemptsField.getText();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate;
         Date endDate;
-        int maxAttempts;
+        int maxAttempts = -1;
 
 
         try {
             startDate = dateFormat.parse(releaseDateField.getValue().format(DateTimeFormatter.ISO_LOCAL_DATE));
             endDate = dateFormat.parse(dueDateField.getValue().format(DateTimeFormatter.ISO_LOCAL_DATE));
-            maxAttempts = Integer.parseInt(maxAttemptsText);
         } catch (ParseException e) {
             errorLabel.setText("Please ensure the dates are entered correctly.");
-            return;
-        } catch (NumberFormatException e) {
-            errorLabel.setText("Please ensure the max attempts field is strictly numeric.");
-            maxAttemptsField.clear();
-            maxAttemptsField.requestFocus();
             return;
         }
 
@@ -186,7 +175,6 @@ public class AddProblemSetScreenController extends Controller {
     private void clearFields() {
         problemList.clear();
         updateTableList();
-        maxAttemptsField.clear();
         tagsField.clear();
         releaseDateField.setValue(null);
         dueDateField.setValue(null);

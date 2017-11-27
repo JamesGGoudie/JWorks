@@ -13,14 +13,14 @@
    <children>
       <Pane layoutX="198.0" layoutY="172.0" prefHeight="375.0" prefWidth="385.0">
          <children>
-            <Button fx:id="loginButton" layoutX="169.0" layoutY="245.0" mnemonicParsing="false" text="Login" />
-            <TextField fx:id="username" layoutX="118.0" layoutY="144.0" promptText="Userame" />
-            <PasswordField fx:id="password" layoutX="118.0" layoutY="186.0" promptText="Password" />
             <Text layoutX="116.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JWorks">
                <font>
                   <Font name="System Italic" size="50.0" />
                </font>
             </Text>
+            <TextField fx:id="username" layoutX="118.0" layoutY="144.0" promptText="Userame" />
+            <PasswordField fx:id="password" layoutX="118.0" layoutY="186.0" promptText="Password" />
+            <Button fx:id="loginButton" layoutX="169.0" layoutY="245.0" mnemonicParsing="false" text="Login" defaultButton="true"/>
             <Label fx:id="errorMessage" layoutX="122.0" layoutY="217.0" text="" textFill="RED" />
          </children>
       </Pane>

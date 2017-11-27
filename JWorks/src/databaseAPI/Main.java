@@ -94,8 +94,8 @@ public class Main {
         System.out.println();
         List<Problem> pList = ps.getQuestions();
         for (Problem p: pList
-             ) {printProblem(p);
-             System.out.println("");
+                ) {printProblem(p);
+            System.out.println("");
 
         }
     }
