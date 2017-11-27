@@ -12,7 +12,7 @@
       <Button fx:id="createNewQuestionButton" layoutX="285.0" layoutY="168.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="211.0" text="Create New Question" />
       <Button fx:id="viewQuestionsButton" layoutX="285.0" layoutY="256.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="211.0" text="View Questions" />
       <Button fx:id="addProblemSetButton" layoutX="285.0" layoutY="345.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="211.0" text="Add Problem Set" />
-      <Button fx:id="createStudentAccount" layoutX="284.0" layoutY="432.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="211.0" text="Create New Student Account" />
+      <Button fx:id="createStudentAccount" layoutX="284.0" layoutY="432.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="211.0" text="Create Student Accounts" />
       <Button fx:id="viewProblemSetButton" layoutX="284.0" layoutY="525.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="211.0" text="View Problem Sets" />
       <Label layoutX="14.0" layoutY="14.0" prefHeight="45.0" prefWidth="367.0" text="JWorks Instructor Panel">
          <font>
