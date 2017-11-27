@@ -58,24 +58,6 @@ public class DatabaseTester {
             e.printStackTrace();
         }
     }
-  }
-
-  /**
-   * Reverts the directory back to how it was before by deleting the testing database and renaming
-   * the original back to jworks.db.
-   */
-  @AfterClass
-  public static void revert() {
-    try {
-      connection.close();
-      File oldDB = new File("jworks_backup.db");
-      File dest = new File("jworks.db");
-      dest.delete();
-      oldDB.renameTo(dest);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
   
   /**
    * Tests that we can insert a student into the database and get the exact same information from
@@ -83,28 +65,29 @@ public class DatabaseTester {
    */
   @Test
   public void insertAndRetrieveStudentBasic() {
-    int studentNumber = 1;
-    String name = "Jim";
-    String email = "james.mail";
-    String password = "SECRET";
-    
-    try {
-      boolean actual = DatabaseInserter.insertStudent(studentNumber, name, email, password,
-          connection);
-      
-      // Make sure that the student was inserted into the database.
-      assertTrue(actual);
-      
-      ResultSet results = DatabaseSelector.getStudent(studentNumber, connection);
-      
-      // Make sure that the the data in the student table is correct.
-      assertEquals(name, results.getString(2));
-      assertEquals(email, results.getString(3));
-      assertEquals(password, results.getString(4));
-      
-    } catch (DatabaseInsertException | DatabaseSelectException | SQLException e) {
-      fail();
-    }
+      int studentNumber = 1;
+      String name = "Jim";
+      String email = "james.mail";
+      String password = "SECRET";
+
+      try {
+          boolean actual = DatabaseInserter.insertStudent(studentNumber, name, email, password,
+                  connection);
+
+          // Make sure that the student was inserted into the database.
+          assertTrue(actual);
+
+          ResultSet results = DatabaseSelector.getStudent(studentNumber, connection);
+
+          // Make sure that the the data in the student table is correct.
+          assertEquals(name, results.getString(2));
+          assertEquals(email, results.getString(3));
+          assertEquals(password, results.getString(4));
+
+      } catch (DatabaseInsertException | DatabaseSelectException | SQLException e) {
+          fail();
+      }
+  }
 
     /**
      * Tests that if we attempt to insert a student with an ID that is already present in the
@@ -478,7 +461,6 @@ public class DatabaseTester {
             fail();
         }
     }
-  }
 
   /**
    * Tests that we can store a students attempt to a problem set in the database and retrieving it
@@ -486,96 +468,97 @@ public class DatabaseTester {
    */
   @Test
   public void insertAndRetrievePreviousAttempt() {
-    int questionType = 1;
-    String questionOne = "1 + 1";
-    String answerOne = "2";
-    String questionTwo = "1 + 2";
-    String answerTwo = "3";
-    String questionThree = "2 + 2";
-    String answerThree = "4";
-    
-    int instructorID = 7;
-    String nameInstructor = "Jim";
-    String emailInstructor = "james.mail";
-    String passwordInstructor = "SECRET";
-    
-    int maxAttempts = 5;
-    
-    Date startTime = new Date(1000);
-    Date endTime = new Date(1000000);
-    
-    int studentNumber = 5;
-    String nameStudent = "Jim";
-    String emailStudent = "james.mail";
-    String passwordStudent = "SECRET";
-    
-    String studentAnswerOne = "7";
-    String studentAnswerTwo = "8";
-    String studentAnswerThree = "9";
-    
-    String[] studentAnswers = {studentAnswerOne, studentAnswerTwo, studentAnswerThree};
-    
-    long attemptTime = 1000;
-    
-    try {
-      boolean instructorExists = DatabaseInserter.insertInstructor(instructorID, nameInstructor,
-          emailInstructor, passwordInstructor, connection);
-      
-      assertTrue(instructorExists);
-      
-      int problemIDOne = DatabaseInserter.insertProblem(questionType, questionOne, answerOne,
-          instructorID, connection);
+      int questionType = 1;
+      String questionOne = "1 + 1";
+      String answerOne = "2";
+      String questionTwo = "1 + 2";
+      String answerTwo = "3";
+      String questionThree = "2 + 2";
+      String answerThree = "4";
 
-      // Make sure that the problem was inserted into the database.
-      assertTrue(problemIDOne > 0);
-      
-      int problemIDTwo = DatabaseInserter.insertProblem(questionType, questionTwo, answerTwo,
-          instructorID, connection);
+      int instructorID = 7;
+      String nameInstructor = "Jim";
+      String emailInstructor = "james.mail";
+      String passwordInstructor = "SECRET";
 
-      // Make sure that the problem was inserted into the database.
-      assertTrue(problemIDTwo > 0);
-      
-      int problemIDThree = DatabaseInserter.insertProblem(questionType, questionThree, answerThree,
-          instructorID, connection);
-      
-      // Make sure that the problem was inserted into the database.
-      assertTrue(problemIDThree > 0);
-      
-      int[] problemIDs = {problemIDOne, problemIDTwo, problemIDThree};
-      
-      int problemSetKey = DatabaseInserter.insertProblemSet(maxAttempts, problemIDs, startTime,
-          endTime, instructorID, connection);
-      
-      // Make sure that the problem set was inserted into the database.
-      assertTrue(problemSetKey > 0);
+      int maxAttempts = 5;
 
-      boolean studentExists = DatabaseInserter.insertStudent(studentNumber, nameStudent, emailStudent,
-          passwordStudent, connection);
-      
-      // Make sure that the student was inserted into the database.
-      assertTrue(studentExists);
-      
-      boolean insertedAttempts = DatabaseInserter.insertStudentsAttempt(studentNumber, problemSetKey, attemptTime, problemIDs, studentAnswers, connection);
-      
-      // Make sure that the attempt was inserted.
-      assertTrue(insertedAttempts);
-      
-      ResultSet results = DatabaseSelector.getStudentsAttempt(studentNumber, problemSetKey, attemptTime, connection);
-      
-      // Make sure that the student results retrieved matches what was inserted.
-      results.next();
-      assertEquals(problemIDOne, results.getInt(1));
-      assertEquals(studentAnswerOne, results.getString(2));
-      results.next();
-      assertEquals(problemIDTwo, results.getInt(1));
-      assertEquals(studentAnswerTwo, results.getString(2));
-      results.next();
-      assertEquals(problemIDThree, results.getInt(1));
-      assertEquals(studentAnswerThree, results.getString(2));
-      
-    } catch (DatabaseInsertException | DatabaseSelectException | SQLException e) {
-      fail();
-    }
+      Date startTime = new Date(1000);
+      Date endTime = new Date(1000000);
+
+      int studentNumber = 5;
+      String nameStudent = "Jim";
+      String emailStudent = "james.mail";
+      String passwordStudent = "SECRET";
+
+      String studentAnswerOne = "7";
+      String studentAnswerTwo = "8";
+      String studentAnswerThree = "9";
+
+      String[] studentAnswers = {studentAnswerOne, studentAnswerTwo, studentAnswerThree};
+
+      long attemptTime = 1000;
+
+      try {
+          boolean instructorExists = DatabaseInserter.insertInstructor(instructorID, nameInstructor,
+                  emailInstructor, passwordInstructor, connection);
+
+          assertTrue(instructorExists);
+
+          int problemIDOne = DatabaseInserter.insertProblem(questionType, questionOne, answerOne,
+                  instructorID, connection);
+
+          // Make sure that the problem was inserted into the database.
+          assertTrue(problemIDOne > 0);
+
+          int problemIDTwo = DatabaseInserter.insertProblem(questionType, questionTwo, answerTwo,
+                  instructorID, connection);
+
+          // Make sure that the problem was inserted into the database.
+          assertTrue(problemIDTwo > 0);
+
+          int problemIDThree = DatabaseInserter.insertProblem(questionType, questionThree, answerThree,
+                  instructorID, connection);
+
+          // Make sure that the problem was inserted into the database.
+          assertTrue(problemIDThree > 0);
+
+          int[] problemIDs = {problemIDOne, problemIDTwo, problemIDThree};
+
+          int problemSetKey = DatabaseInserter.insertProblemSet(maxAttempts, problemIDs, startTime,
+                  endTime, instructorID, connection);
+
+          // Make sure that the problem set was inserted into the database.
+          assertTrue(problemSetKey > 0);
+
+          boolean studentExists = DatabaseInserter.insertStudent(studentNumber, nameStudent, emailStudent,
+                  passwordStudent, connection);
+
+          // Make sure that the student was inserted into the database.
+          assertTrue(studentExists);
+
+          boolean insertedAttempts = DatabaseInserter.insertStudentsAttempt(studentNumber, problemSetKey, attemptTime, problemIDs, studentAnswers, connection);
+
+          // Make sure that the attempt was inserted.
+          assertTrue(insertedAttempts);
+
+          ResultSet results = DatabaseSelector.getStudentsAttempt(studentNumber, problemSetKey, attemptTime, connection);
+
+          // Make sure that the student results retrieved matches what was inserted.
+          results.next();
+          assertEquals(problemIDOne, results.getInt(1));
+          assertEquals(studentAnswerOne, results.getString(2));
+          results.next();
+          assertEquals(problemIDTwo, results.getInt(1));
+          assertEquals(studentAnswerTwo, results.getString(2));
+          results.next();
+          assertEquals(problemIDThree, results.getInt(1));
+          assertEquals(studentAnswerThree, results.getString(2));
+
+      } catch (DatabaseInsertException | DatabaseSelectException | SQLException e) {
+          fail();
+      }
+  }
 
     /**
      * Tests that we can retrieve the problem IDs of all of the problems inserted into the database
