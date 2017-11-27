@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,14 +10,10 @@
    <children>
       <Pane fx:id="InstructorRoot" prefHeight="780.0" prefWidth="780.0">
          <children>
+            <Button fx:id="homeButton" layoutX="640.0" layoutY="10.0" mnemonicParsing="false" text="Home" />
             <Button fx:id="logoutButton" layoutX="708.0" layoutY="10.0" mnemonicParsing="false" text="Logout" />
             <Label fx:id="welcomeLabel" layoutX="21.0" layoutY="14.0" text="Welcome" />
             <Separator layoutY="47.0" prefHeight="2.0" prefWidth="780.0" />
-            <ButtonBar fx:id="buttonBar" layoutY="49.0" prefHeight="40.0" prefWidth="95.0">
-              <buttons>
-                <Button fx:id="homeButton" mnemonicParsing="false" text="Home" />
-              </buttons>
-            </ButtonBar>
          </children>
       </Pane>
       <Pane fx:id="innerScreen" layoutY="90.0" prefHeight="690.0" prefWidth="780.0" />
