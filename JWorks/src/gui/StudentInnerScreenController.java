@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import models.*;
 
@@ -15,6 +16,8 @@ public class StudentInnerScreenController extends Controller {
   private Button viewProblemSetsButton;
   @FXML
   private Pane innerScreen;
+  @FXML
+  private Label unattemptedLabel;
 
   public void start(StudentInnerScreenManager studentInnerScreenManager) {
 
@@ -25,5 +28,6 @@ public class StudentInnerScreenController extends Controller {
       }
     });
 
+    unattemptedLabel.setText(String.valueOf(studentInnerScreenManager.getNumUncompletedAssignments()));
   }
 }
