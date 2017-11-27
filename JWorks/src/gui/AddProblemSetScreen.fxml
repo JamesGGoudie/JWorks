@@ -21,22 +21,20 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="215.0">
             <children>
-                <TableView fx:id="problemListTable" layoutX="18.0" layoutY="14.0" prefHeight="206.0" prefWidth="220.0">
+                <TableView fx:id="problemListTable" layoutX="18.0" layoutY="14.0" prefHeight="230.0" prefWidth="220.0">
                     <columns>
                         <TableColumn fx:id="problemListColumn" editable="false" prefWidth="219.0" sortable="false" text="Problem ID" />
                     </columns>
                 </TableView>
-                <DatePicker fx:id="releaseDateField" layoutX="22.0" layoutY="313.0" prefHeight="31.0" prefWidth="220.0" />
-                <Label layoutX="22.0" layoutY="292.0" text="Release Date" />
-                <DatePicker fx:id="dueDateField" layoutX="22.0" layoutY="377.0" prefHeight="31.0" prefWidth="220.0" />
-                <Label layoutX="23.0" layoutY="356.0" text="Due Date" />
+                <DatePicker fx:id="releaseDateField" layoutX="24.0" layoutY="344.0" prefHeight="31.0" prefWidth="220.0" />
+                <Label layoutX="24.0" layoutY="317.0" text="Release Date" />
+                <DatePicker fx:id="dueDateField" layoutX="22.0" layoutY="413.0" prefHeight="31.0" prefWidth="220.0" />
+                <Label layoutX="24.0" layoutY="382.0" text="Due Date" />
                 <Button fx:id="saveProblemSetButton" layoutX="55.0" layoutY="643.0" mnemonicParsing="false" text="Save Problem Set" />
                 <Label fx:id="errorLabel" layoutX="18.0" layoutY="588.0" prefHeight="55.0" prefWidth="220.0" text="" textFill="RED" wrapText="true" />
-                <TextField fx:id="maxAttemptsField" layoutX="22.0" layoutY="436.0" prefHeight="31.0" prefWidth="220.0" />
-                <Label layoutX="22.0" layoutY="415.0" text="Maximum Attempts" />
             <Label layoutX="22.0" layoutY="476.0" prefHeight="119.0" prefWidth="220.0" text="Double click on Problems in the left view to add them to the Problem Set. Double click on the Problem in the right pane to remove it." wrapText="true" />
-            <TextField fx:id="tagsField" layoutX="22.0" layoutY="252.0" prefHeight="31.0" prefWidth="220.0" />
-            <Label layoutX="23.0" layoutY="231.0" text="Tags (space-separated) (optional)" />
+            <TextField fx:id="tagsField" layoutX="22.0" layoutY="280.0" prefHeight="31.0" prefWidth="220.0" />
+            <Label layoutX="24.0" layoutY="252.0" text="Tags (space-separated) (optional)" />
             </children></AnchorPane>
     </items>
 </SplitPane>
