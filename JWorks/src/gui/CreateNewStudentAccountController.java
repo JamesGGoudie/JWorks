@@ -69,12 +69,12 @@ public class CreateNewStudentAccountController {
 				FileChooser fileChooser = new FileChooser();
 				fileChooser.setTitle("Open Students File");
 				File targetFile = fileChooser.showOpenDialog(sceneNode.getScene().getWindow());
-
-				createNewStudentAccountManager.createBulkStudentAccounts(targetFile);
+				if (targetFile != null) {
+					createNewStudentAccountManager.createBulkStudentAccounts(targetFile);
+				}
 			}
 		});
 	}
-	
 
 	private boolean passwordMatched() {
 		boolean result = false;
@@ -85,7 +85,6 @@ public class CreateNewStudentAccountController {
 		}
 		return result;
 	}
-
 
 	private boolean hasEmptyFields() {
 		boolean result = false;

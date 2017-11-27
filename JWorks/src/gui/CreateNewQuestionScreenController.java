@@ -70,8 +70,9 @@ public class CreateNewQuestionScreenController extends Controller {
 				FileChooser fileChooser = new FileChooser();
 				fileChooser.setTitle("Open Students File");
 				File targetFile = fileChooser.showOpenDialog(sceneNode.getScene().getWindow());
-
-				createNewQuestionScreenManager.createBulkProblems(targetFile);
+				if (targetFile != null) {
+					createNewQuestionScreenManager.createBulkProblems(targetFile);
+				}
 			}
 		});
 
