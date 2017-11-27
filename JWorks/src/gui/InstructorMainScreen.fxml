@@ -17,7 +17,6 @@
             <ButtonBar fx:id="buttonBar" layoutY="49.0" prefHeight="40.0" prefWidth="95.0">
               <buttons>
                 <Button fx:id="homeButton" mnemonicParsing="false" text="Home" />
-                  <Button fx:id="statisticsButton" mnemonicParsing="false" text="Statistics" />
               </buttons>
             </ButtonBar>
          </children>
